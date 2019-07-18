@@ -1,6 +1,7 @@
 import React from 'react';
 import { makeStyles } from '@material-ui/core'
 import { createMuiTheme } from '@material-ui/styles';
+import Navbar from './components/navbar/Navbar';
 
 //fontFamily: 'Engli-Besh',
 
@@ -9,9 +10,6 @@ import { createMuiTheme } from '@material-ui/styles';
 //     fontFamily: '"Comic Sans"',
 //   })
 // });
-
-
-
 
 const appStyles = makeStyles({
   main: {
@@ -22,8 +20,6 @@ const appStyles = makeStyles({
       //fontFamily: 'Symbol, Times, serif',
     }
   },
-
-
 })
 
 
@@ -32,7 +28,7 @@ function App() {
   const classes = appStyles();
   return (
     <div className={classes.main}>
-     <h1 className='green'>TEXT is Here</h1>     
+     <Navbar/>   
      
     </div>
   );
