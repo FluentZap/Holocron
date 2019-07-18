@@ -1,3 +1,18 @@
+/* @font-face {
+  font-family: 'Englbesh', Courier, monospace;
+  src: url('./fonts/englbesh.ttf') format("truetype");
+}
+
+@font-face {
+  font-family: 'Teuton', Courier, monospace;
+  src: url('./fonts/TeutonMager.otf') format("opentype");
+}
+
+@font-face {
+  font-family: 'Symbol', Courier, monospace;
+  src: url('./fonts/itc-symbol-lt-bold.ttf') format("truetype");
+} */
+
 body {
   margin: 0;
   font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Roboto", "Oxygen",
@@ -11,3 +26,9 @@ code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, "Courier New",
     monospace;
 }
+
+.green {
+  /* font-family: 'Engli-Besh'; */
+  color: green;  
+}
+
