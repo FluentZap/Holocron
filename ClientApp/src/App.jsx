@@ -2,6 +2,7 @@ import React from 'react';
 import { makeStyles } from '@material-ui/core'
 import { createMuiTheme } from '@material-ui/styles';
 import Navbar from './components/navbar/Navbar';
+import { SquareButtonSVG, HolocronSVG } from './SVG';
 
 //fontFamily: 'Engli-Besh',
 
@@ -11,25 +12,29 @@ import Navbar from './components/navbar/Navbar';
 //   })
 // });
 
+
+
 const appStyles = makeStyles({
   main: {
-    // backgroundColor: 'green',
+    // backgroundColor: '#0a0a12',
     '& h1': {
       fontFamily: 'Engli-Besh, Times, serif',
       // fontFamily: 'Teuton',
-      //fontFamily: 'Symbol, Times, serif',
+      //fontFamily: 'Symbol, Times, serif',      
     }
   },
 })
 
 
 
-function App() {  
+function App() {
   const classes = appStyles();
   return (
     <div className={classes.main}>
-     <Navbar/>   
-     
+      {/* <Navbar/>    */}
+      {/* <SVG width={400} fill="#49c" /> */}
+      <HolocronSVG />
+      <SquareButtonSVG width={"128"} height={"128"} fill={"#ccc"} />      
     </div>
   );
 }
