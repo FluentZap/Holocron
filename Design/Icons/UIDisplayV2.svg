@@ -1,0 +1,12 @@
+<svg width="20.827mm" height="19.352mm" version="1.1" viewBox="0 0 20.827 19.352" xmlns="http://www.w3.org/2000/svg">
+ <defs>
+  <filter id="filter1005-8-7" x="-.05763" y="-.062573" width="1.1153" height="1.1251" color-interpolation-filters="sRGB">
+   <feGaussianBlur stdDeviation="0.44841689"/>
+  </filter>
+ </defs>
+ <g transform="translate(-95.42 -124.04)">
+  <path d="m105.83 142.31c-0.66996-0.0325-1.2771-0.40446-1.6104-0.98655l-7.4644-13.269c-0.74924-1.3098 0.19575-2.9404 1.7047-2.9415h14.74c1.509 1e-3 2.4539 1.6317 1.7047 2.9415l-7.2758 13.269c-0.36684 0.64059-1.0616 1.0216-1.799 0.98655z" fill-opacity=".039216" stroke="#b31518" stroke-linejoin="round" stroke-width=".26458"/>
+  <path transform="matrix(1 0 0 -1 76.729 491.56)" d="m29.104 349.25c-0.66996 0.0325-1.2771 0.40446-1.6104 0.98655l-7.4644 13.269c-0.74924 1.3098 0.19575 2.9404 1.7047 2.9415h14.74c1.509-1e-3 2.4539-1.6317 1.7047-2.9415l-7.2758-13.269c-0.36684-0.64059-1.0616-1.0216-1.799-0.98655z" fill="none" filter="url(#filter1005-8-7)" stroke="#b31518" stroke-linejoin="round" stroke-width=".26458"/>
+  <text x="106.05447" y="135.00053" fill="#b4141d" font-family="'AG Stencil'" font-size="8.4667px" letter-spacing="0px" stroke-width=".13229" text-align="center" text-anchor="middle" word-spacing="0px" style="line-height:1.25" xml:space="preserve"><tspan x="106.05447" y="135.00053" fill="#b4141d" font-family="Aurebesh" font-size="8.4667px" stroke-width=".13229" text-align="center" text-anchor="middle">w</tspan></text>
+ </g>
+</svg>

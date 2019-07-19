@@ -1,0 +1,14 @@
+<svg version="1.1" viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
+ <g transform="translate(0 -266.17)" stroke="#ebe6de" stroke-linecap="round">
+  <g fill="#3642d9" stroke-width="2">
+   <rect x="2" y="268.17" width="96" height="96" rx="0" ry="0" style="paint-order:normal"/>
+   <circle cx="50" cy="316.17" r="47" stroke-linejoin="round" style="paint-order:normal"/>
+   <rect transform="rotate(45)" x="226.39" y="155.68" width="65.054" height="65.054" stroke-linejoin="round" style="paint-order:normal"/>
+  </g>
+  <g fill="none">
+   <circle cx="50" cy="316.17" r="32" stroke-linejoin="round" stroke-width="2" style="paint-order:normal"/>
+   <ellipse cx="50" cy="316.17" rx="10.007" ry="31.39" stroke-linejoin="round" stroke-width="1.4862" style="paint-order:normal"/>
+   <rect transform="rotate(-45)" x="-194.57" y="252.55" width="12.728" height="12.728" stroke-width="1.35" style="paint-order:normal"/>
+  </g>
+ </g>
+</svg>
