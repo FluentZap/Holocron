@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { makeStyles } from '@material-ui/core'
-import { createMuiTheme } from '@material-ui/styles';
+import { createMuiTheme } from '@material-ui/core/styles';
 import Navbar from './components/navbar/Navbar';
 import { SquareButtonSVG, HolocronSVG } from './SVG';
 import TabBar from './components/TabBar';
@@ -8,26 +8,23 @@ import { Provider } from 'react-redux';
 import { todos, logger } from './middleware/HoloStore';
 import { createStore, applyMiddleware } from 'redux';
 import Login from './components/login/Login';
+import MainMenu from './components/mainMenu/MainMenu';
+import { ThemeProvider } from '@material-ui/styles';
 
 //fontFamily: 'Engli-Besh',
 
-// const theme = createMuiTheme({
-//   typography: createTypography(createPalette(), {
-//     fontFamily: '"Comic Sans"',
-//   })
-// });
+const theme = createMuiTheme({
+  palette: {      
+    primary: {
+      main: '#335'
+    },
+    secondary: {
+      main: '#257'
+    },
+  },  
+});
 
 const store = createStore(todos, ['Use Redux'], applyMiddleware(logger));
-
-
-
-
-store.dispatch({
-  type: 'ADD_TODO',
-  text: 'Understand the middleware'
-})
-
-
 
 const appStyles = makeStyles({
   main: {
@@ -44,31 +41,21 @@ const appStyles = makeStyles({
 
 function App() {
   const classes = appStyles();
-
-  useEffect(() => {
-    // connection.start().then(() => {
-    //   console.log('Connected')
-    //   connection.invoke("updateServer", 'Hello Server').catch(function (err) {
-    //     return console.error(err.toString());
-    //   });
-    // });
-
-
-  }, []);
-
   return (
     <Provider store={store}>
-      <div className={classes.main}>
-        <Login />
-        {/* <h1 className="red-glow">Glowing!</h1> */}
-        {/* <div className="glow"></div> */}
-        {/* <TabBar/> */}
-        {/* <Navbar/>    */}
-        {/* <SVG width={400} fill="#49c" /> */}
-        {/* <HolocronSVG/> */}
-
-        {/* <SquareButtonSVG width={"128"} height={"128"} fill={"#ccc"} />       */}
-      </div>
+      <ThemeProvider theme={theme}>
+        <div className={classes.main}>
+          {/* <Login /> */}
+          <MainMenu />
+          {/* <h1 className="red-glow">Glowing!</h1> */}
+          {/* <div className="glow"></div> */}
+          {/* <TabBar/> */}
+          {/* <Navbar/>    */}
+          {/* <SVG width={400} fill="#49c" /> */}
+          {/* <HolocronSVG/> */}
+          {/* <SquareButtonSVG width={"128"} height={"128"} fill={"#ccc"} />       */}
+        </div>
+      </ThemeProvider>
     </Provider>
   );
 }
