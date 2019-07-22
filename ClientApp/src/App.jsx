@@ -53,13 +53,13 @@ function App() {
     //   });
     // });
 
-  
+
   }, []);
 
   return (
-    <Provider store={store}> 
+    <Provider store={store}>
       <div className={classes.main}>
-        <Login/>
+        <Login />
         {/* <h1 className="red-glow">Glowing!</h1> */}
         {/* <div className="glow"></div> */}
         {/* <TabBar/> */}

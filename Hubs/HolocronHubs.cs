@@ -20,7 +20,7 @@ namespace Holocron.Hubs
         public override async Task OnDisconnectedAsync(Exception exception)
         {
             // if (FiefdomUpdate.ConnectedUsers.Contains(Context.ConnectionId))
-            // {
+            // { 
             // 	FiefdomUpdate.ConnectedUsers.Remove(Context.ConnectionId);
             // }
             await base.OnDisconnectedAsync(exception);

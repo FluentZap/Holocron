@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { makeStyles } from '@material-ui/core'
 import { connect } from 'react-redux'
+import uuid from 'uuid';
 
 const appStyles = makeStyles({
   root: {
@@ -20,7 +21,7 @@ function Login(props) {
   return (
     <div className={classes.root}>
       {props.messages.map(m => (
-        <h1>{m}</h1>
+        <h1 key={uuid.v4()}>{m}</h1>
       )
       )}
     </div>
