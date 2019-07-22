@@ -29,11 +29,13 @@ const appStyles = makeStyles({
 
 
 function App() {
-  const classes = appStyles();
-  const [translate, setTranslate] = useState(0);
+  const classes = appStyles();  
 
   return (
-    <div className={classes.main} onClick={() => setTranslate(4)}>
+    <div className={classes.main}>
+
+      {/* <h1 className="red-glow">Glowing!</h1> */}
+      {/* <div className="glow"></div> */}
       {/* <TabBar/> */}
       {/* <Navbar/>    */}
       {/* <SVG width={400} fill="#49c" /> */}
