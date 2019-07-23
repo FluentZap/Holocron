@@ -10,6 +10,7 @@ import { createStore, applyMiddleware } from 'redux';
 import Login from './components/login/Login';
 import MainMenu from './components/mainMenu/MainMenu';
 import { ThemeProvider } from '@material-ui/styles';
+import Games from './components/games/Games';
 
 //fontFamily: 'Engli-Besh',
 
@@ -46,7 +47,7 @@ function App() {
       <ThemeProvider theme={theme}>
         <div className={classes.main}>
           {/* <Login /> */}
-          <MainMenu />
+          {/* <Games /> */}
           {/* <h1 className="red-glow">Glowing!</h1> */}
           {/* <div className="glow"></div> */}
           {/* <TabBar/> */}
