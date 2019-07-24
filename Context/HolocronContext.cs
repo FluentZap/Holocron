@@ -7,8 +7,7 @@ namespace Holocron.Context
 
     public class HolocronContext : DbContext
     {
-        public DbSet<Player> Player { get; set; }        
-        public DbSet<Question> Question { get; set; }
+        public DbSet<User> Users { get; set; }
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
 		{
@@ -17,29 +16,60 @@ namespace Holocron.Context
 
     }
 
-    public class Player
+    public class User
     {
         public int Id { get; set; }
-        public string SessionId { get; set; }
+        public string SessionToken { get; set; }
         public string Name { get; set; }
-        public string Score { get; set; }
-        public List<Answer> Answer { get; set; } = new List<Answer>();
+        public List<Character> Characters { get; set; } = new List<Character>();
+        public List<Group> Groups { get; set; } = new List<Group>();
     }
 
-    public class Answer
+    public class Group
     {
         public int Id { get; set; }
-        public int Choice { get; set; }
+        public int Name { get; set; }
+        public string ConnectionId { get; set; }
+        public List<Character> Characters = new List<Character>();
+    }
+    
+    public class Character
+    {
+        public int Id { get; set; }
+        public string Name { get; set; }
+
+        public int Wound { get; set; }
+        public int WoundThreashold { get; set; }
+
+        public int Strain { get; set; }
+        public int StrainThreashold { get; set; }
+
+        public int Xp { get; set; }
+        public int Credits { get; set; }
+
+        public string Career { get; set; }
+        public string Specializations { get; set; }
+
+        public int Brawn { get; set; }
+        public int Agility { get; set; }
+        public int Intelect { get; set; }
+        public int Cunning { get; set; }
+        public int Willpower { get; set; }
+        public int Presence { get; set; }
+        public List<Item> Inventory { get; set; } = new List<Item>();
+
     }
 
-    public class Question
+    public class Item
     {
         public int Id { get; set; }
-        public string Prompt { get; set; }
-        public string Option1 { get; set; }
-        public string Option2 { get; set; }
-        public string Option3 { get; set; }
-        public int CorrectAnswer { get; set; }
+        public string Name { get; set; }
+    }
+
+    public class Ship
+    {
+        public int Id { get; set; }
+        public string Name { get; set; }
     }
 
 }

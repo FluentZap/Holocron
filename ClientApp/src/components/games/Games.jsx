@@ -27,11 +27,11 @@ const appStyles = makeStyles({
     flexDirection: 'row',
     // padding: 20,
     '&:before': {
-        border: '1px solid #C7D7F1',
-        backgroundColor: '#131435',
-        filter: 'blur(1px)',
-        width: '100px',
-        height: '100px',
+      border: '1px solid #C7D7F1',
+      backgroundColor: '#131435',
+      filter: 'blur(1px)',
+      width: '100px',
+      height: '100px',
     },
     borderRadius: 10,
     margin: 0,
@@ -54,13 +54,15 @@ function Games(props) {
   const classes = appStyles();
   return (
     <div className={classes.root}>
-      <NavMenuSVG width={'100%'}/>
+      <div style={{ margin: 10 }}>
+        <NavMenuSVG width={'100%'} />
+      </div>
       <div className={classes.loginContainer}>
-      <Button text={'C'}/>
-      <Button text={'S'}/>
-      <Button text={'I'}/>
-      <Button text={'A'}/>
-      {/* <Button variant="contained" color="primary" >Games</Button>
+        <Button text={'C'} />
+        <Button text={'S'} />
+        <Button text={'I'} />
+        <Button text={'A'} />
+        {/* <Button variant="contained" color="primary" >Games</Button>
       <Button variant="contained" color="secondary" >Characters</Button>
       <Button variant="contained" color="primary" >Data Archives</Button> */}
         {/* {props.messages.map(m => (

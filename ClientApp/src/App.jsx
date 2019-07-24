@@ -46,8 +46,8 @@ function App() {
     <Provider store={store}>
       <ThemeProvider theme={theme}>
         <div className={classes.main}>
-          {/* <Login /> */}
-          <Games/>
+          <Login />
+          {/* <Games/> */}
           
           {/* <h1 className="red-glow">Glowing!</h1> */}
           {/* <div className="glow"></div> */}

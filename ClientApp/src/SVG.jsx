@@ -60,21 +60,19 @@ export const NavMenuSVG = props => {
   // const height = props.height || '100%';
   
   return (
-    <svg width={width} version="1.1" viewBox="0 0 148.45774 29.792084" xmlns="http://www.w3.org/2000/svg">
+    <svg width={width} version="1.1" viewBox="0 0 120.91459 32.080728" xmlns="http://www.w3.org/2000/svg">
     <defs>
-     <filter id="filter4821" x="-.014824" y="-.063" width="1.0296" height="1.126" color-interpolation-filters="sRGB">
-      <feGaussianBlur stdDeviation="0.69453124"/>
-     </filter>
-     <filter id="filter4837" x="-.048" y="-.048" width="1.096" height="1.096" color-interpolation-filters="sRGB">
-      <feGaussianBlur stdDeviation="0.52916683"/>
-     </filter>
+     <linearGradient id="linearGradient6446" x1="72.76" x2="72.76" y1="52.26" y2="39.031" gradientUnits="userSpaceOnUse">
+      <stop offset="0"/>
+      <stop stopOpacity="0" offset="1"/>
+     </linearGradient>
     </defs>
-    <g transform="translate(-11.562 -30.75)" fill="none">
-     <path d="m132.29 32.417 1e-5 3.9687 1.3229 1.3229v15.875l-1.3229 1.3229-1e-5 3.9688h26.458v-2.6458l-1.3229-1.3229v-17.198l1.3229-1.3229-2e-5 -3.9687z" filter="url(#filter4837)" stroke="#fff" strokeWidth=".265"/>
-     <path d="m132.29 32.417v3.9687l1.3229 1.3229v15.875l-1.3229 1.3229v3.9688h26.458v-2.6458l-1.3229-1.3229v-17.198l1.3229-1.3229-1e-5 -3.9687z" stroke="#f4ffff" strokeWidth=".79375"/>
-     <path d="m15.875 32.417c-1.3229 0-2.6458 1.3229-2.6458 2.6458v21.167c0 1.3229 1.3229 2.6458 2.6458 2.6458h5.2917v-1.3229h3.9688v1.3229h47.625l3.9688-2.6458h38.365l4.0245 2.6458h6.5588v-26.458h-6.6156l-3.9677 2.6458h-38.365l-3.9688-2.6458h-47.625l1e-6 1.3229h-3.9688v-1.3229z" filter="url(#filter4821)" stroke="#fff" strokeWidth=".26511"/>
-     <path d="m15.875 32.417c-1.3229 0-2.6458 1.3229-2.6458 2.6458v21.167c0 1.3229 1.3229 2.6458 2.6458 2.6458h5.2917v-1.3229h3.9688v1.3229h47.625l3.9688-2.6458h38.365l4.0245 2.6458h6.5588v-26.458h-6.6156l-3.9677 2.6458h-38.365l-3.9688-2.6458h-47.625l1e-6 1.3229h-3.9688v-1.3229z" stroke="#fff" strokeWidth=".52917"/>
+    <g transform="translate(-6.35 -24.215)" stroke="#fff">
+     <path d="m6.6146 53.583h6.6146c2.6458 0 3.9688-2.6458 6.6146-2.6458h19.844c2.6458 0 3.9688 2.6458 6.6146 2.6458h66.146c7.9375 0 14.552-6.6146 14.552-14.552v-14.552h-2.6458v1.3229h-3.9688v-1.3229h-100.54v1.3229h-6.6146l-1.3229-1.3229h-5.2917z" fill="url(#linearGradient6446)" strokeLinejoin="round" strokeWidth=".52917"/>
+     <circle cx="112.45" cy="39.031" r="12.686" strokeWidth=".52917"/>
+     <path d="m13.229 53.583h2.6458c2.6458 1e-6 2.6458 2.6458 5.2917 2.6458h17.198c2.6458 0 2.6458-2.6458 5.2917-2.6458l2.6458 1e-6" fill="none" strokeWidth=".13229"/>
     </g>
    </svg>
+   
   )
 }
