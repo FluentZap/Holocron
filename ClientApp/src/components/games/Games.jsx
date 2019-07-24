@@ -5,12 +5,13 @@ import TextField from '@material-ui/core/TextField';
 import uuid from 'uuid';
 import { styled } from '@material-ui/styles';
 import Button from '../Button';
+import { NavMenuSVG } from '../../SVG';
 
 
 const appStyles = makeStyles({
   root: {
     height: '100vh',
-    display: 'flex',
+    // display: 'flex',
     flexDirection: 'column',
     alignItems: 'center',
     justifyContent: 'center',
@@ -22,7 +23,7 @@ const appStyles = makeStyles({
     }
   },
   loginContainer: {
-    display: 'flex',
+    // display: 'flex',
     flexDirection: 'row',
     // padding: 20,
     '&:before': {
@@ -53,6 +54,7 @@ function Games(props) {
   const classes = appStyles();
   return (
     <div className={classes.root}>
+      <NavMenuSVG width={'100%'}/>
       <div className={classes.loginContainer}>
       <Button text={'C'}/>
       <Button text={'S'}/>
