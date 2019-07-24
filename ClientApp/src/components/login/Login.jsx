@@ -40,19 +40,30 @@ const StyledInput = styled(TextField)({
 
 function Login(props) {
   const classes = appStyles();
+  const { dispatch } = props;
+  const [userName, setUserName] = useState('');
+  const [password, setPassword] = useState('');
+
+  const AddUser = () => {
+    dispatch({type: 'SERVER_CREATE_USER', userName: userName, password: password});
+  }
+
+
   return (
     <div className={classes.root}>
       <div className={classes.loginContainer}>
         <StyledInput
           label="Username"
           className={classes.textField}
+          onChange={event => setUserName(event.target.value)}
         />
         <StyledInput
           type="password"
           label="Password"
           className={classes.textField}
+          onChange={event => setPassword(event.target.value)}
         />
-        <Button variant="contained" color="primary">
+        <Button variant="contained" color="primary" onClick={AddUser}>
         Login
         </Button>
         {/* {props.messages.map(m => (

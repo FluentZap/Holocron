@@ -4,6 +4,8 @@ using System;
 using System.Linq;
 using Microsoft.EntityFrameworkCore;
 using System.Collections.Generic;
+using Newtonsoft.Json;
+using Holocron.Context;
 
 namespace Holocron.Hubs
 {
@@ -32,8 +34,19 @@ namespace Holocron.Hubs
             await Clients.Caller.SendAsync("send", message + ": First Data And other things");
         }
 
+public class UserData
+{
+    [JsonProperty("userName")]
+    public string Name { get; set; }
 
+    [JsonProperty("password")]
+    public string Password { get; set; }
+}
 
+        public async Task CreateUser(UserData user)
+        {
+            HoloData.CreateUser(new User(){ Name = user.Name, Password = user.Password });            
+        }
 
 
 

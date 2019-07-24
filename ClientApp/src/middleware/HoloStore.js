@@ -23,6 +23,12 @@ export function logger({ dispatch, getState }) {
 
         }
 
+        if (action.type === 'SERVER_CREATE_USER') {                        
+            connection.invoke("CreateUser", {userName: action.userName, password: action.password}).catch(function (err) {
+                return console.error(err.toString());
+            });
+        }
+
         // Call the next dispatch method in the middleware chain.
         const returnValue = next(action)
 

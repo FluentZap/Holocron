@@ -101,6 +101,8 @@ namespace Holocron.Migrations
 
                     b.Property<string>("Name");
 
+                    b.Property<string>("Password");
+
                     b.Property<string>("SessionToken");
 
                     b.HasKey("Id");

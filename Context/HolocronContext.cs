@@ -21,6 +21,7 @@ namespace Holocron.Context
         public int Id { get; set; }
         public string SessionToken { get; set; }
         public string Name { get; set; }
+        public string Password { get; set; }
         public List<Character> Characters { get; set; } = new List<Character>();
         public List<Group> Groups { get; set; } = new List<Group>();
     }

@@ -9,7 +9,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Holocron.Migrations
 {
     [DbContext(typeof(HolocronContext))]
-    [Migration("20190724223441_FirstMigration")]
+    [Migration("20190724231952_FirstMigration")]
     partial class FirstMigration
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -102,6 +102,8 @@ namespace Holocron.Migrations
                         .ValueGeneratedOnAdd();
 
                     b.Property<string>("Name");
+
+                    b.Property<string>("Password");
 
                     b.Property<string>("SessionToken");
 
