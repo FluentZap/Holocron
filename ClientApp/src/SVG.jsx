@@ -53,3 +53,28 @@ export const HolocronSVG = (
 
   )
 }
+
+
+export const NavMenuSVG = {
+  
+
+  return (
+    <svg width="146.99mm" height="28.125mm" version="1.1" viewBox="0 0 146.98929 28.125208" xmlns="http://www.w3.org/2000/svg">
+ <defs>
+  <filter id="filter4785" x="-.0074118" y="-.0315" width="1.0148" height="1.063" color-interpolation-filters="sRGB">
+   <feGaussianBlur stdDeviation="0.34726562"/>
+  </filter>
+  <filter id="filter4817" x="-.024" y="-.024" width="1.048" height="1.048" color-interpolation-filters="sRGB">
+   <feGaussianBlur stdDeviation="0.26458341"/>
+  </filter>
+ </defs>
+ <g transform="translate(-12.396 -31.583)" fill="none">
+  <path d="m132.29 32.417 1e-5 3.9687 1.3229 1.3229v15.875l-1.3229 1.3229-1e-5 3.9688h26.458v-2.6458l-1.3229-1.3229v-17.198l1.3229-1.3229-2e-5 -3.9687z" filter="url(#filter4817)" stroke="#fff" stroke-width=".265"/>
+  <path d="m132.29 32.417v3.9687l1.3229 1.3229v15.875l-1.3229 1.3229v3.9688h26.458v-2.6458l-1.3229-1.3229v-17.198l1.3229-1.3229-1e-5 -3.9687z" stroke="#f4ffff" stroke-width=".26458px"/>
+  <path d="m15.875 32.417c-1.3229 0-2.6458 1.3229-2.6458 2.6458v21.167c0 1.3229 1.3229 2.6458 2.6458 2.6458h5.2917v-1.3229h3.9688v1.3229h47.625l3.9688-2.6458h38.365l4.0245 2.6458h6.5588v-26.458h-6.6156l-3.9677 2.6458h-38.365l-3.9688-2.6458h-47.625l1e-6 1.3229h-3.9688v-1.3229z" filter="url(#filter4785)" stroke="#fff" stroke-width=".26511"/>
+  <path d="m15.875 32.417c-1.3229 0-2.6458 1.3229-2.6458 2.6458v21.167c0 1.3229 1.3229 2.6458 2.6458 2.6458h5.2917v-1.3229h3.9688v1.3229h47.625l3.9688-2.6458h38.365l4.0245 2.6458h6.5588v-26.458h-6.6156l-3.9677 2.6458h-38.365l-3.9688-2.6458h-47.625l1e-6 1.3229h-3.9688v-1.3229z" stroke="#fff" stroke-width=".265"/>
+ </g>
+</svg>
+
+  )
+}
