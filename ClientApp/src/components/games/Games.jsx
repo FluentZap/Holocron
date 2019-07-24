@@ -23,7 +23,7 @@ const appStyles = makeStyles({
   },
   loginContainer: {
     display: 'flex',
-    flexDirection: 'column',
+    flexDirection: 'row',
     // padding: 20,
     '&:before': {
         border: '1px solid #C7D7F1',
@@ -54,7 +54,10 @@ function Games(props) {
   return (
     <div className={classes.root}>
       <div className={classes.loginContainer}>
-      <Button width={64 * 1} height={64 * 1} text={'C'}/>
+      <Button text={'C'}/>
+      <Button text={'S'}/>
+      <Button text={'I'}/>
+      <Button text={'A'}/>
       {/* <Button variant="contained" color="primary" >Games</Button>
       <Button variant="contained" color="secondary" >Characters</Button>
       <Button variant="contained" color="primary" >Data Archives</Button> */}
