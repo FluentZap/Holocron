@@ -1,9 +1,11 @@
 import React, { useState, useEffect } from 'react';
-import { makeStyles, Button } from '@material-ui/core'
+import { makeStyles } from '@material-ui/core'
 import { connect } from 'react-redux'
 import TextField from '@material-ui/core/TextField';
 import uuid from 'uuid';
 import { styled } from '@material-ui/styles';
+import Button from '../Button';
+
 
 const appStyles = makeStyles({
   root: {
@@ -51,10 +53,11 @@ function Games(props) {
   const classes = appStyles();
   return (
     <div className={classes.root}>
-      <div className={classes.loginContainer}>      
-      <Button variant="contained" color="primary" >Games</Button>
+      <div className={classes.loginContainer}>
+      <Button width={64 * 1} height={64 * 1} text={'C'}/>
+      {/* <Button variant="contained" color="primary" >Games</Button>
       <Button variant="contained" color="secondary" >Characters</Button>
-      <Button variant="contained" color="primary" >Data Archives</Button>      
+      <Button variant="contained" color="primary" >Data Archives</Button> */}
         {/* {props.messages.map(m => (
         <h1 key={uuid.v4()}>{m}</h1>
       )

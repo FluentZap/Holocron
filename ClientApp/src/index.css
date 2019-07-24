@@ -13,6 +13,14 @@
   src: url('./fonts/itc-symbol-lt-bold.ttf') format("truetype");
 } */
 
+@font-face {
+	font-family: Engli-Besh;
+	src: url('./fonts/englbesh.ttf');
+	font-weight: 400;
+	font-weight: normal;
+}
+
+
 body {
   margin: 0;
   font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Roboto", "Oxygen",

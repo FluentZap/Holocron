@@ -43,9 +43,9 @@ function MainMenu(props) {
   return (
     <div className={classes.root}>
       <div className={classes.loginContainer}>      
-      <Button variant="contained" color="primary" >Games</Button>
-      <Button variant="contained" color="secondary" >Characters</Button>
-      <Button variant="contained" color="primary" >Data Archives</Button>      
+      {/* <Button variant="contained" color="primary" >Games</Button> */}
+      {/* <Button variant="contained" color="secondary" >Characters</Button> */}
+      {/* <Button variant="contained" color="primary" >Data Archives</Button>       */}
         {/* {props.messages.map(m => (
         <h1 key={uuid.v4()}>{m}</h1>
       )

@@ -22,7 +22,7 @@ const theme = createMuiTheme({
     secondary: {
       main: '#257'
     },
-  },  
+  },
 });
 
 const store = createStore(todos, ['Use Redux'], applyMiddleware(logger));
@@ -31,7 +31,7 @@ const appStyles = makeStyles({
   main: {
     // backgroundColor: '#0a0a12',
     '& h1': {
-      fontFamily: 'Engli-Besh, Times, serif',
+      fontFamily: 'Alagard, Times, serif',
       // fontFamily: 'Teuton',
       //fontFamily: 'Symbol, Times, serif',      
     }
@@ -47,7 +47,8 @@ function App() {
       <ThemeProvider theme={theme}>
         <div className={classes.main}>
           {/* <Login /> */}
-          {/* <Games /> */}
+          <Games/>
+          
           {/* <h1 className="red-glow">Glowing!</h1> */}
           {/* <div className="glow"></div> */}
           {/* <TabBar/> */}
