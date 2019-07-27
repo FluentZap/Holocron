@@ -11,11 +11,12 @@ import Login from './components/login/Login';
 import MainMenu from './components/mainMenu/MainMenu';
 import { ThemeProvider } from '@material-ui/styles';
 import Games from './components/games/Games';
+import { Router, Link } from "@reach/router"
 
 //fontFamily: 'Engli-Besh',
 
 const theme = createMuiTheme({
-  palette: {      
+  palette: {
     primary: {
       main: '#335'
     },
@@ -45,18 +46,21 @@ function App() {
   return (
     <Provider store={store}>
       <ThemeProvider theme={theme}>
-        <div className={classes.main}>
-          <Login />
-          {/* <Games/> */}
-          
-          {/* <h1 className="red-glow">Glowing!</h1> */}
-          {/* <div className="glow"></div> */}
-          {/* <TabBar/> */}
-          {/* <Navbar/>    */}
-          {/* <SVG width={400} fill="#49c" /> */}
-          {/* <HolocronSVG/> */}
-          {/* <SquareButtonSVG width={"128"} height={"128"} fill={"#ccc"} />       */}
-        </div>
+        <Router>
+            <Login path="/" />
+            <Games path="Game" />
+          {/* <div className={classes.main}> */}
+            {/* <Games/> */}
+
+            {/* <h1 className="red-glow">Glowing!</h1> */}
+            {/* <div className="glow"></div> */}
+            {/* <TabBar/> */}
+            {/* <Navbar/>    */}
+            {/* <SVG width={400} fill="#49c" /> */}
+            {/* <HolocronSVG/> */}
+            {/* <SquareButtonSVG width={"128"} height={"128"} fill={"#ccc"} />       */}
+          {/* </div> */}
+        </Router>
       </ThemeProvider>
     </Provider>
   );

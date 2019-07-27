@@ -3,6 +3,7 @@ import { makeStyles } from '@material-ui/core'
 import { connect } from 'react-redux'
 import uuid from 'uuid';
 import BackgroundSVG from '../../background.svg';
+import { Link, navigate } from "@reach/router"
 
 const appStyles = makeStyles(theme => ({
   root: {
@@ -15,7 +16,7 @@ const appStyles = makeStyles(theme => ({
       fontFamily: 'Engli-Besh, Times, serif',      
     }
   },
-  loginContainer: {   
+  loginContainer: {
     display: 'grid',
     gridTemplateColumns: 'repeat(12, 1fr)',
     gridTemplateRows: 'repeat(12, 1fr)',
@@ -83,7 +84,7 @@ const appStyles = makeStyles(theme => ({
     },
     display: 'flex',
     justifyContent: 'center',
-    alignItems: 'center',    
+    alignItems: 'center',
     color: 'white',
     boxSizing: 'border-box',
     // margin: 10,
@@ -124,16 +125,15 @@ function Login(props) {
     dispatch({ type: 'SERVER_CREATE_USER', userName: userName, password: password });
   }
 
-
   return (
     <div className={classes.root}>
       <div className={classes.loginContainer}>
         <div className={classes.heading}>HoloCron</div>
-        <input className={`${classes.inputBox} ${classes.userNameInput}`} placeholder={'Username'} type="text" name="" id="" />
-        <input className={`${classes.inputBox} ${classes.passwordInput}`} placeholder={'Password'} type="password" name="" id="" />        
-
-        <button className={classes.button} style={{ gridArea: '10 / 2 / span 2 / span 4'}}>Login</button>
-        <button className={classes.button} style={{ gridArea: '10 / 8 / span 2 / span 4'}}>Register</button>
+        <input className={`${classes.inputBox} ${classes.userNameInput}`} placeholder={'Username'} type="text" onChange={event => setUserName(event.target.value)} />
+        <input className={`${classes.inputBox} ${classes.passwordInput}`} placeholder={'Password'} type="password" onChange={event => setPassword(event.target.value)} />
+        <button onClick={() => navigate('/Game')} className={classes.button} style={{ gridArea: '10 / 2 / span 2 / span 4'}}>Login</button>
+        <button onClick={AddUser} className={classes.button} style={{ gridArea: '10 / 8 / span 2 / span 4'}}>Register</button>
+        {/* <Link to="Game">Invoices</Link> */}
         {/* {props.messages.map(m => (
         <h1 key={uuid.v4()}>{m}</h1>
       )
