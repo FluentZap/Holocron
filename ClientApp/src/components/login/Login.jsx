@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { makeStyles, Button } from '@material-ui/core'
+import { makeStyles } from '@material-ui/core'
 import { connect } from 'react-redux'
 import TextField from '@material-ui/core/TextField';
 import uuid from 'uuid';
@@ -7,7 +7,7 @@ import { styled } from '@material-ui/styles';
 import HButton from '../HButton';
 import BackgroundSVG from '../../background.svg';
 
-const appStyles = makeStyles({
+const appStyles = makeStyles(theme => ({
   root: {
     height: '100vh',
     display: 'flex',
@@ -18,7 +18,7 @@ const appStyles = makeStyles({
     '& h1': {
       fontFamily: 'Engli-Besh, Times, serif',
       // fontFamily: 'Teuton',
-      //fontFamily: 'Symbol, Times, serif',      
+      //fontFamily: 'Symbol, Times, serif',
     }
   },
   loginContainer: {
@@ -32,27 +32,36 @@ const appStyles = makeStyles({
     //   filter: 'drop-shadow(0px 0px 1px #fafef9)',
     //   content: '""',
     // },
-    display: 'flex',
-    position: 'relative',
-    padding: '30px 60px 10px',
+    display: 'grid',
+    gridTemplateColumns: 'repeat(8, 1fr)',
+    gridTemplateRows: 'repeat(12, 1fr)',
     flexDirection: 'column',
     background: `url(${BackgroundSVG})`,
     backgroundRepeat: 'no-repeat',
     backgroundSize: 'contain',
-    width: '80vmin',
-    height: '80vmin',
     maxWidth: 600,
     maxHeight: 600,
+    width: '80vmin',
+    height: '80vmin',
     boxSizing: 'border-box',
     // margin: 20
     // backgroundColor: '#334',
-    // borderRadius: 10,
-    '& h1': {
-      fontFamily: 'Engli-Besh, Times, serif',
-      fontSize: '10vmin'
-    }
+    // borderRadius: 10,    
+    // [theme.breakpoints.up('md')]: {
+    //   width: '600px',
+    //   height: '600px',
+    // },
   },
-  inputBox: {    
+  heading: {
+    gridColumn: '2 / span 6',
+    gridRow: '2 / span 2',
+    fontFamily: 'Engli-Besh, Times, serif',
+    fontSize: '8vmin',
+    ['@media (min-width:750px) and (min-height:750px)']: { // eslint-disable-line no-useless-computed-key
+      fontSize: '60px'
+    },    
+  },
+  inputBox: {
     fontFamily: 'monospace',
     cursor: 'pointer',
     height: 40,
@@ -67,7 +76,7 @@ const appStyles = makeStyles({
       outline: 'none'
     }
   }
-})
+}))
 
 const StyledInput = styled(TextField)({
   color: 'white',
@@ -93,13 +102,10 @@ function Login(props) {
   return (
     <div className={classes.root}>
       <div className={classes.loginContainer}>
-        <h1>Holocron</h1>
-        <HButton text={'H'} />
-        <input className={classes.inputBox} type="text" name="" id="" />
-        <input className={classes.inputBox} type="password" name="" id="" />
-        <Button variant="contained" color="primary" onClick={AddUser}>
-          Login
-        </Button>
+        <div className={classes.heading}>HoloCron</div>
+        {/* <HButton text={'H'} /> */}
+        {/* <input className={classes.inputBox} type="text" name="" id="" /> */}
+        {/* <input className={classes.inputBox} type="password" name="" id="" /> */}        
         {/* {props.messages.map(m => (
         <h1 key={uuid.v4()}>{m}</h1>
       )

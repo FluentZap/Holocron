@@ -31,7 +31,7 @@ const appStyles = makeStyles({
   main: {
     // backgroundColor: '#0a0a12',
     '& h1': {
-      fontFamily: 'Alagard, Times, serif',
+      // fontFamily: 'Alagard, Times, serif',
       // fontFamily: 'Teuton',
       //fontFamily: 'Symbol, Times, serif',      
     }
