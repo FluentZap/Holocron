@@ -1,0 +1,118 @@
+.flex-center {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.login-root {
+    height: 100vh;
+    flex-direction: column;
+}
+
+.login-container {
+    display: grid;
+    grid-template-columns: repeat(12, 1fr);
+    grid-template-rows: repeat(12, 1fr);
+    flex-direction: column;
+    background: url('./../../background.svg');
+    background-repeat: no-repeat;
+    background-size: contain;
+    max-width: 600px;
+    max-height: 600px;
+    width: 80vmin;
+    height: 80vmin;
+    box-sizing: border-box;
+    padding: 5vh 8vw 2vh;
+}
+
+.login-heading {
+    grid-column: 1 / span 12;
+    grid-row: 1 / span 3;
+    text-align: center;
+    font-family: Engli-Besh, Times, serif;
+    user-select: none;
+    font-size: 8vmin;
+}
+
+.login-input {
+
+    font-family: SymbolBold;
+    cursor: pointer;
+    height: 100%;
+    background: none;
+    box-shadow: 0px 0px 5px #c72f2f;
+    border: 2px solid #c72f2f;
+    border-radius: 5px;
+    font-size: 4vmin;
+    text-align: center;
+    color: #37a2cc;
+    box-sizing: border-box;
+    user-select: none;
+}
+
+.login-input:focus {
+    border: 2px solid #e07b7b;
+    box-shadow: 0px 0px 8px #e07b7b;
+    outline: none
+}
+
+.login-input::placeholder {
+    color: #26434e
+}
+
+.login-button {
+    border: 2px solid #c72f2f;
+    border-radius: 5px;
+    font-family: Teuton;
+    font-size: 4vmin;
+    color: white;
+    box-sizing: border-box;
+    background-color: #671818;
+    box-shadow: 0px 0px 5px #671818;
+    user-select: none;
+}
+
+.login-button:hover {
+    background-color: #912222;
+    border: 2px solid #e07b7b;
+    box-shadow: 0px 0px 8px #e07b7b;
+}
+
+.login-button:focus {
+    border: 2px solid #e07b7b;
+    box-shadow: 0px 0px 8px #e07b7b;
+    outline: none;
+}
+
+
+@media (min-width:750px) {
+    .login-container {        
+        padding-left: 60px;
+        padding-right: 60px;
+    }
+}
+
+@media (min-height:750px) {
+    .login-container {        
+        padding-top: 37.5px;
+        padding-bottom: 15px;        
+    }
+}
+
+@media (min-width:750px) and (min-height:750px) {
+    .login-container {
+        padding: 37.5px 60px 15px;
+    }
+
+    .login-heading {
+        font-size: 60px;
+    }
+
+    .login-input {
+        font-size: 30px
+    }
+
+    .login-button {
+        font-size: 30px
+    }
+}

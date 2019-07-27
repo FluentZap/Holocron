@@ -1,44 +1,11 @@
 import React, { useState, useEffect } from 'react';
-import { makeStyles } from '@material-ui/core'
 import { connect } from 'react-redux'
 import TextField from '@material-ui/core/TextField';
 import uuid from 'uuid';
 import { styled } from '@material-ui/styles';
 import HButton from '../HButton';
 import { NavMenuSVG } from '../../SVG';
-
-
-const appStyles = makeStyles({
-  root: {
-    height: '100vh',
-    // display: 'flex',
-    flexDirection: 'column',
-    alignItems: 'center',
-    justifyContent: 'center',
-    // backgroundColor: '#0a0a12',
-    '& h1': {
-      fontFamily: 'Engli-Besh, Times, serif',
-      // fontFamily: 'Teuton',
-      //fontFamily: 'Symbol, Times, serif',      
-    }
-  },
-  loginContainer: {
-    // display: 'flex',
-    flexDirection: 'row',
-    // padding: 20,
-    '&:before': {
-      border: '1px solid #C7D7F1',
-      backgroundColor: '#131435',
-      filter: 'blur(1px)',
-      width: '100px',
-      height: '100px',
-    },
-    borderRadius: 10,
-    margin: 0,
-    width: 'calc(100vw - 20px)',
-    height: 'calc(100vh - 20px)',
-  },
-})
+import './gameStyle.css';
 
 const StyledButton = styled(TextField)({
   color: 'white',
@@ -50,14 +17,13 @@ const StyledButton = styled(TextField)({
 
 
 
-function Games(props) {
-  const classes = appStyles();
+function Games(props) {  
   return (
-    <div className={classes.root}>
-      <div style={{ margin: 10 }}>
+    <div className='game-root'>
+      {/* <div style={{ margin: 10 }}>
         <NavMenuSVG width={'100%'} />
-      </div>
-      <div className={classes.loginContainer}>
+      </div> */}
+      <div className='game-container'>
         <HButton text={'C'} />
         <HButton text={'S'} />
         <HButton text={'I'} />
