@@ -5,7 +5,7 @@ import { makeStyles } from '@material-ui/core'
 
 const appStyles = makeStyles({
     glow: {
-        filter: 'drop-shadow(0px 0px 4px red)'
+        filter: 'drop-shadow(0px 0px 2px red)'
     },
     container: {
         backgroundColor: '#9f0918',
@@ -29,7 +29,7 @@ const appStyles = makeStyles({
 })
 
 
-function Button(props) {
+function HButton(props) {
     const classes = appStyles();
     let { width, height, text } = props;
     if (!width) width = '64px';
@@ -45,4 +45,4 @@ function Button(props) {
     );
 }
 
-export default Button;
+export default HButton;
