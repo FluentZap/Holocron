@@ -31,11 +31,11 @@ const appStyles = makeStyles({
 
 function HButton(props) {
     const classes = appStyles();
-    let { width, height, text } = props;
+    let { width, height, text, style} = props;
     if (!width) width = '64px';
     if (!height) height = '64px';
     return (
-        <div className={classes.glow}>
+        <div className={classes.glow} style={style}>
             <div className={classes.container} style={{ width: width, height: height }}>
                 <div className={classes.button} style={{ width: `calc(${width} - 4px)`, height: `calc(${height} - 4px)` }}>
                     <h2>{text}</h2>

@@ -20,6 +20,20 @@
 	font-weight: normal;
 }
 
+@font-face {
+  font-family: SymbolBold;
+  src: url('./fonts/itc-symbol-lt-bold.ttf');
+  font-weight: 400;
+  font-weight: normal;
+}
+
+@font-face {
+  font-family: Teuton;
+  src: url('./fonts/TeutonMager.otf');
+  font-weight: 400;
+  font-weight: normal;
+}
+
 
 body {
   margin: 0;
