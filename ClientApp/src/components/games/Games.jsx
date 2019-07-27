@@ -4,7 +4,7 @@ import { connect } from 'react-redux'
 import TextField from '@material-ui/core/TextField';
 import uuid from 'uuid';
 import { styled } from '@material-ui/styles';
-import Button from '../Button';
+import HButton from '../HButton';
 import { NavMenuSVG } from '../../SVG';
 
 
@@ -58,10 +58,10 @@ function Games(props) {
         <NavMenuSVG width={'100%'} />
       </div>
       <div className={classes.loginContainer}>
-        <Button text={'C'} />
-        <Button text={'S'} />
-        <Button text={'I'} />
-        <Button text={'A'} />
+        <HButton text={'C'} />
+        <HButton text={'S'} />
+        <HButton text={'I'} />
+        <HButton text={'A'} />
         {/* <Button variant="contained" color="primary" >Games</Button>
       <Button variant="contained" color="secondary" >Characters</Button>
       <Button variant="contained" color="primary" >Data Archives</Button> */}

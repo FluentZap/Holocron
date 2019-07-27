@@ -15,7 +15,7 @@ namespace Holocron.Hubs
 
         public override Task OnConnectedAsync()
         {
-            // FiefdomUpdate.ConnectedUsers.Add(Context.ConnectionId);            
+            // FiefdomUpdate.ConnectedUsers.Add(Context.ConnectionId);
             return base.OnConnectedAsync();
         }
 
