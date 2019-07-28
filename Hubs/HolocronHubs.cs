@@ -45,7 +45,18 @@ namespace Holocron.Hubs
 
         public async Task CreateUser(UserData user)
         {
-            await HoloData.CreateUser(new User() { Name = user.Name, Password = user.Password });            
+            await HoloData.CreateUser(new User() { Name = user.Name, Password = user.Password });
+        }
+
+        public async Task LoginUser(UserData user)
+        {
+            if (user.Name != "" && user.Password != "")
+            {
+                TokenReturn tokenReturn = await HoloData.LoginUser(new User() { Name = user.Name, Password = user.Password });
+                await Clients.Caller.SendAsync("ServerLogin", tokenReturn);
+                System.Console.WriteLine(tokenReturn.LoggedIn);
+                System.Console.WriteLine(tokenReturn.SessionToken);
+            }            
         }
 
 

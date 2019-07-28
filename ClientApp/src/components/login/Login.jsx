@@ -13,24 +13,22 @@ function Login(props) {
     dispatch({ type: 'SERVER_CREATE_USER', userName: userName, password: password });
   }
 
+  const LoginUser = () => {
+    dispatch({ type: 'SERVER_LOGIN_USER', userName: userName, password: password });
+  }
+
   return (
     <div className='flex-center login-root'>
       <div className='login-container'>
         <div className='flex-center login-heading'>HoloCron</div>
         <input className='login-input' style={{ gridArea: '4 / 2 / span 2 / span 10' }} placeholder={'Username'} type="text" onChange={event => setUserName(event.target.value)} />
         <input className='login-input' style={{ gridArea: '7 / 2 / span 2 / span 10' }} placeholder={'Password'} type="password" onChange={event => setPassword(event.target.value)} />
-        <button onClick={() => navigate('/Game')} className='flex-center login-button' style={{ gridArea: '10 / 2 / span 2 / span 4'}}>Login</button>
-        <button onClick={AddUser} className='flex-center login-button' style={{ gridArea: '10 / 8 / span 2 / span 4'}}>Register</button>
-        {/* <Link to="Game">Invoices</Link> */}
-        {/* {props.messages.map(m => (
-        <h1 key={uuid.v4()}>{m}</h1>
-      )
-      )} */}
+        <button onClick={LoginUser} className='flex-center login-button' style={{ gridArea: '10 / 2 / span 2 / span 4'}}>Login</button>
+        <button onClick={AddUser} className='flex-center login-button' style={{ gridArea: '10 / 8 / span 2 / span 4'}}>Register</button>        
       </div>
     </div>
   );
 }
-
 
 function mapStateToProps(state) {
   return {

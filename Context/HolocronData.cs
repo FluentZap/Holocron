@@ -7,9 +7,15 @@ using Microsoft.EntityFrameworkCore;
 namespace Holocron.Context
 {
 
+
+    public class TokenReturn
+    {
+        public Guid SessionToken;
+        public bool LoggedIn = false;        
+    }
+
     public static class HoloData
     {
-
         public static async Task CreateUser(User user)
         {
             using (var db = new HolocronContext())
@@ -17,6 +23,24 @@ namespace Holocron.Context
                 await db.Users.AddAsync(user);
                 await db.SaveChangesAsync();
             }            
+        }
+
+        
+
+
+        public static async Task<TokenReturn> LoginUser(User user)
+        {
+            using (var db = new HolocronContext())
+            {
+                User dataUser = await db.Users.Where(x => x.Name == user.Name).FirstOrDefaultAsync();
+                if (dataUser != null && dataUser.Password == user.Password) {
+                    Guid g = Guid.NewGuid();
+                    dataUser.SessionToken = g.ToString();
+                    await db.SaveChangesAsync();
+                    return new TokenReturn(){SessionToken = g, LoggedIn = true};
+                }
+                return new TokenReturn();
+            }
         }
 
     }
