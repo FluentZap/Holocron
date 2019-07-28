@@ -34,18 +34,18 @@ namespace Holocron.Hubs
             await Clients.Caller.SendAsync("send", message + ": First Data And other things");
         }
 
-public class UserData
-{
-    [JsonProperty("userName")]
-    public string Name { get; set; }
+        public class UserData
+        {
+            [JsonProperty("userName")]
+            public string Name { get; set; }
 
-    [JsonProperty("password")]
-    public string Password { get; set; }
-}
+            [JsonProperty("password")]
+            public string Password { get; set; }
+        }
 
         public async Task CreateUser(UserData user)
         {
-            HoloData.CreateUser(new User(){ Name = user.Name, Password = user.Password });            
+            await HoloData.CreateUser(new User() { Name = user.Name, Password = user.Password });            
         }
 
 

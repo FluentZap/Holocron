@@ -1,4 +1,5 @@
 using System;
+using System.Threading.Tasks;
 using System.Collections.Generic;
 using System.Linq;
 using Microsoft.EntityFrameworkCore;
@@ -9,14 +10,13 @@ namespace Holocron.Context
     public static class HoloData
     {
 
-        public static bool CreateUser(User user)
+        public static async Task CreateUser(User user)
         {
             using (var db = new HolocronContext())
             {
-                db.Users.Add(user);
-                db.SaveChanges();
-            }
-            return true;
+                await db.Users.AddAsync(user);
+                await db.SaveChangesAsync();
+            }            
         }
 
     }
