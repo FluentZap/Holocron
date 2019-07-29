@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { connect } from 'react-redux'
 import uuid from 'uuid';
 import { Link, navigate } from "@reach/router";
-import './loginStyles.css';
+import './LoginStyles.css';
 
 function Login(props) {  
   const { dispatch } = props;
@@ -23,8 +23,8 @@ function Login(props) {
         <div className='flex-center login-heading'>HoloCron</div>
         <input className='login-input' style={{ gridArea: '4 / 2 / span 2 / span 10' }} placeholder={'Username'} type="text" onChange={event => setUserName(event.target.value)} />
         <input className='login-input' style={{ gridArea: '7 / 2 / span 2 / span 10' }} placeholder={'Password'} type="password" onChange={event => setPassword(event.target.value)} />
-        <button onClick={LoginUser} className='flex-center login-button' style={{ gridArea: '10 / 2 / span 2 / span 4'}}>Login</button>
-        <button onClick={AddUser} className='flex-center login-button' style={{ gridArea: '10 / 8 / span 2 / span 4'}}>Register</button>        
+        <button onClick={LoginUser} className='flex-center flat-button' style={{ gridArea: '10 / 2 / span 2 / span 4'}}>Login</button>
+        <button onClick={AddUser} className='flex-center flat-button' style={{ gridArea: '10 / 8 / span 2 / span 4'}}>Register</button>        
       </div>
     </div>
   );

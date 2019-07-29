@@ -1,9 +1,9 @@
 import React from 'react';
 import { connect } from 'react-redux'
 import { navigate } from "@reach/router";
-import './MainMenuStyles.css';
+import './RosterStyles.css';
 
-function MainMenu(props) {
+function Roster(props) {
   return (
     <div className='flex-center full-screen'>
       <div className='main-menu-root'>
@@ -17,8 +17,8 @@ function MainMenu(props) {
         </svg>
 
 
-        <div className='main-menu-container'>
-        <button onClick={() => navigate('/roster')} className='flex-center flat-button scanlines' style={{ gridArea: '2 / 1 / span 6 / span 4', margin: 5}}>Roster</button>
+        <div className='main-menu-container'>        
+        {/* <button onClick={() => navigate('/roster')} className='flex-center flat-button scanlines' style={{ gridArea: '2 / 1 / span 6 / span 4', margin: 5}}>Roster</button>
         
         <button onClick={() => navigate('/archives')} className='flex-center flat-button scanlines' style={{ gridArea: '2 / 5 / span 3 / span 5', margin: 5}}>Archives</button>
         <button onClick={() => navigate('/hanger')} className='flex-center flat-button scanlines' style={{ gridArea: '5 / 5 / span 3 / span 5', margin: 5}}>Hanger</button>
@@ -28,7 +28,7 @@ function MainMenu(props) {
         <button onClick={() => navigate('/atlas')} className='flex-center flat-button scanlines' style={{ gridArea: '11 / 1 / span 3 / span 5', margin: 5}}>Atlas</button>
         <button onClick={() => navigate('/notes')} className='flex-center flat-button scanlines' style={{ gridArea: '14 / 1 / span 3 / span 5', margin: 5}}>Notes</button>
         
-        <button onClick={() => navigate('/roller')} className='flex-center flat-button scanlines' style={{ gridArea: '11 / 6 / span 6 / span 4', margin: 5}}>Dice Roller</button>
+        <button onClick={() => navigate('/roller')} className='flex-center flat-button scanlines' style={{ gridArea: '11 / 6 / span 6 / span 4', margin: 5}}>Dice Roller</button> */}
         </div>
       </div>
     </div>
@@ -42,4 +42,4 @@ function mapStateToProps(state) {
   };
 }
 
-export default connect(mapStateToProps)(MainMenu);
+export default connect(mapStateToProps)(Roster);

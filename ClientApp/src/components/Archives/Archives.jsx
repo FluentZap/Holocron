@@ -1,9 +1,9 @@
 import React from 'react';
 import { connect } from 'react-redux'
 import { navigate } from "@reach/router";
-import './MainMenuStyles.css';
+import './ArchivesStyles.css';
 
-function MainMenu(props) {
+function Archives(props) {
   return (
     <div className='flex-center full-screen'>
       <div className='main-menu-root'>
@@ -42,4 +42,4 @@ function mapStateToProps(state) {
   };
 }
 
-export default connect(mapStateToProps)(MainMenu);
+export default connect(mapStateToProps)(Archives);

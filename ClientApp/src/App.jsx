@@ -1,16 +1,26 @@
 import React, { useState, useEffect } from 'react';
 import { makeStyles } from '@material-ui/core'
 import { createMuiTheme } from '@material-ui/core/styles';
-import Navbar from './components/navbar/Navbar';
-import { SquareButtonSVG, HolocronSVG } from './SVG';
-import TabBar from './components/TabBar';
 import { Provider } from 'react-redux';
 import { todos, logger } from './middleware/HoloStore';
 import { createStore, applyMiddleware } from 'redux';
-import Login from './components/login/Login';
-import MainMenu from './components/mainMenu/MainMenu';
+
+import Archives from './components/Archives/Archives';
+import Adventures from './components/Adventures/Adventures';
+import Atlas from './components/Atlas/Atlas';
+import Game from './components/Game/Game';
+import Hanger from './components/Hanger/Hanger';
+
+import Login from './components/Login/Login';
+import MainMenu from './components/MainMenu/MainMenu';
+
+
+import Notes from './components/Notes/Notes';
+import Roller from './components/Roller/Roller';
+import Roster from './components/Roster/Roster';
+
+
 import { ThemeProvider } from '@material-ui/styles';
-import Games from './components/games/Games';
 import { Router, Link } from "@reach/router"
 
 //fontFamily: 'Engli-Besh',
@@ -47,20 +57,16 @@ function App() {
     <Provider store={store}>
       <ThemeProvider theme={theme}>
         <Router>
-            <Login path="/" />
-            <Games path="game" />
-            <MainMenu path="menu" />
-          {/* <div className={classes.main}> */}
-            {/* <Games/> */}
-
-            {/* <h1 className="red-glow">Glowing!</h1> */}
-            {/* <div className="glow"></div> */}
-            {/* <TabBar/> */}
-            {/* <Navbar/>    */}
-            {/* <SVG width={400} fill="#49c" /> */}
-            {/* <HolocronSVG/> */}
-            {/* <SquareButtonSVG width={"128"} height={"128"} fill={"#ccc"} />       */}
-          {/* </div> */}
+          <Adventures path="adventures" />
+          <Archives path="archives" />
+          <Atlas path="atlas" />
+          <Game path="game" />
+          <Hanger path="hanger" />
+          <Login path="/" />
+          <MainMenu path="menu" />
+          <Notes path="notes" />
+          <Roller path="roller" />
+          <Roster path="roster" />
         </Router>
       </ThemeProvider>
     </Provider>

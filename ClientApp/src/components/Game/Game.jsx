@@ -5,7 +5,7 @@ import uuid from 'uuid';
 import { styled } from '@material-ui/styles';
 import HButton from '../HButton';
 import { NavMenuSVG } from '../../SVG';
-import './gameStyle.css';
+import './GameStyles.css';
 
 const StyledButton = styled(TextField)({
   color: 'white',
@@ -17,7 +17,7 @@ const StyledButton = styled(TextField)({
 
 
 
-function Games(props) {  
+function Game(props) {  
   return (
     <div className='game-root'>
       {/* <div style={{ margin: 10 }}>
@@ -47,4 +47,4 @@ function mapStateToProps(state) {
   };
 }
 
-export default connect(mapStateToProps)(Games);
+export default connect(mapStateToProps)(Game);
