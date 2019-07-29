@@ -18,7 +18,7 @@ const appStyles = makeStyles({
         borderRadius: 5,
     },
     button: {
-        fontFamily: 'Engli-Besh, Times, serif',
+        fontFamily: 'Engli-Besh, Times, serif',        
         backgroundColor: '#790713',
         display: 'flex',
         justifyContent: 'center',

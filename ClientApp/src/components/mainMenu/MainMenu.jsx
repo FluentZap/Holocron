@@ -21,17 +21,17 @@ function MainMenu(props) {
 
 
         <div className='main-menu-container'>
-        <button className='flex-center login-button' style={{ gridArea: '2 / 1 / span 6 / span 4', margin: 5}}>Roster</button>
+        <button className='flex-center login-button scanlines' style={{ gridArea: '2 / 1 / span 6 / span 4', margin: 5}}>Roster</button>
         
-        <button className='flex-center login-button' style={{ gridArea: '2 / 5 / span 3 / span 5', margin: 5}}>Archives</button>
-        <button className='flex-center login-button' style={{ gridArea: '5 / 5 / span 3 / span 5', margin: 5}}>Hanger</button>
+        <button className='flex-center login-button scanlines' style={{ gridArea: '2 / 5 / span 3 / span 5', margin: 5}}>Archives</button>
+        <button className='flex-center login-button scanlines' style={{ gridArea: '5 / 5 / span 3 / span 5', margin: 5}}>Hanger</button>
         
-        <button className='flex-center login-button' style={{ gridArea: '8 / 1 / span 3 / span 9', margin: 5}}>Adventures</button>
+        <button className='flex-center login-button scanlines' style={{ gridArea: '8 / 1 / span 3 / span 9', margin: 5}}>Adventures</button>
         
-        <button className='flex-center login-button' style={{ gridArea: '11 / 1 / span 3 / span 5', margin: 5}}>Atlas</button>
-        <button className='flex-center login-button' style={{ gridArea: '14 / 1 / span 3 / span 5', margin: 5}}>Notes</button>
+        <button className='flex-center login-button scanlines' style={{ gridArea: '11 / 1 / span 3 / span 5', margin: 5}}>Atlas</button>
+        <button className='flex-center login-button scanlines' style={{ gridArea: '14 / 1 / span 3 / span 5', margin: 5}}>Notes</button>
         
-        <button className='flex-center login-button' style={{ gridArea: '11 / 6 / span 6 / span 4', margin: 5}}>Dice Roller</button>
+        <button className='flex-center login-button scanlines' style={{ gridArea: '11 / 6 / span 6 / span 4', margin: 5}}>Dice Roller</button>
         </div>
       </div>
     </div>
