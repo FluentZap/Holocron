@@ -48,7 +48,8 @@ function App() {
       <ThemeProvider theme={theme}>
         <Router>
             <Login path="/" />
-            <Games path="Game" />
+            <Games path="game" />
+            <MainMenu path="menu" />
           {/* <div className={classes.main}> */}
             {/* <Games/> */}
 

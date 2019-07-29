@@ -1,0 +1,35 @@
+ .main-menu-container {
+     display: grid;
+     grid-template-columns: repeat(9, 1fr);
+     grid-template-rows: repeat(16, 1fr);
+     /* flex-direction: column; */
+     background: url(./../../BGBorder.svg);
+     background-repeat: no-repeat;
+     background-size: contain;
+     /* max-width: 720px; */
+     /* max-height: 1280px; */
+     /* width: 56.25vmin; */
+     /* height: calc(100vh); */
+     /* width: calc(56.25vh); */
+     /* height: 100vmin; */
+     /* box-sizing: border-box; */
+     /* padding: 5vh 8vw 2vh; */
+     /* display: flex; */
+     /* align-items: center; */
+     /* justify-content: center; */
+ }
+ 
+ .main-menu-root {
+     display: grid;
+     width: 100%;
+     max-width: 400px;
+ }
+ 
+ .main-menu-root>* {
+     grid-area: 1 / 1 / 2 / 2;
+ }
+ /* h1 {
+    fontFamily: Engli-Besh, Times, serif, // fontFamily: Teuton,
+    //fontFamily: Symbol, Times, serif,      
+} */
+ /* one percentage that is the low amount of the screen */

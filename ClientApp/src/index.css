@@ -14,117 +14,106 @@
 } */
 
 @font-face {
-	font-family: Engli-Besh;
-	src: url('./fonts/englbesh.ttf');
-	font-weight: 400;
-	font-weight: normal;
+    font-family: Engli-Besh;
+    src: url('./fonts/englbesh.ttf');
+    font-weight: 400;
+    font-weight: normal;
 }
 
 @font-face {
-  font-family: SymbolBold;
-  src: url('./fonts/itc-symbol-lt-bold.ttf');
-  font-weight: 400;
-  font-weight: normal;
+    font-family: SymbolBold;
+    src: url('./fonts/itc-symbol-lt-bold.ttf');
+    font-weight: 400;
+    font-weight: normal;
 }
 
 @font-face {
-  font-family: Teuton;
-  src: url('./fonts/TeutonMager.otf');
-  font-weight: 400;
-  font-weight: normal;
+    font-family: Teuton;
+    src: url('./fonts/TeutonMager.otf');
+    font-weight: 400;
+    font-weight: normal;
 }
-
 
 body {
-  margin: 0;
-  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Roboto", "Oxygen",
-    "Ubuntu", "Cantarell", "Fira Sans", "Droid Sans", "Helvetica Neue",
-    sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
+    margin: 0;
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Roboto", "Oxygen", "Ubuntu", "Cantarell", "Fira Sans", "Droid Sans", "Helvetica Neue", sans-serif;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
 }
 
 html {
-  background-color: #0a0a12;
-  color: #ebe6de;
+    background-color: #0a0a12;
+    color: #ebe6de;
 }
 
 code {
-  font-family: source-code-pro, Menlo, Monaco, Consolas, "Courier New",
-    monospace;
+    font-family: source-code-pro, Menlo, Monaco, Consolas, "Courier New", monospace;
 }
 
 .green {
-  /* font-family: 'Engli-Besh'; */
-  color: green;
+    /* font-family: 'Engli-Besh'; */
+    color: green;
 }
 
-
-
 .glass {
-  width: 350px;
-  height: 500px;
-  background: inherit;
-  position: absolute;
-  overflow: hidden;
-  top: 50%;
-  left: 50%;
-  margin-left: -175px;
-  margin-top: -250px;
-  border-radius: 8px;
+    width: 350px;
+    height: 500px;
+    background: inherit;
+    position: absolute;
+    overflow: hidden;
+    top: 50%;
+    left: 50%;
+    margin-left: -175px;
+    margin-top: -250px;
+    border-radius: 8px;
 }
 
 .glass:before {
-  width: 400px;
-  height: 550px;
-  content: "";
-  position: absolute;
-  top: -25px;
-  left: -25px;
-  bottom: 0;
-  right: 0;
-  background: inherit;
-  box-shadow: inset 0 0 0 200px rgba(255, 255, 255, 0.2);
-  filter: blur(2px);
+    width: 400px;
+    height: 550px;
+    content: "";
+    position: absolute;
+    top: -25px;
+    left: -25px;
+    bottom: 0;
+    right: 0;
+    background: inherit;
+    box-shadow: inset 0 0 0 200px rgba(255, 255, 255, 0.2);
+    filter: blur(2px);
 }
-
-
 
 .glow {
-  position: absolute;
-  top: calc(50% - 150px);
-  left: calc(50% - 150px);
-  width: 300px;
-  height: 300px;
-  border-radius: 50%;
-  box-shadow:
-    inset 0 0 50px #fff,
-    inset 20px 0 80px #f0f,
-    inset -20px 0 80px #0ff,
-    inset 20px 0 300px #f0f,
-    inset -20px 0 300px #0ff,
-    0 0 50px #fff,
-    -10px 0 80px #f0f,
-    10px 0 80px #0ff;
+    position: absolute;
+    top: calc(50% - 150px);
+    left: calc(50% - 150px);
+    width: 300px;
+    height: 300px;
+    border-radius: 50%;
+    box-shadow: inset 0 0 50px #fff, inset 20px 0 80px #f0f, inset -20px 0 80px #0ff, inset 20px 0 300px #f0f, inset -20px 0 300px #0ff, 0 0 50px #fff, -10px 0 80px #f0f, 10px 0 80px #0ff;
 }
-
-
 
 .red-glow {
-  animation: glow1 3s;
-  animation-iteration-count: infinite;
-  animation-direction: alternate;
-
+    animation: glow1 3s;
+    animation-iteration-count: infinite;
+    animation-direction: alternate;
 }
 
+.flex-center {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
 
+.full-screen {
+    width: 100vw;
+    height: 100vh;
+}
 
 @keyframes glow1 {
-  from {
-    text-shadow: 0 0 10px #fff, 0 0 20px #fff, 0 0 30px #fff, 0 0 40px #9e0003, 0 0 70px #9e0003, 0 0 80px #9e0003, 0 0 100px #9e0003, 0 0 150px #9e0003;
-  }
-
-  to {
-    text-shadow: 0 0 5px #fff, 0 0 10px #fff, 0 0 15px #fff, 0 0 20px #9e0003, 0 0 35px #9e0003, 0 0 40px #9e0003, 0 0 50px #9e0003, 0 0 75px #9e0003;
-  }
+    from {
+        text-shadow: 0 0 10px #fff, 0 0 20px #fff, 0 0 30px #fff, 0 0 40px #9e0003, 0 0 70px #9e0003, 0 0 80px #9e0003, 0 0 100px #9e0003, 0 0 150px #9e0003;
+    }
+    to {
+        text-shadow: 0 0 5px #fff, 0 0 10px #fff, 0 0 15px #fff, 0 0 20px #9e0003, 0 0 35px #9e0003, 0 0 40px #9e0003, 0 0 50px #9e0003, 0 0 75px #9e0003;
+    }
 }

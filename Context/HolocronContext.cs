@@ -11,7 +11,7 @@ namespace Holocron.Context
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
 		{
-			optionsBuilder.UseMySQL("server=localhost;database=holocron;user=root;password=root;port=3306;");
+			optionsBuilder.UseMySQL("server=localhost;database=holocron;user=root;password=root;port=8889;");
 		}
 
     }
