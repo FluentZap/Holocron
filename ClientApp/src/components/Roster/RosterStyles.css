@@ -1,6 +1,6 @@
  .main-menu-container {
      display: grid;
-     grid-template-columns: repeat(9, 1fr);
+     grid-template-columns: repeat(9, calc(100% / 9));
      grid-template-rows: repeat(16, 1fr);
      /* flex-direction: column; */
      background: url(./../../BGBorder.svg);
@@ -18,19 +18,31 @@
      /* align-items: center; */
      /* justify-content: center; */
      clip-path: url(#myClip);
+     overflow: hidden;
  }
  
  .main-menu-root {
      display: grid;
      width: 100%;
-     max-width: 400px;
+     max-width: 432px;
  }
  
  .main-menu-root>* {
      grid-area: 1 / 1 / 2 / 2;
  }
- /* h1 {
-    fontFamily: Engli-Besh, Times, serif, // fontFamily: Teuton,
-    //fontFamily: Symbol, Times, serif,      
-} */
- /* one percentage that is the low amount of the screen */
+ 
+ .roster-character-list {
+     grid-area: 2 / 1 / span 15 / span 9;
+     display: flex;
+     flex-direction: column;
+     padding: 10px;
+     overflow-x: hidden;
+ }
+ 
+ .roster-detail-box {
+     height: 56px;
+     /* grid-column: span 1; */
+     /* grid-row: span 1; */
+     box-sizing: border-box;
+     margin: 2px;
+ }

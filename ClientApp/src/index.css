@@ -172,6 +172,7 @@ code {
     background-color: #671818;
     box-shadow: 0px 0px 5px #671818;
     user-select: none;
+    overflow: hidden;
 }
 
 .flat-button:hover {
@@ -183,5 +184,29 @@ code {
 .flat-button:focus {
     border: 2px solid #e07b7b;
     box-shadow: 0px 0px 8px #e07b7b;
+    outline: none;
+}
+
+.flat-container {
+    border: 2px solid #392fc7;
+    border-radius: 5px;
+    font-family: Teuton;
+    font-size: 2em;
+    color: white;
+    box-sizing: border-box;
+    background-color: #2c249c;
+    box-shadow: 0px 0px 5px #2c249c;
+    user-select: none;
+}
+
+.flat-container:hover {
+    background-color: #817adf;
+    border: 2px solid #b5b0f7;
+    box-shadow: 0px 0px 8px #b5b0f7;
+}
+
+.flat-container:focus {
+    border: 2px solid #b5b0f7;
+    box-shadow: 0px 0px 8px #b5b0f7;
     outline: none;
 }
