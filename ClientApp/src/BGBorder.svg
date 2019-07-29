@@ -1,0 +1,11 @@
+<svg width="225" height="400" version="1.1" viewBox="0 0 225 400.00002" xmlns="http://www.w3.org/2000/svg">
+ <defs>
+  <filter id="filter4509" x="-.017122" y="-.0092368" width="1.0342" height="1.0185" color-interpolation-filters="sRGB">
+   <feGaussianBlur stdDeviation="1.4625"/>
+  </filter>
+ </defs>
+ <g transform="translate(-49 -723.52)" fill="none" stroke-width="3">
+  <path d="m59 743.52 10-10h185l10 10v55l-5 5v240l5 5v55l-10 10h-185l-10-10v-55l4.0896-4.6217 0.91036-240.38-5-5z" stroke="#3f7aa6"/>
+  <path d="m59 743.52 10-10h185l10 10v55l-5 5v240l5 5v55l-10 10h-185l-10-10v-55l4.0896-4.6217 0.91036-240.38-5-5z" filter="url(#filter4509)" stroke="#001835"/>
+ </g>
+</svg>
