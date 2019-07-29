@@ -3,7 +3,7 @@
      grid-template-columns: repeat(9, 1fr);
      grid-template-rows: repeat(16, 1fr);
      /* flex-direction: column; */
-     background: url(./../../BGBorder.svg);
+     background: black url(./../../BGBorder.svg);
      background-repeat: no-repeat;
      background-size: contain;
      /* max-width: 720px; */
@@ -13,10 +13,11 @@
      /* width: calc(56.25vh); */
      /* height: 100vmin; */
      /* box-sizing: border-box; */
-     /* padding: 5vh 8vw 2vh; */
+     padding: 8.5%;
      /* display: flex; */
      /* align-items: center; */
      /* justify-content: center; */
+     clip-path: url(#myClip);
  }
  
  .main-menu-root {
