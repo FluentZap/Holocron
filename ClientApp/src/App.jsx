@@ -1,6 +1,4 @@
 import React, { useState, useEffect } from 'react';
-import { makeStyles } from '@material-ui/core'
-import { createMuiTheme } from '@material-ui/core/styles';
 import { Provider } from 'react-redux';
 import { todos, logger } from './middleware/HoloStore';
 import { createStore, applyMiddleware } from 'redux';
@@ -19,43 +17,35 @@ import Notes from './components/Notes/Notes';
 import Roller from './components/Roller/Roller';
 import Roster from './components/Roster/Roster';
 
-
-import { ThemeProvider } from '@material-ui/styles';
 import { Router, Link } from "@reach/router"
+
+const store = createStore(todos, ['Use Redux'], applyMiddleware(logger));  
 
 //fontFamily: 'Engli-Besh',
 
-const theme = createMuiTheme({
-  palette: {
-    primary: {
-      main: '#335'
-    },
-    secondary: {
-      main: '#257'
-    },
-  },
-});
+function toggleFullScreen() {
+  var doc = window.document;
+  var docEl = doc.documentElement;
 
-const store = createStore(todos, ['Use Redux'], applyMiddleware(logger));
+  var requestFullScreen = docEl.requestFullscreen || docEl.mozRequestFullScreen || docEl.webkitRequestFullScreen || docEl.msRequestFullscreen;
+  var cancelFullScreen = doc.exitFullscreen || doc.mozCancelFullScreen || doc.webkitExitFullscreen || doc.msExitFullscreen;
 
-const appStyles = makeStyles({
-  main: {
-    // backgroundColor: '#0a0a12',
-    '& h1': {
-      // fontFamily: 'Alagard, Times, serif',
-      // fontFamily: 'Teuton',
-      //fontFamily: 'Symbol, Times, serif',      
-    }
-  },
-})
-
-
+  if (!doc.fullscreenElement && !doc.mozFullScreenElement && !doc.webkitFullscreenElement && !doc.msFullscreenElement) {
+    requestFullScreen.call(docEl);
+  }
+  else {
+    cancelFullScreen.call(doc);
+  }
+}
 
 function App() {
-  const classes = appStyles();
+  useEffect(()=>{    
+    // window.document.documentElement.requestFullscreen();    
+  },[])
+    
+
   return (
-    <Provider store={store}>
-      <ThemeProvider theme={theme}>
+    <Provider store={store}>      
         <Router>
           <Adventures path="adventures" />
           <Archives path="archives" />
@@ -67,8 +57,7 @@ function App() {
           <Notes path="notes" />
           <Roller path="roller" />
           <Roster path="roster" />
-        </Router>
-      </ThemeProvider>
+        </Router>      
     </Provider>
   );
 }

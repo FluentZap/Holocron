@@ -1,15 +1,15 @@
-import { HubConnectionBuilder } from '@aspnet/signalr';
+import { HubConnectionBuilder, LogLevel } from '@aspnet/signalr';
 
 export function logger({ dispatch, getState }) {
 
-    const connection = new HubConnectionBuilder().withUrl("/HolocronHub").build();
+    const connection = new HubConnectionBuilder().withUrl("/HolocronHub").configureLogging(LogLevel.Information).build();
 
-
-    connection.start().then(() => {
-        // connection.invoke("updateServer", 'Hello Server').catch(function (err) {
-        //     return console.error(err.toString());
-        // });
-    });
+    // connection.start().then(() => {
+    //     console.log('connected');
+    //     // connection.invoke("updateServer", 'Hello Server').catch(function (err) {
+    //     //     return console.error(err.toString());
+    //     // });
+    // });    
 
     connection.on("send", data => {
         dispatch({
@@ -21,6 +21,12 @@ export function logger({ dispatch, getState }) {
     connection.on("ServerLogin", data => {
         console.log('Login ' + data['loggedIn'] + 'SessionToken: ' + data['sessionToken']);
         // document.cookie = `username=${}`
+    });
+
+    connection.start().catch(function (err) {
+        return console.error(err.toString());
+    }).then(() => {
+        console.log('connected');
     });
 
     return next => action => {
