@@ -170,9 +170,13 @@ code {
     grid-template-columns: repeat(9, 1fr);
     grid-template-rows: repeat(16, 1fr);
     background: #19223a;
-    background-image: url(./BGBorder.svg), linear-gradient(to bottom, transparent 50%, rgba(0, 0, 0, 0.3) 51%);
-    background-repeat: no-repeat, repeat;
-    background-size: contain, 100% 3px;
+    /* background-image: url(./BGBorder.svg), linear-gradient(to bottom, transparent 50%, rgba(0, 0, 0, 0.3) 51%); */
+    /* background-repeat: no-repeat, repeat; */
+    /* background-size: contain, 100% 3px; */
+
+    background-image: url(./BGBorderWhite.svg);
+    background-repeat: no-repeat;
+    background-size: contain;
     /* 19223a */
     mask-image: url(./BGBorderMask.svg);
     mask-size: contain;
