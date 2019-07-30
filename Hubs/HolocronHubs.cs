@@ -13,18 +13,21 @@ namespace Holocron.Hubs
     {
         public static IHubCallerClients HubContext;
 
+        static Dictionary<string, ConnenctedUser> connectedUsers = new Dictionary<string, ConnenctedUser>();
+
         public override Task OnConnectedAsync()
         {
-            // FiefdomUpdate.ConnectedUsers.Add(Context.ConnectionId);
+            
+            if (connectedUsers.ContainsKey(Context.ConnectionId)) {
+                connectedUsers.Remove(Context.ConnectionId);
+            }
+            connectedUsers.Add(Context.ConnectionId, new ConnenctedUser());
             return base.OnConnectedAsync();
         }
 
         public override async Task OnDisconnectedAsync(Exception exception)
         {
-            // if (FiefdomUpdate.ConnectedUsers.Contains(Context.ConnectionId))
-            // { 
-            // 	FiefdomUpdate.ConnectedUsers.Remove(Context.ConnectionId);
-            // }
+            connectedUsers.Remove(Context.ConnectionId);
             await base.OnDisconnectedAsync(exception);
         }
 
@@ -41,6 +44,9 @@ namespace Holocron.Hubs
 
             [JsonProperty("password")]
             public string Password { get; set; }
+
+            [JsonProperty("sessionToken")]
+            public string sessionToken { get; set; }
         }
 
         public async Task CreateUser(UserData user)
@@ -52,11 +58,28 @@ namespace Holocron.Hubs
         {
             if (user.Name != "" && user.Password != "")
             {
+                TokenReturn tokenReturn = await HoloData.LoginUser(new User() { Name = user.Name, Password = user.Password });                                
+                if (connectedUsers.ContainsKey(Context.ConnectionId)) {
+                    connectedUsers[Context.ConnectionId].UserName = user.Name;
+                    connectedUsers[Context.ConnectionId].SessionToken = tokenReturn.SessionToken.ToString();
+                    await Clients.Caller.SendAsync("ServerLogin", tokenReturn);
+                    System.Console.WriteLine(tokenReturn.LoggedIn);
+                    System.Console.WriteLine(tokenReturn.SessionToken);
+                } else {
+                    System.Console.WriteLine("Bad Client Token");
+                }                
+            }
+        }
+
+        public async Task FetchRoster(UserData user)
+        {
+            if (connectedUsers.ContainsKey(user.sessionToken))
+            {
                 TokenReturn tokenReturn = await HoloData.LoginUser(new User() { Name = user.Name, Password = user.Password });
                 await Clients.Caller.SendAsync("ServerLogin", tokenReturn);
                 System.Console.WriteLine(tokenReturn.LoggedIn);
                 System.Console.WriteLine(tokenReturn.SessionToken);
-            }            
+            }
         }
 
 

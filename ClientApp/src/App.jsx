@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { Provider } from 'react-redux';
-import { todos, logger } from './middleware/HoloStore';
+import { holocronMiddleware, holocronReducer } from './middleware/HoloStore';
 import { createStore, applyMiddleware } from 'redux';
 
 import Archives from './components/Archives/Archives';
@@ -17,9 +17,10 @@ import Notes from './components/Notes/Notes';
 import Roller from './components/Roller/Roller';
 import Roster from './components/Roster/Roster';
 
-import { Router, Link } from "@reach/router"
+import { Router, Link, Redirect } from "@reach/router"
+import PrivateRoute from './components/PrivateRoute';
 
-const store = createStore(todos, ['Use Redux'], applyMiddleware(logger));  
+const store = createStore(holocronReducer, ['Use Redux'], applyMiddleware(holocronMiddleware));
 
 //fontFamily: 'Engli-Besh',
 
@@ -39,25 +40,25 @@ function toggleFullScreen() {
 }
 
 function App() {
-  useEffect(()=>{    
+  useEffect(() => {
     // window.document.documentElement.requestFullscreen();    
-  },[])
-    
+  }, [])
+
 
   return (
-    <Provider store={store}>      
-        <Router>
-          <Adventures path="adventures" />
-          <Archives path="archives" />
-          <Atlas path="atlas" />
-          <Game path="game" />
-          <Hanger path="hanger" />
-          <Login path="/" />
-          <MainMenu path="menu" />
-          <Notes path="notes" />
-          <Roller path="roller" />
-          <Roster path="roster" />
-        </Router>      
+    <Provider store={store}>
+      <Router>
+        <Login path="/" default/>
+        <PrivateRoute Component={Adventures} path="adventures" />
+        <PrivateRoute Component={Archives} path="archives" />
+        <PrivateRoute Component={Atlas} path="atlas" />
+        <PrivateRoute Component={Game} path="game" />
+        <PrivateRoute Component={Hanger} path="hanger" />
+        <PrivateRoute Component={MainMenu} path="menu" />
+        <PrivateRoute Component={Notes} path="notes" />
+        <PrivateRoute Component={Roller} path="roller" />
+        <PrivateRoute Component={Roster} path="roster" />        
+      </Router>
     </Provider>
   );
 }
