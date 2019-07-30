@@ -25,9 +25,6 @@ namespace Holocron.Context
             }            
         }
 
-        
-
-
         public static async Task<TokenReturn> LoginUser(User user)
         {
             using (var db = new HolocronContext())
@@ -41,7 +38,22 @@ namespace Holocron.Context
                 }
                 return new TokenReturn();
             }
-        }    
+        }
+
+        public static async Task<List<Character>> FetchCharacters(User user)
+        {
+            using (var db = new HolocronContext())
+            {
+                User dataUser = await db.Users.Where(x => x.Name == user.Name).Include("Characters").FirstOrDefaultAsync();
+                if (dataUser != null)
+                {                                                            
+                    return dataUser.Characters;
+                }
+                return new List<Character>();
+            }
+        }
+
+
     }
 
 

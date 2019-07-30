@@ -27,6 +27,13 @@ export function holocronMiddleware({ dispatch, getState }) {
         // document.cookie = `username=${}`
     });
 
+    connection.on("ClientGetCharacterS", data => {
+        dispatch({
+            type: 'CLIENT_CHARACTERS',
+            payload: data
+        })        
+    });
+
     startConnection(connection, dispatch);
 
     // connection.onclose(async () => {
@@ -96,6 +103,8 @@ export const holocronReducer = (state = initial_state, action) => {
             return { ...state, sessionToken: action.sessionToken };
         case 'SERVER_LOGIN_USER':
             return { ...state, userName: action.userName };
+        case 'CLIENT_CHARACTERS':
+            return { ...state, characters: action.payload };            
         default:
             return state;
     }

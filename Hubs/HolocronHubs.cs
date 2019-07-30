@@ -73,12 +73,10 @@ namespace Holocron.Hubs
 
         public async Task FetchRoster(UserData user)
         {
-            if (connectedUsers.ContainsKey(user.sessionToken))
+            if (connectedUsers.ContainsKey(Context.ConnectionId) && user.sessionToken == connectedUsers[Context.ConnectionId].SessionToken)
             {
-                TokenReturn tokenReturn = await HoloData.LoginUser(new User() { Name = user.Name, Password = user.Password });
-                await Clients.Caller.SendAsync("ServerLogin", tokenReturn);
-                System.Console.WriteLine(tokenReturn.LoggedIn);
-                System.Console.WriteLine(tokenReturn.SessionToken);
+                List<Character> characters = await HoloData.FetchCharacters(new User() { Name = user.Name});                
+                await Clients.Caller.SendAsync("ClientGetCharacters", characters);                
             }
         }
 
