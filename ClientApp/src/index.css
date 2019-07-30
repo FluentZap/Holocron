@@ -166,7 +166,7 @@ code {
     border: 2px solid #c72f2f;
     border-radius: 5px;
     font-family: Teuton;
-    font-size: 2em;
+    font-size: 3.5vh;
     color: white;
     box-sizing: border-box;
     background-color: #671818;
@@ -191,7 +191,7 @@ code {
     border: 2px solid #392fc7;
     border-radius: 5px;
     font-family: Teuton;
-    font-size: 2em;
+    font-size: 3vh;
     color: white;
     box-sizing: border-box;
     background-color: #2c249c;
@@ -209,4 +209,18 @@ code {
     border: 2px solid #b5b0f7;
     box-shadow: 0px 0px 8px #b5b0f7;
     outline: none;
+}
+
+.datapad-container {
+    display: grid;
+    grid-template-columns: repeat(9, 1fr);
+    grid-template-rows: repeat(16, 1fr);
+    background: url(./BGBorder.svg);
+    background-repeat: no-repeat;
+    background-size: contain;
+    height: calc(100vh);
+    width: calc(100vh * 0.5625);
+    padding: 5vh;
+    clip-path: url(#myClip);
+    overflow: hidden;
 }
