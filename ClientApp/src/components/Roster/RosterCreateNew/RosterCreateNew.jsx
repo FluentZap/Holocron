@@ -4,12 +4,13 @@ import { navigate } from "@reach/router";
 import uuid from 'uuid';
 import './RosterCreateNewStyles.css';
 import FadeInBuilder from '../../FadeInBuilder';
+import CharacterCard from '../CharacterCard/CharacterCard';
 
 
 const fadeIn = new FadeInBuilder(0, 0.3, 6);
 
 function Roster(props) {
-  const { characters } = props;
+  const { character } = props;
 
   const [stats, setStats] = useState({
     brawn: 3,
@@ -52,7 +53,11 @@ function Roster(props) {
     <div className='flex-center full-screen'>
       <div className='data-container'>
         <button onClick={() => navigate('/menu')} className='animate-fade-in flex-center data-panel red-glow scanlines' style={{ gridArea: '1 / 1 / span 1 / span 4', margin: 5, animationDelay: fadeIn() }}>Menu</button>
-        <div className='animate-fade-in flex-center data-panel red-glow scanlines' style={{ gridArea: '2 / 1 / span 3 / span 9', margin: 5, animationDelay: fadeIn() }} />
+        {/* <div className='animate-fade-in flex-center data-panel red-glow scanlines' style={{ gridArea: '2 / 1 / span 3 / span 9', margin: 5, animationDelay: fadeIn() }}> */}
+        <CharacterCard fadeDelay={fadeIn()} character={character}/>
+        {/* </div> */}
+        
+        
         <div className='roster-new-characteristics-list animate-fade-in flex-center data-panel red-flat scanlines-back' style={{ gridArea: '5 / 1 / span 12 / span 3', margin: 5, animationDelay: fadeIn() }}>
           <StatBox name={'Brawn'} value={stats.brawn} />
           <StatBox name={'Agility'} value={stats.agility} />

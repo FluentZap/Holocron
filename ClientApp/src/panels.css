@@ -83,3 +83,10 @@
     background-color: #671818;
     box-shadow: 0px 0px 0.5vh #671818;
 }
+
+.blue-flat {
+    color: white;
+    border: 0.2vh solid #392fc7;
+    background-color: #2c249c;
+    box-shadow: 0px 0px 0.5vh #2c249c;
+}

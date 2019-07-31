@@ -176,7 +176,7 @@ code {
 
     display: grid;
     grid-template-columns: repeat(9, 1fr);
-    grid-template-rows: repeat(16, 1fr);
+    grid-template-rows: repeat(17, 1fr);
     background: #19223a;
     /* background-image: url(./BGBorder.svg), linear-gradient(to bottom, transparent 50%, rgba(0, 0, 0, 0.3) 51%); */
     /* background-repeat: no-repeat, repeat; */
@@ -192,8 +192,9 @@ code {
 
     height: 100vh;
     width: calc(100vh * 0.5625);
-    padding: 5vh;
-    max-height: calc(100vw * 1.77);
+    /* padding: 5vh; */
+    padding: 5vh calc(10vh * 0.5625);
+    max-height: calc(100vw * 1.78);
     overflow: hidden;
 }
 
