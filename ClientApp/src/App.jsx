@@ -19,6 +19,7 @@ import Roster from './components/Roster/Roster';
 
 import { Router, Link, Redirect } from "@reach/router"
 import PrivateRoute from './components/PrivateRoute';
+import RosterCreateNew from './components/Roster/RosterCreateNew/RosterCreateNew';
 
 const store = createStore(holocronReducer, ['Use Redux'], applyMiddleware(holocronMiddleware));
 
@@ -48,7 +49,8 @@ function App() {
   return (
     <Provider store={store}>
       <Router>
-        <Login path="/" default/>
+        {/* <Login path="/" default/> */}
+        <RosterCreateNew path="/" default/>        
         <PrivateRoute Component={Adventures} path="adventures" />
         <PrivateRoute Component={Archives} path="archives" />
         <PrivateRoute Component={Atlas} path="atlas" />
@@ -57,7 +59,8 @@ function App() {
         <PrivateRoute Component={MainMenu} path="menu" />
         <PrivateRoute Component={Notes} path="notes" />
         <PrivateRoute Component={Roller} path="roller" />
-        <PrivateRoute Component={Roster} path="roster" />        
+        <PrivateRoute Component={Roster} path="roster" />
+        <PrivateRoute Component={RosterCreateNew} path="createnew" />
       </Router>
     </Provider>
   );

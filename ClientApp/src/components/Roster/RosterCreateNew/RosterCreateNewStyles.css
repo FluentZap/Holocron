@@ -1,0 +1,65 @@
+
+ .roster-root {
+     display: grid;
+     /* width: 20rem; */
+     width: 100vmin;
+     /* max-width: 432px; */
+ }
+
+ 
+ .roster-new-characteristics-list {     
+     /* grid-template-columns: 1fr; */
+     /* grid-template-rows: repeat(6, 13vh); */
+
+     display: flex;
+     flex-direction: column;
+     padding: 0 0.5vh;
+     overflow: visible;
+     margin: 2vh;
+     z-index: 10;
+     /* height: calc(69vh); */
+     /* width: calc(75vh * 0.5625); */
+}
+
+.roster-new-characteristics-box {     
+    height: 100%; 
+    width: 100%;
+    border-radius: 20%;
+    /* grid-column: span 1; */
+     /* grid-row: span 1; */
+    box-sizing: border-box;
+    margin: 0.5vh;
+ }
+ 
+ .roster-detail-box {
+     height: 10vh;
+     grid-column: span 1;
+     grid-row: span 1;
+     box-sizing: border-box;
+     text-align: center;     
+ }
+
+ .roster-detail-selected {
+    /* width: 32vh;
+    left: 10vh;    
+    border-radius: 0px;
+    padding-right: 19vh;
+    margin-left: 19.5vh; */
+    
+    animation-name: toggleButton;
+    animation-duration: 0.2s;
+    animation-fill-mode: forwards;
+}
+
+
+@keyframes toggleButton {
+    0%   { }
+    100% { 
+        width: 32vh;
+        left: 10vh;
+        /* z-index: 10; */
+        border-radius: 0px;
+        padding-right: 19vh;
+        margin-left: 19.5vh; 
+    }
+  }

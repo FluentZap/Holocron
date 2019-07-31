@@ -33,7 +33,7 @@ function Roster(props) {
 
 
         </div>
-        <button onClick={() => navigate('/menu')} className='flex-center data-panel red-glow scanlines' style={{ gridArea: '15 / 2 / span 2 / span 7', margin: 5 }}>Create New</button>
+        <button onClick={() => navigate('/createnew')} className='flex-center data-panel red-glow scanlines' style={{ gridArea: '15 / 2 / span 2 / span 7', margin: 5 }}>Create New</button>
       </div>
     </div>
   );
