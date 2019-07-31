@@ -3,32 +3,10 @@ import { connect } from 'react-redux'
 import { navigate } from "@reach/router";
 import uuid from 'uuid';
 import './RosterCreateNewStyles.css';
+import FadeInBuilder from '../../FadeInBuilder';
 
-const getRandomArray = (min, max, count) => {
-  let numbers = [];
-  let step = (max - min) / count;
-  for (let x = min; x <= max; x += step) {
-    numbers.push(x);
-  }
-  return shuffle(numbers)
-}
 
-function shuffle(array) {
-  var currentIndex = array.length, temporaryValue, randomIndex;
-  while (0 !== currentIndex) {
-    randomIndex = Math.floor(Math.random() * currentIndex);
-    currentIndex -= 1;
-    temporaryValue = array[currentIndex];
-    array[currentIndex] = array[randomIndex];
-    array[randomIndex] = temporaryValue;
-  }
-  console.log(array);
-
-  return array;
-}
-
-const fadeIn = getRandomArray(0, 0.3, 5);
-
+const fadeIn = new FadeInBuilder(0, 0.3, 6);
 
 function Roster(props) {
   const { characters } = props;
@@ -44,13 +22,25 @@ function Roster(props) {
 
   const [selectStat, setselectStat] = useState('')
 
+  const StatBox = ({ name, value }) => {
+    let classes = 'roster-new-characteristics-box flex-center data-panel scanlines-back font-small';
 
-  const StatBox = ({name, value}) => {
-    let classes = 'roster-new-characteristics-box flex-center data-panel blue-glow scanlines-back font-small';
-    if (name === selectStat) {
-      classes += ' roster-detail-selected'
-    }
-    return <div onClick={() => {setselectStat(name)}} className={classes}>
+    return name === selectStat ?
+    // return 1 === 1 ?
+      <div onClick={() => { setselectStat(name) }} className={classes + ' orange-glow roster-detail-selected'}>
+        {/* <div className={'roster-new-characteristics-details'}> */}
+          {name} {value}
+          <br />
+          {(value + 1) * 10} xp
+  
+        {/* </div> */}
+        <div className={'roster-new-characteristics-details'}>
+          <div className={'flex-center data-panel orange-glow scanlines-back roster-new-characteristics-modifier-box'}>Stuff</div>
+          <div className={'flex-center data-panel orange-glow scanlines-back roster-new-characteristics-modifier-box'}>Stuff</div>
+        </div>
+      </div>
+      :
+      <div onClick={() => { setselectStat(name) }} className={classes + ' blue-glow'}>
         {name} {value}
         <br />
         {(value + 1) * 10} xp
@@ -61,9 +51,9 @@ function Roster(props) {
   return (
     <div className='flex-center full-screen'>
       <div className='data-container'>
-        <button onClick={() => navigate('/menu')} className='animate-fade-in flex-center data-panel red-glow scanlines' style={{ gridArea: '1 / 1 / span 1 / span 4', margin: 5, animationDelay: fadeIn[0] + 's' }}>Menu</button>
-        <div className='animate-fade-in flex-center data-panel red-glow scanlines' style={{ gridArea: '2 / 1 / span 3 / span 9', margin: 5, animationDelay: fadeIn[1] + 's' }} />
-        <div className='roster-new-characteristics-list animate-fade-in flex-center data-panel red-flat scanlines-back' style={{ gridArea: '5 / 1 / span 12 / span 3', margin: 5, animationDelay: fadeIn[2] + 's' }}>
+        <button onClick={() => navigate('/menu')} className='animate-fade-in flex-center data-panel red-glow scanlines' style={{ gridArea: '1 / 1 / span 1 / span 4', margin: 5, animationDelay: fadeIn() }}>Menu</button>
+        <div className='animate-fade-in flex-center data-panel red-glow scanlines' style={{ gridArea: '2 / 1 / span 3 / span 9', margin: 5, animationDelay: fadeIn() }} />
+        <div className='roster-new-characteristics-list animate-fade-in flex-center data-panel red-flat scanlines-back' style={{ gridArea: '5 / 1 / span 12 / span 3', margin: 5, animationDelay: fadeIn() }}>
           <StatBox name={'Brawn'} value={stats.brawn} />
           <StatBox name={'Agility'} value={stats.agility} />
           <StatBox name={'Intellect'} value={stats.intellect} />
@@ -73,9 +63,9 @@ function Roster(props) {
         </div>
 
 
-        <div className='animate-fade-in flex-center data-panel red-glow scanlines' style={{ gridArea: '5 / 4 / span 4 / span 6', margin: 5, animationDelay: fadeIn[3] + 's' }} />
-        <div className='animate-fade-in flex-center data-panel red-glow scanlines' style={{ gridArea: '9 / 4 / span 4 / span 6', margin: 5, animationDelay: fadeIn[4] + 's' }} />
-        <div className='animate-fade-in flex-center data-panel red-glow scanlines' style={{ gridArea: '13 / 4 / span 4 / span 6', margin: 5, animationDelay: fadeIn[5] + 's' }} />
+        <div className='animate-fade-in flex-center data-panel red-glow scanlines' style={{ gridArea: '5 / 4 / span 4 / span 6', margin: 5, animationDelay: fadeIn() }} />
+        <div className='animate-fade-in flex-center data-panel red-glow scanlines' style={{ gridArea: '9 / 4 / span 4 / span 6', margin: 5, animationDelay: fadeIn() }} />
+        <div className='animate-fade-in flex-center data-panel red-glow scanlines' style={{ gridArea: '13 / 4 / span 4 / span 6', margin: 5, animationDelay: fadeIn() }} />
       </div>
     </div>
   );

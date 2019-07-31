@@ -1,3 +1,5 @@
+@import './panels.css';
+
 /* @font-face {
   font-family: 'Englbesh', Courier, monospace;
   src: url('./fonts/englbesh.ttf') format("truetype");
@@ -195,72 +197,6 @@ code {
     overflow: hidden;
 }
 
-.data-panel {    
-    border-radius: 0.5vh;
-    font-family: Teuton;
-    font-size: 3.5vh;
-    box-sizing: border-box;    
-    user-select: none;
-    overflow: hidden;    
-}
-
-.font-small {
-    font-size: 2.4vh;
-}
-
-.red-glow {
-    color: white;
-    border: 0.2vh solid #c72f2f;
-    background-color: #671818;
-    box-shadow: 0px 0px 0.5vh #671818;
-}
-
-.red-glow:hover {
-    background-color: #912222;
-    border: 0.2vh solid #e07b7b;
-    box-shadow: 0px 0px .5vh #e07b7b;
-}
-
-.red-glow:focus {
-    border: 0.2vh solid #e07b7b;
-    box-shadow: 0px 0px .5vh #e07b7b;
-    outline: none;
-}
-
-.blue-glow {
-    color: white;
-    border: 0.2vh solid #392fc7;
-    background-color: #2c249c;
-    box-shadow: 0px 0px 0.5vh #2c249c;
-}
-
-.blue-glow:hover {
-    background-color: #817adf;
-    border: 0.2vh solid #b5b0f7;
-    box-shadow: 0px 0px .5vh #b5b0f7;
-}
-
-.blue-glow:focus {
-    border: 0.2vh solid #b5b0f7;
-    box-shadow: 0px 0px .5vh #b5b0f7;
-    outline: none;
-}
-
-
-.gray-flat {
-    color:  white;
-    border: 0.2vh solid #cccccc;
-    background-color: #00000080;
-    /* box-shadow: 0px 0px 0.5vh #cccccc; */
-    border-radius: 0px;
-}
-
-.red-flat {
-    color: white;
-    border: 0.2vh solid #c72f2f;
-    background-color: #671818;
-    box-shadow: 0px 0px 0.5vh #671818;
-}
 
 
 
@@ -291,3 +227,6 @@ input:-webkit-autofill:focus {
     /* animation-fill-mode: both; */
     /* animation: flickerAnimation 1.5s 1; */
  }
+
+
+ /* #f2aa2a */
