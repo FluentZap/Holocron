@@ -49,7 +49,7 @@ function App() {
   return (
     <Provider store={store}>
       <Router>
-        {/* <Login path="/" default/> */}
+        <Login path="/" default/>
         {/* <Roster path="/" default/> */}
         <PrivateRoute Component={Adventures} path="adventures" />
         <PrivateRoute Component={Archives} path="archives" />

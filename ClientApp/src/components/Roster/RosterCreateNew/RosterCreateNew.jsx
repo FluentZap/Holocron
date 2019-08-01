@@ -21,7 +21,7 @@ function Roster(props) {
     credits: 500,
     species: 'Droid',
     career: 'Smuggler',
-    specializations: ['Charmer', 'Pilot'],
+    specializations: 'Charmer,Pilot',
     wound: 0,
     woundThreshold: 10,
     strain: 0,
@@ -89,7 +89,7 @@ function Roster(props) {
         <button onClick={() => navigate('/menu')} className='font-small animate-fade-in flex-center data-panel red-glow scanlines-back m2'
           style={{ gridArea: '1 / 1 / span 3 / span 7', animationDelay: fadeIn() }}>Menu</button>
         {/* <div className='animate-fade-in flex-center data-panel red-glow scanlines' style={{ gridArea: '2 / 1 / span 3 / span 9', margin: 5, animationDelay: fadeIn() }}> */}
-        <CharacterCard fadeDelay={fadeIn()} stats={stats} />
+        <CharacterCard fadeDelay={fadeIn()} stats={stats} newCharacter={true} />
         {/* </div> */}
 
 

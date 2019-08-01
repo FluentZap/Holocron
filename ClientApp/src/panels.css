@@ -94,3 +94,10 @@
     background-color: #2c249c;
     box-shadow: 0px 0px 0.5vh #2c249c;
 }
+
+.disabled {
+    color: #c1c1c1;
+    border: 0.2vh solid #000000;
+    background-color: #421717;
+    box-shadow: 0px 0px 0.5vh #671818;
+}

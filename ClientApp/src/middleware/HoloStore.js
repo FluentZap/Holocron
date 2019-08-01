@@ -84,10 +84,10 @@ export function holocronMiddleware({ dispatch, getState }) {
         if (action.type === 'SET_SESSION_TOKEN') {
             let state = getState();
             if (state.sessionToken !== null) {
-                navigate('/roster');
-                // navigate('/menu');
-            } else {
                 // navigate('/');
+                navigate('/menu');
+            } else {
+                navigate('/');
             }
         }
 
@@ -128,7 +128,7 @@ const startConnection = async (connection, dispatch) => {
             dispatch({ type: 'SET_CONNECTED', payload: true });
         });
         console.log("connected");
-        dispatch({ type: 'SERVER_LOGIN_USER', userName: 'root', password: 'root' });
+        // dispatch({ type: 'SERVER_LOGIN_USER', userName: 'root', password: 'root' });
         //Auto Login Test Account        
     } catch (err) {
         console.log(err);

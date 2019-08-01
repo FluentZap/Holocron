@@ -6,13 +6,9 @@ function shuffle(array) {
         temporaryValue = array[currentIndex];
         array[currentIndex] = array[randomIndex];
         array[randomIndex] = temporaryValue;
-    }
-    console.log(array);
-
+    }    
     return array;
 }
-
-// const fadeIn = getRandomArray(0, 0.3, 5);
 
 
 export default class FadeInBuilder {
