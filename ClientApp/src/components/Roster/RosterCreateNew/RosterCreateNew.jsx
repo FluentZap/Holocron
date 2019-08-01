@@ -7,7 +7,7 @@ import FadeInBuilder from '../../FadeInBuilder';
 import CharacterCard, { TextBox } from '../CharacterCard/CharacterCard';
 
 
-const fadeIn = new FadeInBuilder(0, 0.3, 4);
+const fadeIn = new FadeInBuilder(0, 0.3, 5);
 const fadeStats = new FadeInBuilder(0.3, 0.5, 6);
 const boxFade = new FadeInBuilder(0.3, 0.5, 8);
 
@@ -86,7 +86,7 @@ function Roster(props) {
   return (
     <div className='flex-center full-screen'>
       <div className='data-container'>
-        <button onClick={() => navigate('/menu')} className='font-small animate-fade-in flex-center data-panel red-glow scanlines-back m2'
+        <button onClick={() => navigate('/menu')} className='animate-fade-in flex-center data-panel red-glow scanlines-back m2'
           style={{ gridArea: '1 / 1 / span 3 / span 7', animationDelay: fadeIn() }}>Menu</button>
         {/* <div className='animate-fade-in flex-center data-panel red-glow scanlines' style={{ gridArea: '2 / 1 / span 3 / span 9', margin: 5, animationDelay: fadeIn() }}> */}
         <CharacterCard fadeDelay={fadeIn()} stats={stats} newCharacter={true} />
@@ -104,19 +104,17 @@ function Roster(props) {
 
         {/* <div className='animate-fade-in roster-skills-card' style={{ gridArea: '14 / 8 / span 24 / span 13', animationDelay: fadeIn() }}> */}
 
-          <div className='animate-fade-in flex-center data-panel red-flat scanlines-back m2' style={{ gridArea: '14 / 8 / span 24 / span 13', display: 'block', overflow: 'auto' }} >
+        <div className='animate-fade-in flex-center data-panel red-flat scanlines-back m2' style={{ gridArea: '14 / 8 / span 24 / span 13', display: 'block', overflow: 'auto' }} >
           {Object.entries(stats.skills).map((value, i) => {
             return <div key={uuid.v4()} className='animate-fade-in z-5 m2 p2 flex-left data-panel gray-flat'
-              style={{animationDelay: boxFade() }}>
+              style={{ animationDelay: boxFade() }}>
               {value[0]}: {value[1]}
             </div>
           })
-
           }
-          {/* <TextBox area={[2, 2, 2, 11]} delay={boxFade()} className={'m2'}
-            text={'stuff'} /> */}
-
         </div>
+        <button className='animate-fade-in flex-center data-panel red-glow scanlines-back m2'
+          style={{ gridArea: '38 / 1 / span 3 / span 20', animationDelay: fadeIn() }}>Register</button>
       </div>
     </div>
   );
