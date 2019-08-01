@@ -20,7 +20,7 @@ function Roster(props) {
     credits: 500,
     species: 'Droid',
     career: 'Smuggler',
-    specializations:['Charmer', 'Pilot'],
+    specializations: ['Charmer', 'Pilot'],
     wound: 0,
     woundThreshold: 10,
     strain: 0,
@@ -36,16 +36,14 @@ function Roster(props) {
   const [selectStat, setSelectStat] = useState('')
 
   const StatBox = ({ name, value }) => {
-    let classes = 'roster-new-characteristics-box flex-center data-panel scanlines-back font-small';    
+    let classes = 'roster-new-characteristics-box flex-center data-panel scanlines-back';
 
     return name === selectStat ?
-    // return 1 === 1 ?
+      // return 1 === 1 ?
       <div onClick={() => { setSelectStat(name) }} className={classes + ' orange-glow roster-detail-selected'}>
         {/* <div className={'roster-new-characteristics-details'}> */}
-          {name} {value}
-          <br />
-          {(value + 1) * 10} xp
-  
+        <div style={{ fontFamily: 'Engli-Besh' }}>{value}</div>
+        {name}        
         {/* </div> */}
         <div className={'roster-new-characteristics-details'}>
           <div className={'flex-center data-panel orange-glow scanlines-back roster-new-characteristics-modifier-box'}>Stuff</div>
@@ -53,24 +51,23 @@ function Roster(props) {
         </div>
       </div>
       :
-      <div onClick={() => { setSelectStat(name) }} className={classes + ' blue-glow '} style={{animationDelay: fadeStats()}}>
-        {name} {value}
-        <br />
-        {(value + 1) * 10} xp
-    </div>
+      <div onClick={() => { setSelectStat(name) }} className={classes + ' blue-glow '} style={{ animationDelay: fadeStats() }}>
+        <div style={{ fontFamily: 'Engli-Besh' }}>{value}</div>
+        {name}        
+      </div>
   }
 
 
   return (
     <div className='flex-center full-screen'>
       <div className='data-container'>
-        <button onClick={() => navigate('/menu')} className='font-small animate-fade-in flex-center data-panel red-glow scanlines-back m2' 
-        style={{ gridArea: '1 / 1 / span 2 / span 7', animationDelay: fadeIn() }}>Menu</button>
+        <button onClick={() => navigate('/menu')} className='font-small animate-fade-in flex-center data-panel red-glow scanlines-back m2'
+          style={{ gridArea: '1 / 1 / span 2 / span 7', animationDelay: fadeIn() }}>Menu</button>
         {/* <div className='animate-fade-in flex-center data-panel red-glow scanlines' style={{ gridArea: '2 / 1 / span 3 / span 9', margin: 5, animationDelay: fadeIn() }}> */}
-        <CharacterCard fadeDelay={fadeIn()} stats={stats}/>
+        <CharacterCard fadeDelay={fadeIn()} stats={stats} />
         {/* </div> */}
-        
-      
+
+
         <div className='roster-new-characteristics-list animate-fade-in flex-center data-panel red-flat scanlines-back m2' style={{ gridArea: '13 / 1 / span 28 / span 7', animationDelay: fadeIn() }}>
           <StatBox name={'Brawn'} value={stats.brawn} />
           <StatBox name={'Agility'} value={stats.agility} />

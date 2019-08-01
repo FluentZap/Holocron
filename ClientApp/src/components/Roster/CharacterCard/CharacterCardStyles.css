@@ -3,8 +3,13 @@
     margin: 0;
     display: grid;
     grid-template-columns: repeat(20, calc(100% / 20));
-    grid-template-rows: repeat(10, calc(100% / 10));
+    grid-template-rows: repeat(10, calc(100% / 10));    
 }
+
+.roster-text {
+    justify-content: space-evenly;
+}
+
 
 .credits {
     background: url('../../assets/images/creditsWhite.svg');
