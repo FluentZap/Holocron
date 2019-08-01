@@ -29,6 +29,11 @@
  .main-menu-root>* {
      grid-area: 1 / 1 / 2 / 2;
  }
+
+.main-menu-panel {
+    /* font-family: Engli-Besh, Times, serif;     */
+}
+
  /* h1 {
     fontFamily: Engli-Besh, Times, serif, // fontFamily: Teuton,
     //fontFamily: Symbol, Times, serif,      

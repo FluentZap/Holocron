@@ -106,7 +106,7 @@ function Roster(props) {
 
           <div className='animate-fade-in flex-center data-panel red-flat scanlines-back m2' style={{ gridArea: '14 / 8 / span 24 / span 13', display: 'block', overflow: 'auto' }} >
           {Object.entries(stats.skills).map((value, i) => {
-            return <div className='animate-fade-in z-5 m2 p2 flex-left data-panel gray-flat roster-text'
+            return <div key={uuid.v4()} className='animate-fade-in z-5 m2 p2 flex-left data-panel gray-flat'
               style={{animationDelay: boxFade() }}>
               {value[0]}: {value[1]}
             </div>

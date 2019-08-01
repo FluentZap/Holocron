@@ -50,7 +50,7 @@ function App() {
     <Provider store={store}>
       <Router>
         {/* <Login path="/" default/> */}
-        <RosterCreateNew path="/" default/>
+        <Roster path="/" default/>
         <PrivateRoute Component={Adventures} path="adventures" />
         <PrivateRoute Component={Archives} path="archives" />
         <PrivateRoute Component={Atlas} path="atlas" />

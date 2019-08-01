@@ -11,6 +11,10 @@
     font-size: 2.4vh;
 }
 
+.font-large {
+    font-size: 4.0vh;
+}
+
 .red-glow {
     color: white;
     border: 0.2vh solid #c72f2f;
