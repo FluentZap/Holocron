@@ -302,3 +302,19 @@ input:-webkit-autofill:focus {
  .p5 {
     padding: 2.5vmin;
  }
+
+ ::-webkit-scrollbar {
+    width: 2vh;    
+ }
+
+ ::-webkit-scrollbar-track {
+     background: #671818;
+ }
+
+ ::-webkit-scrollbar-thumb {     
+     background: #9e0003;
+ }
+
+ ::-webkit-scrollbar-thumb:hover {     
+     background: #cc3333;
+ }

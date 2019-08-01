@@ -20,11 +20,11 @@
 .roster-new-characteristics-box {
     height: 100%;
     width: 100%;
-    border-radius: 20%;
+    border-radius: 1vh;
     /* grid-column: span 1; */
     /* grid-row: span 1; */
     box-sizing: border-box;
-    margin: 0.5vh;
+    margin: 0.5vh;    
 }
 
 .roster-detail-box {
@@ -37,8 +37,10 @@
 
 .roster-detail-selected {
     animation-name: toggleButton;
-    animation-duration: 0.2s;
-    animation-fill-mode: forwards;
+    animation-duration: 0.2s;    
+    animation-fill-mode: both;
+    /* border-radius: 0; */
+    /* margin-left: 4vh; */
 }
 
 .roster-new-characteristics-details {
@@ -54,6 +56,16 @@
     /* padding-left: 19vh; */
 }
 
+
+.roster-skills-card {
+    padding: 0;
+    margin: 0;
+    display: grid;
+    grid-template-columns: repeat(13, calc(100% / 13));
+    grid-template-rows: repeat(24, calc(100% / 24));
+}
+
+
 @keyframes toggleButton {
     0% {}
     100% {
@@ -63,7 +75,7 @@
         border-radius: 0px;
         /* padding-right: 19vh; */
         /* padding-left: 1vh; */
-        margin-left: 4vh;
+        /* margin-left: 4vh; */
         /* justify-content: space-between; */
         /* width: 12vh; */
         /* margin-left: 5vh; */
