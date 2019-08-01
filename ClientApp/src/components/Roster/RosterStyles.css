@@ -10,15 +10,12 @@
  }
  
  .roster-character-list {
-     grid-area: 2 / 1 / span 13 / span 9;
+     grid-area: 4 / 3 / span 20 / span 16;
      grid-template-columns: 1fr;
      grid-auto-rows: 11vh;
      display: grid;
      padding: 0.5vh;
-     overflow-x: hidden;
-     margin: 2vh;
-     height: calc(69vh);
-     width: calc(75vh * 0.5625);
+     overflow-x: hidden;          
 }
 
 .roster-character-box {
