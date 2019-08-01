@@ -6,6 +6,8 @@ import './RosterStyles.css';
 
 function Roster(props) {
   const { characters } = props;
+  
+  //Load characters
   useEffect(() => {
     if (!characters) {
       props.dispatch({ type: 'SERVER_FETCH_ROSTER' })

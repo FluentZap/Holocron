@@ -84,9 +84,9 @@ export function holocronMiddleware({ dispatch, getState }) {
         if (action.type === 'SET_SESSION_TOKEN') {
             let state = getState();
             if (state.sessionToken !== null) {
-                navigate('/menu');
+                // navigate('/menu');
             } else {
-                navigate('/');
+                // navigate('/');
             }
         }
 
@@ -101,6 +101,8 @@ export const holocronReducer = (state = initial_state, action) => {
     switch (action.type) {
         case 'SET_SESSION_TOKEN':
             return { ...state, sessionToken: action.sessionToken };
+        case 'SET_CONNECTED':
+            return { ...state, connected: true };
         case 'SERVER_LOGIN_USER':
             return { ...state, userName: action.userName };
         case 'CLIENT_CHARACTERS':
@@ -125,6 +127,8 @@ const startConnection = async (connection, dispatch) => {
             dispatch({ type: 'SET_CONNECTED', payload: true });
         });
         console.log("connected");
+        dispatch({ type: 'SERVER_LOGIN_USER', userName: 'root', password: 'root' });
+        //Auto Login Test Account        
     } catch (err) {
         console.log(err);
         setTimeout(() => startConnection(), 5000);

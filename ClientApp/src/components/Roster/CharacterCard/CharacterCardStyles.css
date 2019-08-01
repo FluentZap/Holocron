@@ -1,9 +1,15 @@
 .roster-character-card {
+    padding: 0;
+    margin: 0;
     display: grid;
-    grid-template-columns: repeat(12, calc(100% / 12));
-    grid-template-rows: repeat(4, calc(100% / 4));
+    grid-template-columns: repeat(20, calc(100% / 20));
+    grid-template-rows: repeat(10, calc(100% / 10));
 }
 
-.roster-character-card-image {
-    margin: .5vh;
+.credits {
+    background: url('../../assets/images/creditsWhite.svg');
+    background-repeat: no-repeat;
+    background-size: contain;
+    height: 2.4vh;
+    width: 2vh;
 }
