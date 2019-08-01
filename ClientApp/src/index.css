@@ -207,7 +207,7 @@ code {
     /* mask-image: url(./BGBorderMask.svg); */
     /* mask-size: contain; */
     /* mask-repeat: no-repeat;     */
-
+    box-sizing: border-box;
     height: 100vh;
     width: calc(100vh * 0.5625);
     /* padding: 5vh; */

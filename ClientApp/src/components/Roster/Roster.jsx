@@ -20,13 +20,13 @@ function Roster(props) {
   return (
     <div className='flex-center full-screen'>
       <div className='data-container'>
-        <button onClick={() => navigate('/menu')} className='flex-center data-panel red-glow scanlines' style={{ gridArea: '1 / 1 / span 1 / span 4', margin: 5 }}>Menu</button>
+        <button onClick={() => navigate('/menu')} className='flex-center data-panel red-glow scanlines-back' style={{ gridArea: '1 / 1 / span 1 / span 4', margin: 5 }}>Menu</button>
         <div className='flex-center data-panel gray-flat roster-character-list'>
           { characters ?
             characters.map(character =>
               <div className='roster-character-box' key={uuid.v4()}>
-              <div className='flex-center data-panel red-flat roster-detail-box scanlines' >{character['name']}</div>
-              <div className='flex-center data-panel red-flat roster-detail-box scanlines' >{character['career']}</div>
+              <div className='flex-center data-panel red-flat roster-detail-box scanlines-back' >{character['name']}</div>
+              <div className='flex-center data-panel red-flat roster-detail-box scanlines-back' >{character['career']}</div>
             </div>
             )
             :
@@ -35,7 +35,7 @@ function Roster(props) {
 
 
         </div>
-        <button onClick={() => navigate('/createnew')} className='flex-center data-panel red-glow scanlines' style={{ gridArea: '15 / 2 / span 2 / span 7', margin: 5 }}>Create New</button>
+        <button onClick={() => navigate('/createnew')} className='flex-center data-panel red-glow scanlines-back' style={{ gridArea: '15 / 2 / span 2 / span 7', margin: 5 }}>Create New</button>
       </div>
     </div>
   );

@@ -1,8 +1,4 @@
-* {
-     box-sizing: border-box;
- }
- 
- .roster-root {
+.roster-root {
      display: grid;
      /* width: 20rem; */
      width: 100vmin;

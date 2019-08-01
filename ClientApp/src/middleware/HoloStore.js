@@ -27,7 +27,7 @@ export function holocronMiddleware({ dispatch, getState }) {
         // document.cookie = `username=${}`
     });
 
-    connection.on("ClientGetCharacterS", data => {
+    connection.on("ClientGetCharacters", data => {
         dispatch({
             type: 'CLIENT_CHARACTERS',
             payload: data
