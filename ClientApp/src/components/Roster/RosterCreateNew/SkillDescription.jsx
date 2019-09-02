@@ -19,14 +19,14 @@ export default Description;
 const DescriptionText = {
   cybernetics: {
     main:
-      "At the GM's and players' discretion, Cybernetics can be presented as a custom skill rather than as a specific use of Mechanics and Medicine.The introduction of this skill is optional.",
+      "At the GM's and players' discretion, Cybernetics can be presented as a custom skill rather than as a specific use of Mechanics and Medicine. The introduction of this skill is optional.",
     list: [
       "If introduced, Cybernetics is used for building, modifying, and installing cybernetic enhancements and replacements(see page 85 of the Special Modifications Technician Source Book), as well as other checks at the GM's discretion. Talents that apply to Mechanics or Medicine checks might apply to Cybernetics checks at the GM's discretion.The Cyber Tech should recieve Cybernetics as an additional bonus career skill."
     ]
   },
   astrogation: {
     main:
-      "There are many billions of stars within the galaxy, all of which are in motion relative to one another.Planets and other smaller masses constantly orbit many of these stars.There are also huge numbers of nebulae and other astronomical anomalies.Traveling between the worlds of the galaxy requires a rudimentary knowledge of the galaxy's organization and composition. It also requires a navicomputer that is well-informed as to the current time and the relative motion of all of these objects. The Astrogation skill represents a character's ability to use his knowledge of the galaxy to most effectively program the hyper- space coordinates for any jump.",
+      "There are many billions of stars within the galaxy, all of which are in motion relative to one another. Planets and other smaller masses constantly orbit many of these stars.There are also huge numbers of nebulae and other astronomical anomalies.Traveling between the worlds of the galaxy requires a rudimentary knowledge of the galaxy's organization and composition. It also requires a navicomputer that is well-informed as to the current time and the relative motion of all of these objects. The Astrogation skill represents a character's ability to use his knowledge of the galaxy to most effectively program the hyper- space coordinates for any jump.",
     list: [
       "Any time that a character wishes to program a navicomputer for a hyperspace jump, he must first use Astrogation to program the navicomputer.",
       "Astrogation governs a character's basic knowledge of galactic geography. It may be checked any time a character wonders what other systems are nearby.",

@@ -29,6 +29,8 @@ const CharacterCard = ({ fadeDelay, stats, newCharacter }) => {
 
             <TextBox area={[4, 15, 2, 5]} delay={boxFade()}
                 text={stats.career}/>
+            {/* <div className={'font-small animate-fade-in z-5 m2 p2 flex-left data-panel gray-flat-hover scanlines-back roster-text '}
+                style={{ gridArea: `4 / 15 / span 2 / span 5`, animationDelay: boxFade() }}>{stats.career}</div> */}
 
             <TextBox area={[6, 7, 4, 4]} delay={boxFade()}
                 text={<>

@@ -4,7 +4,7 @@ export default class CharacterStats {
   unusedXp: number = 110;
   credits: number = 500;
   species: string = 'Droid';
-  career: string = 'Smuggler';
+  career: string = '';
   specializations: string = 'Charmer,Pilot';
   wound: number = 0;
   woundThreshold: number = 10;
