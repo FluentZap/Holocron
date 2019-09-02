@@ -25,7 +25,7 @@ const CharacterCard = ({ fadeDelay, stats, newCharacter }) => {
                 text={`Name: ${stats.name}`} edit={newCharacter} />
 
             <TextBox area={[4, 7, 2, 8]} delay={boxFade()}
-                text={`Species: ${stats.species}`} edit={newCharacter}/>
+                text={`Species: ${stats.speciesName}`} edit={newCharacter}/>
 
             <TextBox area={[4, 15, 2, 5]} delay={boxFade()}
                 text={stats.career}/>

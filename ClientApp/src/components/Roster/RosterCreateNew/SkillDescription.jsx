@@ -1,4 +1,4 @@
-import React, { useMemo } from 'react';
+import React from 'react';
 import uuid from 'uuid';
 
 const Description = ({ skill }) => (
