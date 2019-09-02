@@ -72,6 +72,22 @@
     outline: none;
 }
 
+.gray-flat-hover {
+    color: white;
+    background-color: #00000080;
+    border: 0.2vh solid #cccccc;
+}
+
+.gray-flat-hover:hover {
+    border: 0.2vh solid #e5e5e5;    
+    background-color: #44444480;    
+}
+
+.gray-flat-hover:focus {
+    border: 0.2vh solid #cccccc;    
+    outline: none;
+}
+
 
 .gray-flat {
     color:  white;

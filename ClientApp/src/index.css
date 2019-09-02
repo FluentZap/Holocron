@@ -304,17 +304,25 @@ input:-webkit-autofill:focus {
  }
 
  ::-webkit-scrollbar {
-    width: 2vh;    
+    width: 1vmin;
  }
 
  ::-webkit-scrollbar-track {
-     background: #671818;
+     /* background: #671818; */
+     /* background: #671818; */
+     /* border: 0.1vmin solid #f2aa2a; */
+     /* #f2aa2a */
+     /* #f4bc5c */
  }
 
- ::-webkit-scrollbar-thumb {     
+ ::-webkit-scrollbar-thumb {
      background: #9e0003;
+     border-radius: 1vmin;
+
+     /* background: #f2aa2a; */
  }
 
  ::-webkit-scrollbar-thumb:hover {     
      background: #cc3333;
+     /* background: #f4bc5c; */
  }

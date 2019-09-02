@@ -15,8 +15,8 @@ export default class FadeInBuilder {
     numberArray = [];
     index = 0;
     count = 0;
-    constructor(min, max, count) {
-        count--;
+    constructor(min, max, count) {        
+        count--;        
         let numbers = [];
         let step = (max - min) / count;
         for (let x = min; x <= max; x += step) {

@@ -41,9 +41,9 @@
     user-select: none;
 }
 
-.login-input:focus {
-    border: 2px solid #e07b7b;
-    box-shadow: 0px 0px 8px #e07b7b;
+.login-input:focus {    
+    border: .5vmin solid #e07b7b;
+    box-shadow: 0px 0px 0.5vmin #e07b7b;
     outline: none
 }
 
