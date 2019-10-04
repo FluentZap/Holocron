@@ -42,7 +42,7 @@ function toggleFullScreen() {
 
 function App() {
   useEffect(() => {
-    // window.document.documentElement.requestFullscreen();    
+    // window.document.documentElement.requestFullscreen();
   }, [])
 
 
