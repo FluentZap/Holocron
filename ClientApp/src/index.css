@@ -30,11 +30,31 @@
 }
 
 @font-face {
+    font-family: EoteSymbol;
+    src: url('./fonts/EotE_Symbol-Regular_v1.otf');
+    font-weight: 400;
+    font-weight: normal;
+}
+
+@font-face {
     font-family: Teuton;
     src: url('./fonts/TeutonMager.otf');
     font-weight: 400;
     font-weight: normal;
 }
+
+.smbl {
+    font-family: EoteSymbol;
+}
+
+.full-width {
+    width: 100%;
+}
+
+.half-width {
+    width: 50%;
+}
+
 
 body {
     margin: 0;
@@ -272,6 +292,10 @@ input:-webkit-autofill:focus {
 
  .z-overlay, .z-15 {
     z-index: 15;
+ }
+ 
+ .z-overlay-child, .z-20 {
+    z-index: 20;
  }
 
  .m1 {

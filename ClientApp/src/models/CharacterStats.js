@@ -74,42 +74,80 @@ export function newCharacter(species) {
     strain: 0,
     soak: parseInt(Brawn[0]),
     skills: {
-      Astrogation: 0,
-      Athletics: 0,
-      Brawl: 0,
-      Charm: 0,
-      Coercion: 0,
-      Computers: 0,
-      Cool: 0,
-      Coordination: 0,
-      Core_Worlds: 0,
-      Deception: 0,
-      Discipline: 0,
-      Education: 0,
-      Gunnery: 0,
-      Leadership: 0,
-      Lightsaber: 0,
-      Lore: 0,
-      Mechanics: 0,
-      Medicine: 0,
-      Melee: 0,
-      Negotiation: 0,
-      Outer_Rim: 0,
-      Perception: 0,
-      Piloting_Planetary: 0,
-      Piloting_Space: 0,
-      Ranged_Heavy: 0,
-      Ranged_Light: 0,
-      Resilience: 0,
-      Skulduggery: 0,
-      Stealth: 0,
-      Streatwise: 0,
-      Survival: 0,
-      Underworld: 0,
-      Vigilance: 0,
-      Xenology: 0,
-      Warfare: 0,
-      Cybernetics: 0,
+      ASTRO: 0,
+      ATHL: 0,
+      BRAWL: 0,
+      CHARM: 0,
+      COERC: 0,
+      COMP: 0,
+      COOL: 0,
+      COORD: 0,
+      CORE: 0,
+      CYBERNETICS: 0,
+      DECEP: 0,
+      DISC: 0,
+      EDU: 0,
+      GUNN: 0,
+      LEAD: 0,
+      LORE: 0,
+      LTSABER: 0,
+      MECH: 0,
+      MED: 0,
+      MELEE: 0,
+      NEG: 0,
+      OUT: 0,
+      PERC: 0,
+      PILOTPL: 0,
+      PILOTSP: 0,
+      RANGHVY: 0,
+      RANGLT: 0,
+      RESIL: 0,
+      SKUL: 0,
+      STEAL: 0,
+      SURV: 0,
+      SW: 0,
+      UND: 0,
+      VIGIL: 0,
+      WARF: 0,
+      XEN: 0,
+    },
+    skillsBuy: {
+      ASTRO: 0,
+      ATHL: 0,
+      BRAWL: 0,
+      CHARM: 0,
+      COERC: 0,
+      COMP: 0,
+      COOL: 0,
+      COORD: 0,
+      CORE: 0,
+      CYBERNETICS: 0,
+      DECEP: 0,
+      DISC: 0,
+      EDU: 0,
+      GUNN: 0,
+      LEAD: 0,
+      LORE: 0,
+      LTSABER: 0,
+      MECH: 0,
+      MED: 0,
+      MELEE: 0,
+      NEG: 0,
+      OUT: 0,
+      PERC: 0,
+      PILOTPL: 0,
+      PILOTSP: 0,
+      RANGHVY: 0,
+      RANGLT: 0,
+      RESIL: 0,
+      SKUL: 0,
+      STEAL: 0,
+      SURV: 0,
+      SW: 0,
+      UND: 0,
+      VIGIL: 0,
+      WARF: 0,
+      XEN: 0,
     },
     species: Key[0],
     speciesName: Name[0],
@@ -117,74 +155,49 @@ export function newCharacter(species) {
     unusedXp: parseInt(Experience[0]),
     characteristics:
     {
-      brawn: parseInt(Brawn[0]),
-      agility: parseInt(Agility[0]),
-      intellect: parseInt(Intellect[0]),
-      cunning: parseInt(Cunning[0]),
-      willpower: parseInt(Willpower[0]),
-      presence: parseInt(Presence[0])
+      BR: parseInt(Brawn[0]),
+      AG: parseInt(Agility[0]),
+      INT: parseInt(Intellect[0]),
+      CUN: parseInt(Cunning[0]),
+      WIL: parseInt(Willpower[0]),
+      PR: parseInt(Presence[0])
     },
     characteristicsBuy:
     {
-      brawn: 0,
-      agility: 0,
-      intellect: 0,
-      cunning: 0,
-      willpower: 0,
-      presence: 0,
+      BR: 0,
+      AG: 0,
+      INT: 0,
+      CUN: 0,
+      WIL: 0,
+      PR: 0,
     },
     strainThreshold: parseInt(StrainThreshold[0]),
     woundThreshold: parseInt(WoundThreshold[0])
   }
 }
-
-const skillLookup = {
-  intellect: ['Astrogation',
-    'Computers',
-    'Core Worlds',
-    'Education',
-    'Lore',
-    'Mechanics',
-    'Medicine',
-    'Outer Rim',
-    'Underworld',
-    'Xenology',
-    'Warfare',
-    'Cybernetics'],
-  brawn: ['Athletics',
-    'Brawl',
-    'Lightsaber',
-    'Melee',
-    'Resilience'],
-  presence: ['Charm',
-    'Cool',
-    'Leadership',
-    'Negotiation'],
-  agility: ['Coordination',
-    'Gunnery',
-    'Piloting Planetary',
-    'Piloting Space',
-    'Ranged Heavy',
-    'Ranged Light',
-    'Stealth'],
-  cunning: ['Deception',
-    'Perception',
-    'Skulduggery',
-    'Streatwise',
-    'Survival'],
-  willpower: ['Coercion',
-    'Discipline',
-    'Vigilance']
+export function getSkills(ds, char) {
+  let skills = [];
+  Object.entries(ds.skills).forEach(([key, value]) => {
+    if (char === '' || value.CharKey[0] === char) {
+      skills.push([value.Key[0], value.Name[0]]);
+    }
+  });
+  skills.sort();
+  return skills;
 }
 
-export function getSkills(char) {
-  if (char === '') {
-    let skills = [].concat(skillLookup.intellect, skillLookup.brawn, skillLookup.presence, skillLookup.agility, skillLookup.cunning, skillLookup.willpower);
-    console.log(skills);    
-    return skills;
-  }
-  return skillLookup[char];
+export function getStatValue(character, stat) {
+  return character.characteristics[stat] + character.characteristicsBuy[stat];
 }
+
+export function getSkillValue(character, skill) {  
+  return character.skills[skill] + character.skillsBuy[skill];
+}
+
+// export function getSkillName(skillList, skill) {
+//   return character.skills[skill] + character.skillsBuy[skill];
+// }
+
 // getSkills(): Array<Skill>;
 // getSkills(characteristics ?: string): Array < Skill > {
 //   if(characteristics) {

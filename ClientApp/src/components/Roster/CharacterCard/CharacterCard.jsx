@@ -8,7 +8,7 @@ const boxFade = new FadeInBuilder(0.3, 0.5, 8);
 export const TextBox = ({ text, area, delay, className, edit }) => {
 	if (!className) className = '';
 	return edit === true ?
-		<input className={'font-small animate-fade-in z-5 m2 p2 flex-left data-panel gray-flat scanlines-back roster-text ' + className}
+		<input className={'font-small animate-fade-in z-5 m2 p2 flex-left data-panel blue-glow scanlines-back roster-text ' + className}
 			style={{ gridArea: `${area[0]} / ${area[1]} / span ${area[2]} / span ${area[3]}`, animationDelay: delay }} placeholder={text} />
 		:
 		<div className={'font-small animate-fade-in z-5 m2 p2 flex-left data-panel gray-flat scanlines-back roster-text ' + className}
