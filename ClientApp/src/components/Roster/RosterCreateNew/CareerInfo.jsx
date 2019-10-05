@@ -3,11 +3,12 @@ import uuid from 'uuid';
 import FadeInBuilder from '../../FadeInBuilder';
 import { getSkillValue } from '../../../models/CharacterStats';
 import GetSkillSymbols from '../../Universal/Symbol';
+import DescriptionBox from '../../Universal/DescriptionBox';
 
 const panelFade = new FadeInBuilder(0, 0.1, 2);
 const childFade = new FadeInBuilder(0.1, 0.2, 4);
 
-const CareerInfo = ({ ds, career, changeCareer, character, setCharacter }) => {
+const CareerInfo = ({ ds, career, changeCareer, character, setCharacter, setShowInfo }) => {
   const careerCount = Object.keys(ds.careers).length;
   console.log(ds.careers[career].CareerSkills[0].Key);
 
@@ -50,7 +51,7 @@ const CareerInfo = ({ ds, career, changeCareer, character, setCharacter }) => {
     {careerCategory === 'Skills' ?
       <CareerSkills {...{ ds, character, career, setSkill }} />
       : careerCategory === 'Info' ?
-        <CareerInfoBox {...{ ds, character, career, setSkill }} /> : ''
+        <CareerInfoBox {...{ ds, character, career, setSkill, setShowInfo }} /> : ''
     }
 
 
@@ -88,14 +89,15 @@ const CareerSkills = ({ ds, character, career, setSkill }) => {
   </>
 }
 
-const CareerInfoBox = ({ ds, character, career, setSkill }) => {
+const CareerInfoBox = ({ ds, character, career, setSkill, setShowInfo }) => {
   return <>
     <div className='flex-center data-panel red-flat scanlines-back m2 p2'
-      style={{ gridArea: '19 / 8 / span 19 / span 13', justifyContent: 'center', animationDelay: panelFade() }}>
+      style={{ gridArea: '16 / 8 / span 22 / span 13', justifyContent: 'center', animationDelay: panelFade() }}>
       <div className='flex-center' style={{ display: 'block', overflowY: 'auto', width: '99%', margin: '.5vmin 0' }} >
 
+        <DescriptionBox text={ds.careers[career].Description[0]} setShowInfo={setShowInfo} />
 
-        <div dangerouslySetInnerHTML={{ __html: ds.careers[career].Description[0] }} />
+        {/* <div dangerouslySetInnerHTML={{ __html: ds.careers[career].Description[0] }} /> */}
       </div>      
     </div>
   </>

@@ -43,6 +43,17 @@
     font-weight: normal;
 }
 
+b {
+    color: gold;
+}
+
+h4 {
+    font-size: 2.4vmin;
+    margin: 2vmin 0;
+    font-family: Engli-Besh;
+    font-weight: normal;
+}
+
 .smbl {
     font-family: EoteSymbol;
 }

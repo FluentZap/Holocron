@@ -9,6 +9,7 @@ import { newCharacter, getSkills, getSkillsStat, getStatValue, getSkillValue, se
 import { SkillBuySell, CharacteristicsBuySell, SkillBox } from './SkillBox';
 import FullScreenInfo from './FullScreenInfo';
 import CareerInfo from './CareerInfo';
+import DescriptionBox from '../../Universal/DescriptionBox';
 
 const panelFade = new FadeInBuilder(0, 0.1, 2);
 const childFade = new FadeInBuilder(0.1, 0.2, 4);
@@ -22,7 +23,7 @@ function Roster({ dataSet }) {
 
   const [category, setCategory] = useState('Species')
 
-  const [species, setSpecies] = useState('')
+  const [species, setSpecies] = useState('HUMAN')
   const [career, setCareer] = useState('SMUG')
 
   const [showInfo, setShowInfo] = useState('')
@@ -84,7 +85,7 @@ function Roster({ dataSet }) {
                 <div className='animate-fade-in flex-center data-panel red-flat scanlines-back m2 p2' style={{ gridArea: '14 / 8 / span 24 / span 13', justifyContent: 'start' }} />}
             </>
             : category === 'Career' ?
-              <CareerInfo {...{ career, changeCareer, ds, character, setCharacter }} />
+              <CareerInfo {...{ career, changeCareer, ds, character, setCharacter, setShowInfo }} />
               : ''
         }
         <button className={'animate-fade-in flex-center data-panel scanlines-back m2 ' + (category === 'Species' ? 'orange-glow' : 'red-glow')}
@@ -134,7 +135,7 @@ const SpeciesBox = ({ species, ds, setShowInfo }) => {
       <div ref={speciesRef} className='flex-center' style={{ display: 'block', overflowY: 'auto', width: '99%', margin: '.5vmin 0' }} >
         <div className='animate-fade-in z-5 m2 p2 flex-left data-panel gray-flat font-small'
           style={{ animationDelay: childFade(), marginTop: 0 }}>
-          <h3 className='m2'>{Name}</h3>
+          <h4 className='m2'>{Name}</h4>
           xp {Experience}
           <p>
             Wound: {WoundThreshold} Strain: {StrainThreshold}
@@ -148,15 +149,7 @@ const SpeciesBox = ({ species, ds, setShowInfo }) => {
             <li className='m2' >Presence: {Presence}</li>
           </ul>
         </div>
-        <div className='animate-fade-in z-5 m2 p2 flex-left data-panel gray-flat font-small'
-          style={{ animationDelay: childFade(), marginBottom: 0 }}>
-          <div className={`animate-fade-in z-5 m2 p2 flex-center center data-panel font-small gray-flat-hover half-width`}
-            onClick={() => {
-              setShowInfo(Description[0]);
-            }}
-          >Expand</div>
-          <div dangerouslySetInnerHTML={{ __html: Description[0] }} />
-        </div>
+        <DescriptionBox text={Description[0]} setShowInfo={setShowInfo} />
       </div>
     </div>
   )

@@ -19,7 +19,7 @@ const loadDataSet = (dispatch) => {
     careerPromiseList.push(
       import(/* webpackMode: "eager" */ `../dataset/Careers/${career.slice(2).replace('.xml', '')}.xml`).then(value => {
         let career = value.default.Career;        
-        // career.Description[0] = parseXML(career.Description[0]);
+        career.Description[0] = parseXML(career.Description[0]);
         careerList[career.Key] = career;
       })
     );
@@ -39,7 +39,7 @@ const loadDataSet = (dispatch) => {
   let characteristicPromise = import(/* webpackMode: "eager" */ `../dataset/Characteristics.xml`).then(value => {    
     let chars = value.default.Characteristics.Characteristic;
     chars.forEach(char => {
-      // char.Description[0] = parseXML(skill.Description[0]);
+      // char.Description[0] = parseXML(char.Description[0]);
       characteristicList[char.Key] = char;
     })    
   })
