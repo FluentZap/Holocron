@@ -25,6 +25,19 @@ const loadDataSet = (dispatch) => {
     );
   });
 
+  let SpecializationSourceList = require.context('../dataset/Specializations/', true, /\.xml$/).keys();
+  let SpecializationList = {};
+  let SpecializationPromiseList = [];
+  SpecializationSourceList.forEach(Specialization => {
+    SpecializationPromiseList.push(
+      import(/* webpackMode: "eager" */ `../dataset/Specializations/${Specialization.slice(2).replace('.xml', '')}.xml`).then(value => {
+        let Specialization = value.default.Specialization;
+        Specialization.Description[0] = parseXML(Specialization.Description[0]);
+        SpecializationList[Specialization.Key] = Specialization;
+      })
+    );
+  });
+
   let skillList = {};
   let skillPromise = import(/* webpackMode: "eager" */ `../dataset/Skills.xml`).then(value => {
     let skills = value.default.Skills.Skill;
@@ -54,6 +67,9 @@ const loadDataSet = (dispatch) => {
       }),
       Promise.all(careerPromiseList).then(() => {        
         return ['careers', careerList];        
+      }),
+      Promise.all(speciesPromiseList).then(() => {
+        return ['specializations', SpecializationList];
       }),
       skillPromise.then(() => {
         return ['skills', skillList];

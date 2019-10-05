@@ -9,7 +9,7 @@ const DescriptionBox = ({ text, setShowInfo }) => {
         setShowInfo(text);
       }}
     >Expand</div>
-    <div dangerouslySetInnerHTML={{ __html: text }} />
+    <div style={{ width: '100%' }} dangerouslySetInnerHTML={{ __html: text }} />
   </div>
 }
 

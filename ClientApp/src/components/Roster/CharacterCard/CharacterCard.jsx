@@ -17,8 +17,7 @@ export const TextBox = ({ text, area, delay, className, edit }) => {
 }
 
 
-const CharacterCard = ({ ds, fadeDelay, character }) => {
-	console.log(ds.careers[character.career].Name[0].length);
+const CharacterCard = ({ ds, fadeDelay, character }) => {	
 	return (
 		<div className='animate-fade-in roster-character-card' style={{ gridArea: '4 / 1 / span 10 / span 20', animationDelay: fadeDelay }}>
 			<div className='data-panel red-flat scanlines-back m2 p2' style={{ gridArea: '1 / 1 / span 10 / span 20' }} />

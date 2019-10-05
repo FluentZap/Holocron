@@ -19,12 +19,13 @@ function Roster({ dataSet }) {
 
   const [character, setCharacter] = useState(newCharacter(ds.species['HUMAN']));
   const [selectStat, setSelectStat] = useState('')
-  const [selectSkill, setSelectSkill] = useState('')
+  const [selectSkill, setSelectSkill] = useState('')  
 
   const [category, setCategory] = useState('Species')
 
   const [species, setSpecies] = useState('HUMAN')
   const [career, setCareer] = useState('SMUG')
+  const [specialization, setSpecialization] = useState('SCOUND')
 
   const [showInfo, setShowInfo] = useState('')
 
@@ -34,13 +35,24 @@ function Roster({ dataSet }) {
     newChar = setCharacterCareer(ds, newChar, oldCareer)
     setCharacter(newChar);
     setSpecies(newSpecies);
+    setSpecies(newSpecies);
   }
 
   const changeCareer = newCareer => {
     if (newCareer !== character.career) {
       setCharacter(setCharacterCareer(ds, character, newCareer));
       setCareer(newCareer);
+      // setSpecialization(ds.careers[newCareer].Specializations[0].Key[0]);
+      setSpecialization('')
     }
+  }
+
+  const changeSpecialization = newSpec => {
+    setSpecialization(newSpec);
+    // if (newCareer !== character.career) {
+    //   setCharacter(setCharacterCareer(ds, character, newCareer));
+    //   setCareer(newCareer);
+    // }
   }
 
   // console.log(speciesList);
@@ -85,7 +97,7 @@ function Roster({ dataSet }) {
                 <div className='animate-fade-in flex-center data-panel red-flat scanlines-back m2 p2' style={{ gridArea: '14 / 8 / span 24 / span 13', justifyContent: 'start' }} />}
             </>
             : category === 'Career' ?
-              <CareerInfo {...{ career, changeCareer, ds, character, setCharacter, setShowInfo }} />
+              <CareerInfo {...{ career, changeCareer, specialization, changeSpecialization, ds, character, setCharacter, setShowInfo }} />
               : ''
         }
         <button className={'animate-fade-in flex-center data-panel scanlines-back m2 ' + (category === 'Species' ? 'orange-glow' : 'red-glow')}

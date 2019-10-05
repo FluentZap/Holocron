@@ -70,6 +70,7 @@ export function newCharacter(species) {
     credits: 500,
     career: 'SMUG',    
     freeRanks: 4,
+    freeRanksTotal: 4,
     specializations: 'Charmer,Pilot',
     wound: 0,
     strain: 0,
@@ -238,7 +239,7 @@ export function setCharacterCareer(ds, character, career) {
   let newChar = newCharacter(ds.species[character.species]);
   newChar.name = oldChar.name;
   newChar.career = career;
-  newChar.freeRanks = ds.careers[career].FreeRanks[0];
+  newChar.freeRanks = newChar.freeRanksTotal = ds.careers[career].FreeRanks[0];
   return newChar;
 }
 
