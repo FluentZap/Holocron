@@ -231,7 +231,7 @@ code {
     /* background-repeat: no-repeat, repeat; */
     /* background-size: contain, 100% 3px; */
 
-    background-image: url(./BGBorderFull.svg);
+    /* background-image: url(./BGBorderFull.svg); */
     background-repeat: no-repeat;
     background-size: contain;
     /* 19223a */
@@ -242,7 +242,9 @@ code {
     height: 100vh;
     width: calc(100vh * 0.5625);
     /* padding: 5vh; */
-    padding: 3.5vh calc(7vh * 0.5625);
+    /* padding: 3.5vh calc(7vh * 0.5625); */
+
+    padding: 0.5vh calc(1vh * 0.5625);
     max-height: calc(100vw * 1.78);
     overflow: hidden;
 }

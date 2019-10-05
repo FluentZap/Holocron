@@ -68,12 +68,51 @@ export function newCharacter(species) {
   return {
     name: 'Scoundrel',
     credits: 500,
-    career: '',
+    career: 'SMUG',    
+    freeRanks: 4,
     specializations: 'Charmer,Pilot',
     wound: 0,
     strain: 0,
     soak: parseInt(Brawn[0]),
-    skills: {
+    skillsCareer: {
+      ASTRO: 0,
+      ATHL: 0,
+      BRAWL: 0,
+      CHARM: 0,
+      COERC: 0,
+      COMP: 0,
+      COOL: 0,
+      COORD: 0,
+      CORE: 0,
+      CYBERNETICS: 0,
+      DECEP: 0,
+      DISC: 0,
+      EDU: 0,
+      GUNN: 0,
+      LEAD: 0,
+      LORE: 0,
+      LTSABER: 0,
+      MECH: 0,
+      MED: 0,
+      MELEE: 0,
+      NEG: 0,
+      OUT: 0,
+      PERC: 0,
+      PILOTPL: 0,
+      PILOTSP: 0,
+      RANGHVY: 0,
+      RANGLT: 0,
+      RESIL: 0,
+      SKUL: 0,
+      STEAL: 0,
+      SURV: 0,
+      SW: 0,
+      UND: 0,
+      VIGIL: 0,
+      WARF: 0,
+      XEN: 0,
+    },
+    skillsFree: {
       ASTRO: 0,
       ATHL: 0,
       BRAWL: 0,
@@ -190,8 +229,17 @@ export function getStatValue(character, stat) {
   return character.characteristics[stat] + character.characteristicsBuy[stat];
 }
 
-export function getSkillValue(character, skill) {  
-  return character.skills[skill] + character.skillsBuy[skill];
+export function getSkillValue(character, skill) {
+  return character.skillsFree[skill] + character.skillsBuy[skill];
+}
+
+export function setCharacterCareer(ds, character, career) {
+  let oldChar = { ...character };
+  let newChar = newCharacter(ds.species[character.species]);
+  newChar.name = oldChar.name;
+  newChar.career = career;
+  newChar.freeRanks = ds.careers[career].FreeRanks[0];
+  return newChar;
 }
 
 // export function getSkillName(skillList, skill) {

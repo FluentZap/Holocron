@@ -8,16 +8,17 @@ const boxFade = new FadeInBuilder(0.3, 0.5, 8);
 export const TextBox = ({ text, area, delay, className, edit }) => {
 	if (!className) className = '';
 	return edit === true ?
-		<input className={'font-small animate-fade-in z-5 m2 p2 flex-left data-panel blue-glow scanlines-back roster-text ' + className}
+		<input className={className + ' font-small animate-fade-in z-5 m2 p2 flex-left data-panel blue-glow scanlines-back roster-text'}
 			style={{ gridArea: `${area[0]} / ${area[1]} / span ${area[2]} / span ${area[3]}`, animationDelay: delay }} placeholder={text} />
 		:
-		<div className={'font-small animate-fade-in z-5 m2 p2 flex-left data-panel gray-flat scanlines-back roster-text ' + className}
+		<div className={className + ' font-small animate-fade-in z-5 m2 p2 flex-left data-panel gray-flat scanlines-back roster-text'}
 			style={{ gridArea: `${area[0]} / ${area[1]} / span ${area[2]} / span ${area[3]}`, animationDelay: delay }} placeholder={text}>
 			{text}</div>
 }
 
 
-const CharacterCard = ({ fadeDelay, character }) => {
+const CharacterCard = ({ ds, fadeDelay, character }) => {
+	console.log(ds.careers[character.career].Name[0].length);
 	return (
 		<div className='animate-fade-in roster-character-card' style={{ gridArea: '4 / 1 / span 10 / span 20', animationDelay: fadeDelay }}>
 			<div className='data-panel red-flat scanlines-back m2 p2' style={{ gridArea: '1 / 1 / span 10 / span 20' }} />
@@ -25,10 +26,10 @@ const CharacterCard = ({ fadeDelay, character }) => {
 				text={`Name: ${character.name}`} edit={true} />
 
 			<TextBox area={[4, 7, 2, 8]} delay={boxFade()}
-				text={`${character.speciesName}`} />
+				text={`${ds.species[character.species].Name}`} />
 
 			<TextBox area={[4, 15, 2, 5]} delay={boxFade()}
-				text={character.career} />
+				text={ds.careers[character.career].Name} />
 			{/* <div className={'font-small animate-fade-in z-5 m2 p2 flex-left data-panel gray-flat-hover scanlines-back roster-text '}
                 style={{ gridArea: `4 / 15 / span 2 / span 5`, animationDelay: boxFade() }}>{stats.career}</div> */}
 

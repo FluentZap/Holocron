@@ -12,6 +12,19 @@ const loadDataSet = (dispatch) => {
     );
   });
 
+  let careerSourceList = require.context('../dataset/Careers/', true, /\.xml$/).keys();
+  let careerList = {};
+  let careerPromiseList = [];
+  careerSourceList.forEach(career => {
+    careerPromiseList.push(
+      import(/* webpackMode: "eager" */ `../dataset/Careers/${career.slice(2).replace('.xml', '')}.xml`).then(value => {
+        let career = value.default.Career;        
+        // career.Description[0] = parseXML(career.Description[0]);
+        careerList[career.Key] = career;
+      })
+    );
+  });
+
   let skillList = {};
   let skillPromise = import(/* webpackMode: "eager" */ `../dataset/Skills.xml`).then(value => {
     let skills = value.default.Skills.Skill;
@@ -38,6 +51,9 @@ const loadDataSet = (dispatch) => {
         // console.log(speciesList);
         return ['species', speciesList];
         // return speciesList;
+      }),
+      Promise.all(careerPromiseList).then(() => {        
+        return ['careers', careerList];        
       }),
       skillPromise.then(() => {
         return ['skills', skillList];

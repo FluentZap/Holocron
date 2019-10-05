@@ -7,6 +7,10 @@
     overflow: hidden;    
 }
 
+.font-very-small {
+    font-size: 1.4vh;
+}
+
 .font-small {
     font-size: 2.4vh;
 }

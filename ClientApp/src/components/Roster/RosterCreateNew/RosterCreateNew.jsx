@@ -5,15 +5,13 @@ import uuid from 'uuid';
 import './RosterCreateNewStyles.css';
 import FadeInBuilder from '../../FadeInBuilder';
 import CharacterCard, { TextBox } from '../CharacterCard/CharacterCard';
-import { newCharacter, getSkills, getSkillsStat, getStatValue, getSkillValue } from '../../../models/CharacterStats';
+import { newCharacter, getSkills, getSkillsStat, getStatValue, getSkillValue, setCharacterCareer } from '../../../models/CharacterStats';
 import { SkillBuySell, CharacteristicsBuySell, SkillBox } from './SkillBox';
 import FullScreenInfo from './FullScreenInfo';
+import CareerInfo from './CareerInfo';
 
-const fadeInTime = new FadeInBuilder(0, 0.2, 5);
-const fadeStats = new FadeInBuilder(0, 0.2, 6);
-const boxFade = new FadeInBuilder(0, 0.2, 8);
-
-const repeatFade = new FadeInBuilder(0, 0.2, 4);
+const panelFade = new FadeInBuilder(0, 0.1, 2);
+const childFade = new FadeInBuilder(0.1, 0.2, 4);
 
 function Roster({ dataSet }) {
   const ds = dataSet;
@@ -25,13 +23,23 @@ function Roster({ dataSet }) {
   const [category, setCategory] = useState('Species')
 
   const [species, setSpecies] = useState('')
+  const [career, setCareer] = useState('SMUG')
 
   const [showInfo, setShowInfo] = useState('')
 
   const changeSpecies = newSpecies => {
-
-    setCharacter(newCharacter(ds.species[newSpecies]));
+    let oldCareer = character.career;
+    let newChar = newCharacter(ds.species[newSpecies]);
+    newChar = setCharacterCareer(ds, newChar, oldCareer)
+    setCharacter(newChar);
     setSpecies(newSpecies);
+  }
+
+  const changeCareer = newCareer => {
+    if (newCareer !== character.career) {
+      setCharacter(setCharacterCareer(ds, character, newCareer));
+      setCareer(newCareer);
+    }
   }
 
   // console.log(speciesList);
@@ -40,14 +48,14 @@ function Roster({ dataSet }) {
     <div className='flex-center full-screen'>
       <div className='data-container'>
         <button onClick={() => navigate('/menu')} className='animate-fade-in flex-center data-panel red-glow scanlines-back m2'
-          style={{ gridArea: '1 / 1 / span 3 / span 7', animationDelay: fadeInTime() }}>Menu</button>
+          style={{ gridArea: '1 / 1 / span 3 / span 7', animationDelay: panelFade() }}>Menu</button>
         {/* <div className='animate-fade-in flex-center data-panel red-glow scanlines' style={{ gridArea: '2 / 1 / span 3 / span 9', margin: 5, animationDelay: fadeInTime() }}> */}
-        <CharacterCard fadeDelay={fadeInTime()} {...{ character }} newCharacter={true} />
+        <CharacterCard fadeDelay={panelFade()} {...{ character, ds }} newCharacter={true} />
         {/* </div> */}
 
         {category === 'Stats' ?
           <>
-            <div className='roster-new-characteristics-list animate-fade-in flex-center data-panel red-flat scanlines-back m2' style={{ gridArea: '14 / 1 / span 24 / span 7', animationDelay: fadeInTime() }}>
+            <div className='roster-new-characteristics-list animate-fade-in flex-center data-panel red-flat scanlines-back m2' style={{ gridArea: '14 / 1 / span 24 / span 7', animationDelay: panelFade() }}>
               {Object.entries(character.characteristics).map(([key, value]) =>
                 <StatBox key={uuid.v4()} name={ds.characteristics[key].Name[0]} value={value + character.characteristicsBuy[key]} value2={character.characteristicsBuy[key]} selected={key === selectStat} onClick={() => {
                   if (selectStat === key && selectSkill === '') {
@@ -71,20 +79,23 @@ function Roster({ dataSet }) {
           </>
           : category === 'Species' ?
             <>
-              <SpeciesList {...{ species, changeSpecies, ds, fadeInTime }} />
+              <SpeciesList {...{ species, changeSpecies, ds }} />
               {species ? <SpeciesBox {...{ species, ds, setShowInfo }} /> :
                 <div className='animate-fade-in flex-center data-panel red-flat scanlines-back m2 p2' style={{ gridArea: '14 / 8 / span 24 / span 13', justifyContent: 'start' }} />}
             </>
-            : ''}
+            : category === 'Career' ?
+              <CareerInfo {...{ career, changeCareer, ds, character, setCharacter }} />
+              : ''
+        }
         <button className={'animate-fade-in flex-center data-panel scanlines-back m2 ' + (category === 'Species' ? 'orange-glow' : 'red-glow')}
           onClick={() => setCategory('Species')}
-          style={{ gridArea: '38 / 1 / span 3 / span 7', animationDelay: fadeInTime() }}>Species</button>
+          style={{ gridArea: '38 / 1 / span 3 / span 7', animationDelay: panelFade() }}>Species</button>
         <button className={'animate-fade-in flex-center data-panel scanlines-back m2 ' + (category === 'Career' ? 'orange-glow' : 'red-glow')}
           onClick={() => setCategory('Career')}
-          style={{ gridArea: '38 / 8 / span 3 / span 7', animationDelay: fadeInTime() }}>Career</button>
+          style={{ gridArea: '38 / 8 / span 3 / span 7', animationDelay: panelFade() }}>Career</button>
         <button className={'animate-fade-in flex-center data-panel scanlines-back m2 ' + (category === 'Stats' ? 'orange-glow' : 'red-glow')}
           onClick={() => setCategory('Stats')}
-          style={{ gridArea: '38 / 15 / span 3 / span 7', animationDelay: fadeInTime() }}>Stats</button>
+          style={{ gridArea: '38 / 15 / span 3 / span 7', animationDelay: panelFade() }}>Stats</button>
         {showInfo ? <FullScreenInfo onClick={() => setShowInfo('')} text={showInfo} /> : ''}
       </div>
     </div >
@@ -94,11 +105,13 @@ function Roster({ dataSet }) {
 
 
 const StatBox = ({ name, value, value2, selected, onClick }) => {
+
   let classes = 'roster-new-characteristics-box flex-center data-panel scanlines-back'
     + (selected === true ? ' orange-glow roster-detail-selected' : ' blue-glow ');
   return <div
     onClick={onClick}
-    className={classes} >
+    className={classes}
+  >
     {value2 ?
       <div style={{ fontFamily: 'Engli-Besh' }}>{value}[{value2}]</div> :
       <div style={{ fontFamily: 'Engli-Besh' }}>{value}</div>}
@@ -120,7 +133,7 @@ const SpeciesBox = ({ species, ds, setShowInfo }) => {
     <div className='animate-fade-in flex-center data-panel red-flat scanlines-back m2 p2' style={{ gridArea: '14 / 8 / span 24 / span 13', justifyContent: 'start' }} >
       <div ref={speciesRef} className='flex-center' style={{ display: 'block', overflowY: 'auto', width: '99%', margin: '.5vmin 0' }} >
         <div className='animate-fade-in z-5 m2 p2 flex-left data-panel gray-flat font-small'
-          style={{ animationDelay: repeatFade(), marginTop: 0 }}>
+          style={{ animationDelay: childFade(), marginTop: 0 }}>
           <h3 className='m2'>{Name}</h3>
           xp {Experience}
           <p>
@@ -136,7 +149,7 @@ const SpeciesBox = ({ species, ds, setShowInfo }) => {
           </ul>
         </div>
         <div className='animate-fade-in z-5 m2 p2 flex-left data-panel gray-flat font-small'
-          style={{ animationDelay: repeatFade(), marginBottom: 0 }}>
+          style={{ animationDelay: childFade(), marginBottom: 0 }}>
           <div className={`animate-fade-in z-5 m2 p2 flex-center center data-panel font-small gray-flat-hover half-width`}
             onClick={() => {
               setShowInfo(Description[0]);
@@ -158,7 +171,7 @@ const SpeciesList = ({ species, changeSpecies, ds, fadeIn }) => {
     <div className={`${fadeIn} flex-center`} style={{ display: 'block', overflowY: 'auto', width: '99%', margin: '.5vmin 0' }} >
       {Object.entries(ds.species).map(([key, value], i) =>
         <div key={uuid.v4()} className={`${fadeIn} z-5 m2 p2 flex-center center data-panel font-small ${species === key ? 'orange-glow' : 'gray-flat-hover'}`}
-          style={{ animationDelay: boxFade(), marginTop: i === 0 ? 0 : '0.5vmin', marginBottom: i === speciesCount - 1 ? 0 : '0.5vmin' }}
+          style={{ animationDelay: childFade(), marginTop: i === 0 ? 0 : '0.5vmin', marginBottom: i === speciesCount - 1 ? 0 : '0.5vmin' }}
           onClick={() => changeSpecies(key)}
         >
           {value.Name}
