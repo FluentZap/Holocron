@@ -25,7 +25,7 @@ function Roster({ dataSet }) {
 
   const [species, setSpecies] = useState('HUMAN')
   const [career, setCareer] = useState('SMUG')
-  const [specialization, setSpecialization] = useState('')
+  const [specialization, setSpecialization] = useState('SCOUND')
 
   const [showInfo, setShowInfo] = useState('')
 
@@ -41,20 +41,13 @@ function Roster({ dataSet }) {
     if (newCareer !== character.career) {
       setCharacter(setCharacterCareer(ds, character, newCareer));
       setCareer(newCareer);
-      // setSpecialization(ds.careers[newCareer].Specializations[0].Key[0]);
-      setSpecialization('')
+      setSpecialization(ds.careers[newCareer].Specializations[0].Key[0]);
     }
   }
 
   const changeSpecialization = newSpec => {
-    console.log(newSpec);
-    
-    setCharacter({...character, specializations: [newSpec]});
-    setSpecialization(newSpec);
-    // if (newCareer !== character.career) {
-    //   setCharacter(setCharacterCareer(ds, character, newCareer));
-    //   setCareer(newCareer);
-    // }
+    setCharacter({...character, specializations: [newSpec], skillsSpecFree: [], skillsSpec: [...ds.specializations[newSpec].CareerSkills[0].Key]});
+    setSpecialization(newSpec);    
   }
 
   // console.log(speciesList);

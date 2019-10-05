@@ -1,5 +1,5 @@
 import React, { useEffect, useState, useMemo, useCallback, useRef, memo } from 'react';
-import { newCharacter, getSkills, getSkillsStat, getStatValue, getSkillValue } from '../../../models/CharacterStats';
+import { newCharacter, getSkills, getSkillsStat, getStatValue, getSkillValue, getCareerSkill } from '../../../models/CharacterStats';
 import uuid from 'uuid';
 import GetSkillSymbols from '../../Universal/Symbol';
 import FadeInBuilder from '../../FadeInBuilder';
@@ -33,7 +33,7 @@ export const SkillBox = ({ character, selectStat, selectSkill, setSelectSkill, d
           return <div key={uuid.v4()} className='animate-fade-in z-5 m2 p2 flex-left data-panel gray-flat-hover'
             style={{ animationDelay: childFade(), marginTop: i === 0 ? 0 : '.5vmin', marginBottom: i === skillCount - 1 ? 0 : '.5vmin' }}
             onClick={() => updateSelectSkill(key)} >
-            <div className='font-small'>{value} ({getSkillValue(character, key)}){character.skillsCareer.includes(key) ? ' - C' : ''}</div> <GetSkillSymbols skill={key} {...{ character, ds }} />
+            <div className='font-small'>{value} ({getSkillValue(character, key)}){getCareerSkill(character, key) ? ' - C' : ''}</div> <GetSkillSymbols skill={key} {...{ character, ds }} />
           </div>
         })
           :
@@ -42,7 +42,7 @@ export const SkillBox = ({ character, selectStat, selectSkill, setSelectSkill, d
               style={{ animationDelay: childFade(), marginTop: 0 }}
               onClick={() => setSelectSkill('')} >
               {/* {selectSkill}: {character.skills[selectSkill]} */}
-              <div className='font-small'>{ds.skills[selectSkill].Name[0]} ({getSkillValue(character, selectSkill)}){character.skillsCareer.includes(selectSkill) ? ' - C' : ''}</div> <GetSkillSymbols skill={selectSkill} {...{ character, ds }} />
+              <div className='font-small'>{ds.skills[selectSkill].Name[0]} ({getSkillValue(character, selectSkill)}){getCareerSkill(character, selectSkill) ? ' - C' : ''}</div> <GetSkillSymbols skill={selectSkill} {...{ character, ds }} />
             </div>
             <DescriptionBox text={ds.skills[selectSkill].Description[0]} {...{ setShowInfo }} />
           </>

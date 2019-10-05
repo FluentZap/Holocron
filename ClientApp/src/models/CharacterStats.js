@@ -77,8 +77,8 @@ export function newCharacter(species) {
     soak: parseInt(Brawn[0]),
     skillsCareer: [],
     skillsCareerFree: [],
-    skillsSpecs: [],
-    skillsSpecsFree: [],
+    skillsSpec: ['CHARM', 'COOL', 'DECEP', 'RAMGLT'],
+    skillsSpecFree: [],
     skillsBuy: {
       ASTRO: 0,
       ATHL: 0,
@@ -161,11 +161,11 @@ export function getStatValue(character, stat) {
 export function getSkillValue(character, skill) {
   return character.skillsBuy[skill]
     + (character.skillsCareerFree.includes(skill) ? 1 : 0)
-      + (character.skillsSpecsFree.includes(skill) ? 1 : 0);
+      + (character.skillsSpecFree.includes(skill) ? 1 : 0);
 }
 
 export function getCareerSkill(character, skill) {
-  return character.skillsCareer.includes(skill) || character.skillsSpecs.includes(skill);
+  return character.skillsCareer.includes(skill) || character.skillsSpec.includes(skill);
 }
 
 export function setCharacterCareer(ds, character, career) {
@@ -173,6 +173,7 @@ export function setCharacterCareer(ds, character, career) {
   let newChar = newCharacter(ds.species[character.species]);
   newChar.name = oldChar.name;
   newChar.career = career;
+  newChar.specializations = [ds.careers[career].Specializations[0].Key[0]];
   newChar.freeCareerRanks = newChar.freeCareerRanksTotal = ds.careers[career].FreeRanks[0];
   return newChar;
 }
