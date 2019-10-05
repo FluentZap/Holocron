@@ -163,8 +163,8 @@ code {
 }
 
 .full-screen {
-    width: 100vw;
-    height: 100vh;
+    width: 100%;
+    height: 100%;
 }
 
 @keyframes glow1 {
@@ -250,11 +250,15 @@ code {
     /* mask-size: contain; */
     /* mask-repeat: no-repeat;     */
     box-sizing: border-box;
-    height: 100vh;
-    width: calc(100vh * 0.5625);
+    top: 0;
+    height: 100%;
+    /* width: calc(100vh * 0.5625); */
+    width: calc(var(--vh, 1vh) * 100 * 0.5625);
+    /* height: calc(var(--vh, 1vh) * 100); */
+
     /* padding: 5vh; */
     /* padding: 3.5vh calc(7vh * 0.5625); */
-
+    position: fixed;
     padding: 0.5vh calc(1vh * 0.5625);
     max-height: calc(100vw * 1.78);
     overflow: hidden;

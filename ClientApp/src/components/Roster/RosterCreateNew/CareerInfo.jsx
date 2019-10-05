@@ -61,7 +61,7 @@ const CareerInfo = ({ ds, career, changeCareer, specialization, changeSpecializa
       </div>
     </div>
 
-    <Specs {...{ ds, character, career, specialization, changeSpecialization, setShowInfo }} /> :
+    <Specs {...{ ds, character, career, specialization, changeSpecialization, setShowInfo }} />
     {careerCategory === 'CareerSkills' ?
       <CareerSkills {...{ ds, character, career, setCareerSkill }} /> :
       careerCategory === 'CareerInfo' ?
@@ -162,7 +162,7 @@ const SpecSkills = ({ ds, character, specialization, setSpecSkill }) => {
   return <>
     <div className='flex-row-center data-panel red-flat scanlines-back m2 p2 font-small'
       style={{ gridArea: '17 / 8 / span 2 / span 13', justifyContent: 'center', animationDelay: panelFade(), flexFlow: 'row wrap' }}>
-      Pick Specialization Free Rank {character.freeSpecRanks - character.skillsSpecFree.length} / {character.freeSpecRanks}
+      Pick Free Ranks {character.freeSpecRanks - character.skillsSpecFree.length} / {character.freeSpecRanks}
     </div>
     <div className='flex-row-center data-panel red-flat scanlines-back m2 p2'
       style={{ gridArea: '19 / 8 / span 19 / span 13', justifyContent: 'center', animationDelay: panelFade(), flexFlow: 'row wrap', alignItems: 'stretch' }}>

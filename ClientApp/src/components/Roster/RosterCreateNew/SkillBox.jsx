@@ -1,5 +1,5 @@
-import React, { useEffect, useState, useMemo, useCallback, useRef, memo } from 'react';
-import { newCharacter, getSkills, getSkillsStat, getStatValue, getSkillValue, getCareerSkill } from '../../../models/CharacterStats';
+import React, { useRef } from 'react';
+import { getSkills, getStatValue, getSkillValue, getCareerSkill } from '../../../models/CharacterStats';
 import uuid from 'uuid';
 import GetSkillSymbols from '../../Universal/Symbol';
 import FadeInBuilder from '../../FadeInBuilder';

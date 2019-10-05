@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useEffect } from 'react';
 import { Provider } from 'react-redux';
 import { holocronMiddleware, holocronReducer } from './middleware/HoloStore';
 import { createStore, applyMiddleware } from 'redux';
@@ -11,7 +11,6 @@ import Hanger from './components/Hanger/Hanger';
 
 import Login from './components/Login/Login';
 import MainMenu from './components/MainMenu/MainMenu';
-
 
 import Notes from './components/Notes/Notes';
 import Roller from './components/Roller/Roller';
@@ -39,6 +38,12 @@ function toggleFullScreen() {
     cancelFullScreen.call(doc);
   }
 }
+
+window.addEventListener('resize', () => {
+  // We execute the same script as before
+  let vh = window.innerHeight * 0.01;
+  document.documentElement.style.setProperty('--vh', `${vh}px`);
+});
 
 function App() {
   useEffect(() => {

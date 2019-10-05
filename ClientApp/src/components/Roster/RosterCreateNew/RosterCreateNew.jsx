@@ -1,11 +1,11 @@
-import React, { useEffect, useState, useMemo, useCallback, useRef, memo } from 'react';
+import React, { useEffect, useState, useRef } from 'react';
 import { connect } from 'react-redux'
 import { navigate } from "@reach/router";
 import uuid from 'uuid';
 import './RosterCreateNewStyles.css';
 import FadeInBuilder from '../../FadeInBuilder';
-import CharacterCard, { TextBox } from '../CharacterCard/CharacterCard';
-import { newCharacter, getSkills, getSkillsStat, getStatValue, getSkillValue, setCharacterCareer } from '../../../models/CharacterStats';
+import CharacterCard from '../CharacterCard/CharacterCard';
+import { newCharacter, setCharacterCareer } from '../../../models/CharacterStats';
 import { SkillBuySell, CharacteristicsBuySell, SkillBox } from './SkillBox';
 import FullScreenInfo from './FullScreenInfo';
 import CareerInfo from './CareerInfo';
@@ -19,7 +19,7 @@ function Roster({ dataSet }) {
 
   const [character, setCharacter] = useState(newCharacter(ds.species['HUMAN']));
   const [selectStat, setSelectStat] = useState('')
-  const [selectSkill, setSelectSkill] = useState('')  
+  const [selectSkill, setSelectSkill] = useState('')
 
   const [category, setCategory] = useState('Species')
 
@@ -33,7 +33,7 @@ function Roster({ dataSet }) {
     let oldCareer = character.career;
     let newChar = newCharacter(ds.species[newSpecies]);
     newChar = setCharacterCareer(ds, newChar, oldCareer)
-    setCharacter(newChar);    
+    setCharacter(newChar);
     setSpecies(newSpecies);
   }
 
@@ -46,8 +46,8 @@ function Roster({ dataSet }) {
   }
 
   const changeSpecialization = newSpec => {
-    setCharacter({...character, specializations: [newSpec], skillsSpecFree: [], skillsSpec: [...ds.specializations[newSpec].CareerSkills[0].Key]});
-    setSpecialization(newSpec);    
+    setCharacter({ ...character, specializations: [newSpec], skillsSpecFree: [], skillsSpec: [...ds.specializations[newSpec].CareerSkills[0].Key] });
+    setSpecialization(newSpec);
   }
 
   // console.log(speciesList);
@@ -165,8 +165,6 @@ const SpeciesBox = ({ species, ds, setShowInfo }) => {
 const SpeciesList = ({ species, changeSpecies, ds, fadeIn }) => {
   // const fadeClass = fadeIn === true ? 'animate-fade-in ' : ' '
   const speciesCount = Object.keys(ds.species).length;
-  console.log(speciesCount);
-
   return <div className={`${fadeIn} flex-center data-panel red-flat scanlines-back m2 p2`} style={{ gridArea: '14 / 1 / span 24 / span 7', justifyContent: 'start' }} >
     <div className={`${fadeIn} flex-center`} style={{ display: 'block', overflowY: 'auto', width: '99%', margin: '.5vmin 0' }} >
       {Object.entries(ds.species).map(([key, value], i) =>
