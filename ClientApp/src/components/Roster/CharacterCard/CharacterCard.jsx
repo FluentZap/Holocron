@@ -43,7 +43,7 @@ const CharacterCard = ({ ds, fadeDelay, character }) => {
 					<div>{character.strain} / {character.strainThreshold}</div>
 				</>} />
 			<TextBox area={[6, 15, 4, 5]} delay={boxFade()}
-				text={character.specializations.split(',').map(spec => <div key={uuid.v4()}>{spec}</div>)} />
+				text={character.specializations.map(spec => spec !== '' ? <div className='center' key={uuid.v4()}>{ds.specializations[spec].Name[0]}</div> : '')} />
 
 			<TextBox area={[2, 2, 5, 5]} delay={boxFade()}
 				text={''} />

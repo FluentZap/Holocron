@@ -8,25 +8,29 @@ import DescriptionBox from '../../Universal/DescriptionBox';
 const panelFade = new FadeInBuilder(0, 0.1, 2);
 const childFade = new FadeInBuilder(0.1, 0.2, 4);
 
-const CareerInfo = ({ ds, career, changeCareer, specialization, changeSpecialization , character, setCharacter, setShowInfo }) => {
+const CareerInfo = ({ ds, career, changeCareer, specialization, changeSpecialization, character, setCharacter, setShowInfo }) => {
   const careerCount = Object.keys(ds.careers).length;
   const [careerCategory, setCareerCategory] = useState('Info')
 
-  const setSkill = skill => {
-    if (character.skillsCareer[skill] === 1 && character.skillsFree[skill] > 0) {
-      setCharacter({
-        ...character,
-        skillsCareer: { ...character.skillsCareer, [skill]: 0 },
-        freeRanks: character.freeRanks + 1,
-        skillsFree: { ...character.skillsFree, [skill]: character.skillsFree[skill] - 1 }
+  const setCareerSkill = skill => {
+    if (character.skillsCareer.includes(skill)) {
+      setCharacter({ ...character, 
+        skillsCareer: character.skillsCareer.filter(x => x !== skill),
+        skillsCareerFree: character.skillsCareerFree.filter(x => x !== skill)
+       })
+    } else if (character.skillsCareer.length < character.freeCareerRanks) {
+      setCharacter({ ...character, 
+        skillsCareer: [...character.skillsCareer, skill],
+        skillsCareerFree: [...character.skillsCareerFree, skill]
       })
-    } else if (character.freeRanks > 0) {
-      setCharacter({
-        ...character,
-        skillsCareer: { ...character.skillsCareer, [skill]: 1 },
-        freeRanks: character.freeRanks - 1,
-        skillsFree: { ...character.skillsFree, [skill]: character.skillsFree[skill] + 1 }
-      })
+    }
+  }
+
+  const setSpecSkill = skill => {
+    if (character.skillsSpec.includes(skill)) {
+      setCharacter({ ...character, skillsCareer: character.skillsCareer.filter(x => x !== skill) })
+    } else if (character.skillsCareer.length < character.freeCareerRanks) {
+      setCharacter({ ...character, skillsCareer: [...character.skillsCareer, skill] })
     }
   }
 
@@ -47,11 +51,15 @@ const CareerInfo = ({ ds, career, changeCareer, specialization, changeSpecializa
       </div>
     </div>
     {careerCategory === 'CareerSkills' ?
-      <CareerSkills {...{ ds, character, career, setSkill }} />
-      : careerCategory === 'Info' ?
-        <CareerInfoBox {...{ ds, character, career, setSkill, setShowInfo }} /> :
+      <CareerSkills {...{ ds, character, career, setCareerSkill }} /> :
+      careerCategory === 'Info' ?
+        <CareerInfoBox {...{ ds, character, career, setCareerSkill, setShowInfo }} /> :
         careerCategory === 'Specs' ?
-          <Specs {...{ ds, character, career, specialization, changeSpecialization, setShowInfo }} /> : ''
+          <Specs {...{ ds, character, career, specialization, changeSpecialization, setShowInfo }} /> :
+          careerCategory === 'Info' ?
+            <SpecSkills {...{ ds, character, specialization, setSpecSkill }} />
+            : ''
+
     }
 
 
@@ -59,13 +67,13 @@ const CareerInfo = ({ ds, career, changeCareer, specialization, changeSpecializa
       onClick={() => setCareerCategory('Info')}
       style={{ gridArea: '14 / 8 / span 3 / span 3', animationDelay: panelFade() }}>Info</button>
 
-    <button className={'flex-center data-panel scanlines-back m2 font-small ' + (careerCategory === 'CareerSkills' ? 'orange-glow' : 'red-glow')}
-      onClick={() => setCareerCategory('CareerSkills')}
-      style={{ gridArea: '14 / 11 / span 3 / span 3', animationDelay: panelFade() }}>Career Skills</button>
-
     <button className={'flex-center data-panel scanlines-back m2 font-small ' + (careerCategory === 'Specs' ? 'orange-glow' : 'red-glow')}
       onClick={() => setCareerCategory('Specs')}
-      style={{ gridArea: '14 / 14 / span 3 / span 4', animationDelay: panelFade() }}>Specs</button>
+      style={{ gridArea: '14 / 11 / span 3 / span 4', animationDelay: panelFade() }}>Specs</button>
+
+    <button className={'flex-center data-panel scanlines-back m2 font-small ' + (careerCategory === 'CareerSkills' ? 'orange-glow' : 'red-glow')}
+      onClick={() => setCareerCategory('CareerSkills')}
+      style={{ gridArea: '14 / 15 / span 3 / span 3', animationDelay: panelFade() }}>Career Skills</button>
 
     <button className={'flex-center data-panel scanlines-back m2 font-small ' + (careerCategory === 'SpecSkills' ? 'orange-glow' : 'red-glow')}
       onClick={() => setCareerCategory('SpecSkills')}
@@ -76,28 +84,28 @@ const CareerInfo = ({ ds, career, changeCareer, specialization, changeSpecializa
 
 
 
-const CareerSkills = ({ ds, character, career, setSkill }) => {
+const CareerSkills = ({ ds, character, career, setCareerSkill }) => {
   return <>
     <div className='flex-row-center data-panel red-flat scanlines-back m2 p2 font-small'
       style={{ gridArea: '17 / 8 / span 2 / span 13', justifyContent: 'center', animationDelay: panelFade(), flexFlow: 'row wrap' }}>
-      Pick Career Skills {character.freeRanks} / {character.freeRanksTotal}
+      Pick Career Skills {character.freeCareerRanks - character.skillsCareerFree.length} / {character.freeCareerRanks}
     </div>
     <div className='flex-row-center data-panel red-flat scanlines-back m2 p2'
       style={{ gridArea: '19 / 8 / span 19 / span 13', justifyContent: 'center', animationDelay: panelFade(), flexFlow: 'row wrap', alignItems: 'stretch' }}>
       {ds.careers[career].CareerSkills[0].Key.map(key => {
-        return <div key={uuid.v4()} className={`z-5 m2 p2 flex-center center data-panel font-small ${character.skillsCareer[key] === 1 ? 'orange-glow' : 'gray-flat-hover'}`}
+        return <div key={uuid.v4()} className={`z-5 m2 p2 flex-center center data-panel font-small ${character.skillsCareer.includes(key) ? 'orange-glow' : 'gray-flat-hover'}`}
           style={{ animationDelay: childFade(), width: '45%' }}
           onClick={() => {
-            setSkill(key);
+            setCareerSkill(key);
           }}>
-          {ds.skills[key].Name[0]} ({getSkillValue(character, key)}) <GetSkillSymbols skill={key} {...{ character, ds }} />
+          {ds.skills[key].Name[0]} ({getSkillValue(character, key)}) {character.skillsCareer.includes(key) ? ' - C' : ''}<GetSkillSymbols skill={key} {...{ character, ds }} />
         </div>
       })}
     </div>
   </>
 }
 
-const CareerInfoBox = ({ ds, character, career, setSkill, setShowInfo }) => {
+const CareerInfoBox = ({ ds, career, setShowInfo }) => {
   return <>
     <div className='flex-center data-panel red-flat scanlines-back m2 p2'
       style={{ gridArea: '17 / 8 / span 21 / span 13', justifyContent: 'center', animationDelay: panelFade() }}>
@@ -123,7 +131,7 @@ const Specs = ({ ds, character, career, specialization, changeSpecialization, se
           return <div key={uuid.v4()} className='animate-fade-in z-5 m2 p2 flex-left data-panel gray-flat-hover'
             style={{ animationDelay: childFade(), marginTop: i === 0 ? 0 : '.5vmin', marginBottom: i === specCount - 1 ? 0 : '.5vmin' }}
             onClick={() => changeSpecialization(key)} >
-            <div className='font-small'>{ds.specializations[key].Name[0]}</div>
+            <div>{ds.specializations[key].Name[0]}</div>
           </div>
         })
           :
@@ -132,7 +140,7 @@ const Specs = ({ ds, character, career, specialization, changeSpecialization, se
               style={{ animationDelay: childFade(), marginTop: 0 }}
               onClick={() => changeSpecialization('')} >
               {/* {selectSkill}: {character.skills[selectSkill]} */}
-              <div className='font-small'>{ds.specializations[specialization].Name[0]}</div>
+              <div>{ds.specializations[specialization].Name[0]}</div>
             </div>
             <DescriptionBox text={ds.specializations[specialization].Description[0]} {...{ setShowInfo }} />
           </>
@@ -142,7 +150,26 @@ const Specs = ({ ds, character, career, specialization, changeSpecialization, se
   </>
 }
 
-
+const SpecSkills = ({ ds, character, specialization, setSkill }) => {
+  return <>
+    <div className='flex-row-center data-panel red-flat scanlines-back m2 p2 font-small'
+      style={{ gridArea: '17 / 8 / span 2 / span 13', justifyContent: 'center', animationDelay: panelFade(), flexFlow: 'row wrap' }}>
+      Pick Specialization Skills {character.freeSpecRanks} / {character.freeSpecRanksTotal}
+    </div>
+    <div className='flex-row-center data-panel red-flat scanlines-back m2 p2'
+      style={{ gridArea: '19 / 8 / span 19 / span 13', justifyContent: 'center', animationDelay: panelFade(), flexFlow: 'row wrap', alignItems: 'stretch' }}>
+      {ds.specializations[specialization].CareerSkills[0].Key.map(key => {
+        return <div key={uuid.v4()} className={`z-5 m2 p2 flex-center center data-panel font-small ${character.skillsCareer.includes(key) ? 'orange-glow' : 'gray-flat-hover'}`}
+          style={{ animationDelay: childFade(), width: '45%' }}
+          onClick={() => {
+            setSkill(key);
+          }}>
+          {ds.skills[key].Name[0]} ({getSkillValue(character, key)}) <GetSkillSymbols skill={key} {...{ character, ds }} />
+        </div>
+      })}
+    </div>
+  </>
+}
 
 
 

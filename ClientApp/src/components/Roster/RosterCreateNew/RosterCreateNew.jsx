@@ -25,7 +25,7 @@ function Roster({ dataSet }) {
 
   const [species, setSpecies] = useState('HUMAN')
   const [career, setCareer] = useState('SMUG')
-  const [specialization, setSpecialization] = useState('SCOUND')
+  const [specialization, setSpecialization] = useState('')
 
   const [showInfo, setShowInfo] = useState('')
 
@@ -33,8 +33,7 @@ function Roster({ dataSet }) {
     let oldCareer = character.career;
     let newChar = newCharacter(ds.species[newSpecies]);
     newChar = setCharacterCareer(ds, newChar, oldCareer)
-    setCharacter(newChar);
-    setSpecies(newSpecies);
+    setCharacter(newChar);    
     setSpecies(newSpecies);
   }
 
@@ -48,6 +47,9 @@ function Roster({ dataSet }) {
   }
 
   const changeSpecialization = newSpec => {
+    console.log(newSpec);
+    
+    setCharacter({...character, specializations: [newSpec]});
     setSpecialization(newSpec);
     // if (newCareer !== character.career) {
     //   setCharacter(setCharacterCareer(ds, character, newCareer));
@@ -147,7 +149,7 @@ const SpeciesBox = ({ species, ds, setShowInfo }) => {
       <div ref={speciesRef} className='flex-center' style={{ display: 'block', overflowY: 'auto', width: '99%', margin: '.5vmin 0' }} >
         <div className='animate-fade-in z-5 m2 p2 flex-left data-panel gray-flat font-small'
           style={{ animationDelay: childFade(), marginTop: 0 }}>
-          <h4 className='m2'>{Name}</h4>
+          <h4 className='m2 center'>{Name}</h4>
           xp {Experience}
           <p>
             Wound: {WoundThreshold} Strain: {StrainThreshold}
