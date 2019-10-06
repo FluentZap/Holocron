@@ -16,7 +16,7 @@ import { a } from 'react-spring'
 // const childFade = new FadeInBuilder(0.1, 0.2, 4);
 
 
-function Roster({ dataSet }) {
+function Roster({ dataSet, dispatch }) {
   const ds = dataSet;
 
   const [character, setCharacter] = useState(newCharacter(ds.species['HUMAN']));
@@ -31,7 +31,8 @@ function Roster({ dataSet }) {
 
   const [showInfo, setShowInfo] = useState('')
 
-  const [test, setTest] = useState(0)
+  const [careerCategory, setCareerCategory] = useState('CareerInfo')
+
 
   const changeSpecies = newSpecies => {
     let oldCareer = character.career;
@@ -54,6 +55,25 @@ function Roster({ dataSet }) {
     setSpecialization(newSpec);
   }
 
+  const saveCharacter = () => {
+    if (character.skillsCareerFree.length !== character.freeCareerRanks) {
+      setCategory('Career')
+      setCareerCategory('CareerSkills');
+      setShowInfo('')
+      return;
+    }
+
+    if (character.skillsSpecFree.length !== character.freeSpecRanks) {
+      setCategory('Career')
+      setCareerCategory('SpecSkills');
+      setShowInfo('')
+      return;
+    }
+
+    dispatch({ type: 'SERVER_CREATE_CHARACTER', character });
+
+  }
+
   const [setFade, getFade] = new FadeInBuilder();
   useEffect(() => {
     setFade({ opacity: 1 })
@@ -64,9 +84,9 @@ function Roster({ dataSet }) {
       <div className='data-container'>
         <a.button onClick={() => navigate('/menu')} className='flex-center data-panel red-glow scanlines-back m2'
           style={{ ...getFade(), gridArea: '1 / 1 / span 3 / span 7' }}>Menu</a.button>
-        <a.button onClick={() => navigate('/menu')} className='flex-center data-panel red-glow scanlines-back m2'
+        <a.button className='flex-center data-panel red-glow scanlines-back m2'
           style={{ ...getFade(), gridArea: '1 / 14 / span 3 / span 7' }}
-          onClick={() => setTest(test + 1)}>Create</a.button>
+          onClick={saveCharacter}>Create</a.button>
         {/* <div className='flex-center data-panel red-glow scanlines' style={{ gridArea: '2 / 1 / span 3 / span 9', margin: 5, animationDelay: fadeInTime() }}> */}
         <CharacterCard {...{ character, ds }} newCharacter={true} />
         {/* </div> */}
@@ -102,7 +122,7 @@ function Roster({ dataSet }) {
                 <div className='flex-center data-panel red-flat scanlines-back m2 p2' style={{ gridArea: '14 / 8 / span 24 / span 13', justifyContent: 'start' }} />}
             </>
             : category === 'Career' ?
-              <CareerInfo {...{ career, changeCareer, specialization, changeSpecialization, ds, character, setCharacter, setShowInfo }} />
+              <CareerInfo {...{ career, changeCareer, specialization, changeSpecialization, ds, character, setCharacter, setShowInfo, careerCategory, setCareerCategory }} />
               : ''
         }
         <a.button className={'flex-center data-panel scanlines-back m2 ' + (category === 'Species' ? 'orange-glow' : 'red-glow')}

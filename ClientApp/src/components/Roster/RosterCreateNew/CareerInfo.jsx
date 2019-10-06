@@ -6,8 +6,7 @@ import GetSkillSymbols from '../../Universal/Symbol';
 import DescriptionBox from '../../Universal/DescriptionBox';
 import { a } from 'react-spring'
 
-const CareerInfo = ({ ds, career, changeCareer, specialization, changeSpecialization, character, setCharacter, setShowInfo }) => {
-  const [careerCategory, setCareerCategory] = useState('CareerInfo')
+const CareerInfo = ({ ds, career, changeCareer, specialization, changeSpecialization, character, setCharacter, setShowInfo, careerCategory, setCareerCategory }) => {
   const [setFade, getFade] = new FadeInBuilder();
   useEffect(() => {
     setFade({ opacity: 1 })

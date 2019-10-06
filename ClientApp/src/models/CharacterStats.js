@@ -71,7 +71,7 @@ export function newCharacter(species) {
     career: 'SMUG',
     freeCareerRanks: 4,
     freeSpecRanks: 2,
-    specializations: [''],
+    specializations: ['SCOUND'],
     wound: 0,
     strain: 0,
     soak: parseInt(Brawn[0]),
@@ -174,7 +174,7 @@ export function setCharacterCareer(ds, character, career) {
   newChar.name = oldChar.name;
   newChar.career = career;
   newChar.specializations = [ds.careers[career].Specializations[0].Key[0]];
-  newChar.freeCareerRanks = newChar.freeCareerRanksTotal = ds.careers[career].FreeRanks[0];
+  newChar.freeCareerRanks = parseInt(ds.careers[career].FreeRanks[0]);
   newChar.skillsSpecFree = [];
   newChar.skillsSpec = [...ds.specializations[newChar.specializations].CareerSkills[0].Key];  
   return newChar;

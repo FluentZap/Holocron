@@ -51,6 +51,14 @@ export function holocronMiddleware({ dispatch, getState }) {
             });
         }
 
+        if (action.type === 'SERVER_CREATE_CHARACTER') {
+            let state = getState();
+            connection.invoke("CreateCharacter", action.character
+            ).catch(function (err) {
+                return console.error(err.toString());
+            });
+        }
+
         // Call the next dispatch method in the middleware chain.
         const returnValue = next(action)
 
