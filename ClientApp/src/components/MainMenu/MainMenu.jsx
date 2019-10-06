@@ -1,27 +1,37 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { connect } from 'react-redux'
 import { navigate } from "@reach/router";
 import './MainMenuStyles.css';
+import { a } from 'react-spring'
 import FadeInBuilder from '../FadeInBuilder';
 
-const fadeIn = new FadeInBuilder(0, 0.3, 7);
 
 function MainMenu(props) {
+  
+  const [setFade, getFade] = new FadeInBuilder();
+
+  // const [springs, set, stop] = useSprings(4, index => ({ opacity: 1 }))  
+  // const [panelFade, set] = useSpring(() => ({ opacity: 0, config: { mass: 1, tension: 280, friction: 1000 } }))
+
+  useEffect(() => {
+    setFade({ opacity: 1 })
+  })
+
   return (
-    <div className='flex-center full-screen' style={{overflow: 'hidden'}}>
+    <div className='flex-center full-screen' style={{ overflow: 'hidden' }}>
 
       <div className='data-container scanlines-background'>
-        <button onClick={() => navigate('/roster')} className='animate-fade-in flex-center data-panel red-glow scanlines-back m3 main-menu-panel' style={{ gridArea: '1 / 1 / span 16 / span 10', animationDelay: fadeIn()}}>Roster</button>
+        <a.button onClick={() => navigate('/roster')} className='flex-center data-panel red-glow scanlines-back m3 main-menu-panel' style={{ ...getFade(), gridArea: '1 / 1 / span 16 / span 10' }}>Roster</a.button>
 
-        <button onClick={() => navigate('/archives')} className='animate-fade-in flex-center data-panel red-glow scanlines-back m3 main-menu-panel' style={{ gridArea: '1 / 11 / span 8 / span 10', animationDelay: fadeIn()}}>Archives</button>
-        <button onClick={() => navigate('/hanger')} className='animate-fade-in flex-center data-panel red-glow scanlines-back m3 main-menu-panel' style={{ gridArea: '9 / 11 / span 8 / span 10', animationDelay: fadeIn()}}>Hanger</button>
+        <a.button onClick={() => navigate('/archives')} className='flex-center data-panel red-glow scanlines-back m3 main-menu-panel' style={{ ...getFade(), gridArea: '1 / 11 / span 8 / span 10' }}>Archives</a.button>
+        <a.button onClick={() => navigate('/hanger')} className='flex-center data-panel red-glow scanlines-back m3 main-menu-panel' style={{ ...getFade(), gridArea: '9 / 11 / span 8 / span 10' }}>Hanger</a.button>
 
-        <button onClick={() => navigate('/adventures')} className='animate-fade-in flex-center data-panel red-glow scanlines-back m3 main-menu-panel' style={{ gridArea: '17 / 1 / span 8 / span 20', animationDelay: fadeIn()}}>Adventures</button>
+        <a.button onClick={() => navigate('/adventures')} className='flex-center data-panel red-glow scanlines-back m3 main-menu-panel' style={{ ...getFade(), gridArea: '17 / 1 / span 8 / span 20' }}>Adventures</a.button>
 
-        <button onClick={() => navigate('/atlas')} className='animate-fade-in flex-center data-panel red-glow scanlines-back m3 main-menu-panel' style={{ gridArea: '25 / 1 / span 8 / span 10', animationDelay: fadeIn()}}>Atlas</button>
-        <button onClick={() => navigate('/notes')} className='animate-fade-in flex-center data-panel red-glow scanlines-back m3 main-menu-panel' style={{ gridArea: '33 / 1 / span 8 / span 10', animationDelay: fadeIn()}}>Notes</button>
+        <a.button onClick={() => navigate('/atlas')} className='flex-center data-panel red-glow scanlines-back m3 main-menu-panel' style={{ ...getFade(), gridArea: '25 / 1 / span 8 / span 10' }}>Atlas</a.button>
+        <a.button onClick={() => navigate('/notes')} className='flex-center data-panel red-glow scanlines-back m3 main-menu-panel' style={{ ...getFade(), gridArea: '33 / 1 / span 8 / span 10' }}>Notes</a.button>
 
-        <button onClick={() => navigate('/roller')} className='animate-fade-in flex-center data-panel red-glow scanlines-back m3 main-menu-panel' style={{ gridArea: '25 / 11 / span 16 / span 10', animationDelay: fadeIn()}}>Dice Roller</button>
+        <a.button onClick={() => navigate('/roller')} className='flex-center data-panel red-glow scanlines-back m3 main-menu-panel' style={{ ...getFade(), gridArea: '25 / 11 / span 16 / span 10' }}>Dice Roller</a.button>
       </div>
     </div>
   );

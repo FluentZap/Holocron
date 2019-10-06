@@ -5,14 +5,15 @@ import uuid from 'uuid';
 import './RosterStyles.css';
 import FadeInBuilder from '../FadeInBuilder';
 import CharacterCard from './CharacterCard/CharacterCard';
-
-const fadeIn = new FadeInBuilder(0, 0.3, 3);
+import { a } from 'react-spring'
 
 function Roster(props) {
   const { characters } = props;
+  const [setFade, getFade] = new FadeInBuilder();
 
   //Load characters
   useEffect(() => {
+    setFade({ opacity: 1 });
     if (!characters) {
       props.dispatch({ type: 'SERVER_FETCH_ROSTER' })
     }
@@ -21,11 +22,11 @@ function Roster(props) {
   return (
     <div className='flex-center full-screen'>
       <div className='data-container'>
-        <button onClick={() => navigate('/menu')} className='animate-fade-in flex-center data-panel red-glow scanlines-back m2'
-          style={{ gridArea: '1 / 1 / span 3 / span 7', animationDelay: fadeIn() }}>Menu</button>
-        <button onClick={() => navigate('/createnew')} className='animate-fade-in flex-center data-panel red-glow scanlines-back m2'
-          style={{ gridArea: '38 / 1 / span 3 / span 20', animationDelay: fadeIn() }}>Create New</button>
-        <div className='animate-fade-in flex-center data-panel gray-flat roster-character-list m2 p4' style={{ animationDelay: fadeIn() }}>
+        <a.button onClick={() => navigate('/menu')} className='flex-center data-panel red-glow scanlines-back m2'
+          style={{ ...getFade(), gridArea: '1 / 1 / span 3 / span 7', }}>Menu</a.button>
+        <a.button onClick={() => navigate('/createnew')} className='flex-center data-panel red-glow scanlines-back m2'
+          style={{ ...getFade(), gridArea: '38 / 1 / span 3 / span 20', }}>Create New</a.button>
+        <a.div className='flex-center data-panel gray-flat roster-character-list m2 p4' style={{ ...getFade() }}>
           {characters ?
             characters.map(character =>
               <div className='roster-character-box' key={uuid.v4()}>
@@ -38,8 +39,7 @@ function Roster(props) {
             <div>Loading</div>
           }
 
-
-        </div>
+        </a.div>
       </div>
     </div>
   );

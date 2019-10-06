@@ -175,6 +175,8 @@ export function setCharacterCareer(ds, character, career) {
   newChar.career = career;
   newChar.specializations = [ds.careers[career].Specializations[0].Key[0]];
   newChar.freeCareerRanks = newChar.freeCareerRanksTotal = ds.careers[career].FreeRanks[0];
+  newChar.skillsSpecFree = [];
+  newChar.skillsSpec = [...ds.specializations[newChar.specializations].CareerSkills[0].Key];  
   return newChar;
 }
 

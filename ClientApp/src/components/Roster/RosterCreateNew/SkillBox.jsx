@@ -5,8 +5,8 @@ import GetSkillSymbols from '../../Universal/Symbol';
 import FadeInBuilder from '../../FadeInBuilder';
 import DescriptionBox from '../../Universal/DescriptionBox';
 
-const panelFade = new FadeInBuilder(0, 0.1, 2);
-const childFade = new FadeInBuilder(0.1, 0.2, 4);
+// const panelFade = new FadeInBuilder(0, 0.1, 2);
+// const childFade = new FadeInBuilder(0.1, 0.2, 4);
 
 export const SkillBox = ({ character, selectStat, selectSkill, setSelectSkill, ds, setShowInfo, showInfo }) => {
   const skillsRef = useRef(null)
@@ -27,11 +27,11 @@ export const SkillBox = ({ character, selectStat, selectSkill, setSelectSkill, d
   const skillCount = Object.keys(ds.skills).length;
 
   return (
-    <div className='animate-fade-in flex-center data-panel red-flat scanlines-back m2 p2' style={{ gridArea: grid, justifyContent: 'start' }} >
-      <div ref={skillsRef} className='animate-fade-in flex-center' style={{ display: 'block', overflowY: 'auto', width: '99%', margin: '.5vmin 0' }} >
+    <div className='flex-center data-panel red-flat scanlines-back m2 p2' style={{ gridArea: grid, justifyContent: 'start' }} >
+      <div ref={skillsRef} className='flex-center' style={{ display: 'block', overflowY: 'auto', width: '99%', margin: '.5vmin 0' }} >
         {selectSkill === '' ? getSkills(ds, selectStat).map(([key, value], i) => {
-          return <div key={uuid.v4()} className='animate-fade-in z-5 m2 p2 flex-left data-panel gray-flat-hover'
-            style={{ animationDelay: childFade(), marginTop: i === 0 ? 0 : '.5vmin', marginBottom: i === skillCount - 1 ? 0 : '.5vmin' }}
+          return <div key={uuid.v4()} className='z-5 m2 p2 flex-left data-panel gray-flat-hover'
+            style={{ marginTop: i === 0 ? 0 : '.5vmin', marginBottom: i === skillCount - 1 ? 0 : '.5vmin' }}
             onClick={() => updateSelectSkill(key)} >
             <div className='font-small'>{value} ({getSkillValue(character, key)}){getCareerSkill(character, key) ? ' - C' : ''}</div> <GetSkillSymbols skill={key} {...{ character, ds }} />
           </div>
@@ -39,7 +39,7 @@ export const SkillBox = ({ character, selectStat, selectSkill, setSelectSkill, d
           :
           <>
             <div className='z-5 m2 p2 flex-left data-panel orange-glow scanlines-back'
-              style={{ animationDelay: childFade(), marginTop: 0 }}
+              style={{ marginTop: 0 }}
               onClick={() => setSelectSkill('')} >
               {/* {selectSkill}: {character.skills[selectSkill]} */}
               <div className='font-small'>{ds.skills[selectSkill].Name[0]} ({getSkillValue(character, selectSkill)}){getCareerSkill(character, selectSkill) ? ' - C' : ''}</div> <GetSkillSymbols skill={selectSkill} {...{ character, ds }} />
@@ -83,14 +83,14 @@ export const CharacteristicsBuySell = ({ setCharacter, character, selectStat, ds
   }
 
 
-  return <div className='animate-fade-in flex-center data-panel red-flat scanlines-back m2 font-small'
-    style={{ animationDelay: panelFade(), marginLeft: '.5vmin', marginRight: '.5vmin', justifyContent: 'space-evenly', gridArea: '14 / 8 / span 5 / span 13' }} >
+  return <div className='flex-center data-panel red-flat scanlines-back m2 font-small'
+    style={{ marginLeft: '.5vmin', marginRight: '.5vmin', justifyContent: 'space-evenly', gridArea: '14 / 8 / span 5 / span 13' }} >
     Characteristic ({ds.characteristics[selectStat].Name[0]})
     <div className='flex-row-center full-width'>
-      <div className={`animate-fade-in z-5 m2 p2 flex-left data-panel scanlines-back full-width ${character.characteristicsBuy[selectStat] > 0 ? 'blue-glow' : 'gray-flat'}`}
+      <div className={`z-5 m2 p2 flex-left data-panel scanlines-back full-width ${character.characteristicsBuy[selectStat] > 0 ? 'blue-glow' : 'gray-flat'}`}
         onClick={() => sellStat()}
       >+{sellCost}</div>
-      <div className={`animate-fade-in z-5 m2 p2 flex-left data-panel scanlines-back full-width ${canBuy ? 'blue-glow' : 'gray-flat'}`}
+      <div className={`z-5 m2 p2 flex-left data-panel scanlines-back full-width ${canBuy ? 'blue-glow' : 'gray-flat'}`}
         onClick={() => buyStat()}
       >-{buyCost}</div>
     </div>
@@ -130,14 +130,14 @@ export const SkillBuySell = ({ setCharacter, character, selectSkill, ds }) => {
   }
 
 
-  return <div className='animate-fade-in flex-center data-panel red-flat scanlines-back m2 font-small'
-    style={{ animationDelay: panelFade(), marginLeft: '.5vmin', marginRight: '.5vmin', justifyContent: 'space-evenly', gridArea: '14 / 8 / span 5 / span 13' }} >
+  return <div className='flex-center data-panel red-flat scanlines-back m2 font-small'
+    style={{ marginLeft: '.5vmin', marginRight: '.5vmin', justifyContent: 'space-evenly', gridArea: '14 / 8 / span 5 / span 13' }} >
     Skill ({ds.skills[selectSkill].Name[0]})
     <div className='flex-row-center full-width'>
-      <div className={`animate-fade-in z-5 m2 p2 flex-left data-panel scanlines-back full-width ${character.skillsBuy[selectSkill] > 0 ? 'blue-glow' : 'gray-flat'}`}
+      <div className={`z-5 m2 p2 flex-left data-panel scanlines-back full-width ${character.skillsBuy[selectSkill] > 0 ? 'blue-glow' : 'gray-flat'}`}
         onClick={() => sellSkill()}
       >+{sellCost}</div>
-      <div className={`animate-fade-in z-5 m2 p2 flex-left data-panel scanlines-back full-width ${canBuy ? 'blue-glow' : 'gray-flat'}`}
+      <div className={`z-5 m2 p2 flex-left data-panel scanlines-back full-width ${canBuy ? 'blue-glow' : 'gray-flat'}`}
         onClick={() => buySkill()}
       >-{buyCost}</div>
     </div>
