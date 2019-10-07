@@ -38,18 +38,6 @@ namespace Holocron.Hubs
       await Clients.Caller.SendAsync("send", message + ": First Data And other things");
     }
 
-    public class UserData
-    {
-      [JsonProperty("userName")]
-      public string Name { get; set; }
-
-      [JsonProperty("password")]
-      public string Password { get; set; }
-
-      [JsonProperty("sessionToken")]
-      public string sessionToken { get; set; }
-    }
-
     public async Task CreateUser(UserData user)
     {
       await HoloData.CreateUser(new User() { Name = user.Name, Password = user.Password });
@@ -84,24 +72,8 @@ namespace Holocron.Hubs
       }
     }
 
-    [JsonObject]
-    public class CharacterData : Character
-    {
-      [JsonProperty("specializations")]
-      public List<string> SpecializationsList { get; set; }
-      [JsonProperty("skillsCareer")]
-      public List<string> SkillsCareerList { get; set; }
-      [JsonProperty("skillsCareerFree")]
-      public List<string> SkillsCareerFreeList { get; set; }
-      [JsonProperty("skillsSpec")]
-      public List<string> SkillsSpecList { get; set; }
-      [JsonProperty("skillsSpecFree")]
-      public List<string> SkillsSpecFreeList { get; set; }
-    }
-
     public async Task CreateCharacter(CharacterData character)
-    {
-      System.Console.WriteLine(character);
+    {      
       Character NewCharacter = character;
       NewCharacter.Specializations = string.Join( ",", character.SpecializationsList);
       NewCharacter.SkillsCareer = string.Join( ",", character.SkillsCareerList);
@@ -109,8 +81,23 @@ namespace Holocron.Hubs
       NewCharacter.SkillsSpec = string.Join( ",", character.SkillsSpecList);
       NewCharacter.SkillsSpecFree = string.Join( ",", character.SkillsSpecFreeList);
       await HoloData.CreateCharacter(connectedUsers[Context.ConnectionId].UserName, NewCharacter);
+      
+      if (connectedUsers.ContainsKey(Context.ConnectionId))
+      {
+        List<Character> characters = await HoloData.FetchCharacters(new User() { Name = connectedUsers[Context.ConnectionId].UserName });
+        await Clients.Caller.SendAsync("ClientGetCharacters", characters);
+      }
     }
 
+
+    public async Task VT49Connect(string verificationCode)
+    {
+      if (verificationCode == "34f6d465a525aa589271e66648d73773")
+      {        
+        connectedUsers[Context.ConnectionId].UserName = "VT49";
+        connectedUsers[Context.ConnectionId].SessionToken = Context.ConnectionId;
+      }      
+    }
 
 
     // public async Task RequestFiefdomData()

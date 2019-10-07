@@ -3,7 +3,7 @@ import { navigate } from "@reach/router";
 import loadDataSet from './LoadDataSet';
 
 export function holocronMiddleware({ dispatch, getState }) {
-    const connection = new HubConnectionBuilder().withUrl("/HolocronHub").configureLogging(LogLevel.Information).build();    
+    const connection = new HubConnectionBuilder().withUrl("/Holocron").configureLogging(LogLevel.Information).build();    
 
     loadDataSet(dispatch);
 

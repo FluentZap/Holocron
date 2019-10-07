@@ -71,7 +71,7 @@ function Roster({ dataSet, dispatch }) {
     }
 
     dispatch({ type: 'SERVER_CREATE_CHARACTER', character });
-
+    navigate('/roster');
   }
 
   const [setFade, getFade] = new FadeInBuilder();

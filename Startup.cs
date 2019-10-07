@@ -57,7 +57,7 @@ namespace Holocron
 
             app.UseSignalR(routes =>
             {
-                routes.MapHub<HolocronHub>("/HolocronHub");
+                routes.MapHub<HolocronHub>("/Holocron");
             });
 
             app.UseSpa(spa =>
