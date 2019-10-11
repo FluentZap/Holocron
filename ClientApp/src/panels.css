@@ -119,6 +119,20 @@
 .disabled {
     color: #c1c1c1;
     border: 0.2vh solid #000000;
-    background-color: #421717;
-    box-shadow: 0px 0px 0.5vh #671818;
+    background-color: #2b2b2b;
+    box-shadow: 0px 0px 0.5vh #2b2b2b;
+}
+
+.disabled:focus {
+    color: #c1c1c1;
+    border: 0.2vh solid hsl(0, 0%, 10%);
+    background-color: #2b2b2b;
+    box-shadow: 0px 0px 0.5vh #2b2b2b;
+}
+
+.disabled:hover {
+    color: #c1c1c1;
+    border: 0.2vh solid hsl(0, 0%, 10%);
+    background-color: hsl(0, 0%, 27%);
+    box-shadow: 0px 0px 0.5vh hsl(0, 0%, 27%);
 }
