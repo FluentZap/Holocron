@@ -4,10 +4,10 @@ import './CharacterCardStyles.css';
 import FadeInBuilder from '../../FadeInBuilder';
 import { a } from 'react-spring'
 
-export const TextBox = ({ text, area, className, edit, fade }) => {
+export const TextBox = ({ text, area, className, edit, fade, onChange }) => {
 	if (!className) className = '';
 	return edit === true ?
-		<a.input className={className + ' font-small z-5 m2 p2 flex-left data-panel blue-glow scanlines-back roster-text'}
+		<a.input onChange={onChange} className={className + ' font-small z-5 m2 p2 flex-left data-panel blue-glow scanlines-back roster-text'}
 			style={{ ...fade, gridArea: `${area[0]} / ${area[1]} / span ${area[2]} / span ${area[3]}` }} placeholder={text} />
 		:
 		<a.div className={className + ' font-small z-5 m2 p2 flex-left data-panel gray-flat scanlines-back roster-text'}
@@ -16,17 +16,21 @@ export const TextBox = ({ text, area, className, edit, fade }) => {
 }
 
 
-const CharacterCard = ({ ds, character: { name, species, career, wound, woundThreshold, strain, strainThreshold, specializations, unusedXp, credits } }) => {
+const CharacterCard = ({ ds, character, character: { name, species, career, wound, woundThreshold, strain, strainThreshold, specializations, unusedXp, credits }, setCharacter }) => {
 	const [setFade, getFade] = new FadeInBuilder();
 	useEffect(() => {
 		setFade({ opacity: 1 });
 	})
 
+	const changeName = val => {
+		setCharacter({ ...character, name: val.target.value})		
+	}
+
 	return (
 		<div className='roster-character-card' style={{ gridArea: '4 / 1 / span 10 / span 20' }}>
 			<div className='data-panel red-flat scanlines-back m2 p2' style={{ gridArea: '1 / 1 / span 10 / span 20' }} />
 			<TextBox area={[2, 7, 2, 13]} fade={getFade()}
-				text={`Name: ${name}`} edit={true} />
+				text={`Name: ${name}`} edit={true} onChange={changeName} />
 
 			<TextBox area={[4, 7, 2, 8]} fade={getFade()}
 				text={`${ds.species[species].Name}`} />

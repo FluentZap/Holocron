@@ -88,7 +88,7 @@ function Roster({ dataSet, dispatch }) {
           style={{ ...getFade(), gridArea: '1 / 14 / span 3 / span 7' }}
           onClick={saveCharacter}>Create</a.button>
         {/* <div className='flex-center data-panel red-glow scanlines' style={{ gridArea: '2 / 1 / span 3 / span 9', margin: 5, animationDelay: fadeInTime() }}> */}
-        <CharacterCard {...{ character, ds }} newCharacter={true} />
+        <CharacterCard {...{ character, ds, setCharacter }} newCharacter={true} />
         {/* </div> */}
 
         {category === 'Stats' ?

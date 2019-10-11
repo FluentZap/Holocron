@@ -23,7 +23,17 @@ function MainMenu(props) {
       <div className='data-container scanlines-background'>
         <a.button onClick={() => navigate('/roster')} className='flex-center data-panel red-glow scanlines-back m3 main-menu-panel' style={{ ...getFade(), gridArea: '1 / 1 / span 16 / span 10' }}>Roster</a.button>
 
-        <a.button onClick={() => navigate('/archives')} className='disabled flex-center data-panel red-glow scanlines-back m3 main-menu-panel' style={{ ...getFade(), gridArea: '1 / 11 / span 8 / span 10' }}>Archives</a.button>
+        <a.button className='disabled flex-center data-panel red-glow scanlines-back m3 main-menu-panel' style={{ ...getFade(), gridArea: '1 / 11 / span 8 / span 10' }}>Archives</a.button>
+        <a.button className='disabled flex-center data-panel red-glow scanlines-back m3 main-menu-panel' style={{ ...getFade(), gridArea: '9 / 11 / span 8 / span 10' }}>Hanger</a.button>
+
+        <a.button className='disabled flex-center data-panel red-glow scanlines-back m3 main-menu-panel' style={{ ...getFade(), gridArea: '17 / 1 / span 8 / span 20' }}>Adventures</a.button>
+
+        <a.button className='disabled flex-center data-panel red-glow scanlines-back m3 main-menu-panel' style={{ ...getFade(), gridArea: '25 / 1 / span 8 / span 10' }}>Atlas</a.button>
+        <a.button className='disabled flex-center data-panel red-glow scanlines-back m3 main-menu-panel' style={{ ...getFade(), gridArea: '33 / 1 / span 8 / span 10' }}>Notes</a.button>
+
+        <a.button onClick={() => navigate('/roller')} className='disabled flex-center data-panel red-glow scanlines-back m3 main-menu-panel' style={{ ...getFade(), gridArea: '25 / 11 / span 16 / span 10' }}>Dice Roller</a.button>
+
+        {/* <a.button onClick={() => navigate('/archives')} className='disabled flex-center data-panel red-glow scanlines-back m3 main-menu-panel' style={{ ...getFade(), gridArea: '1 / 11 / span 8 / span 10' }}>Archives</a.button>
         <a.button onClick={() => navigate('/hanger')} className='disabled flex-center data-panel red-glow scanlines-back m3 main-menu-panel' style={{ ...getFade(), gridArea: '9 / 11 / span 8 / span 10' }}>Hanger</a.button>
 
         <a.button onClick={() => navigate('/adventures')} className='disabled flex-center data-panel red-glow scanlines-back m3 main-menu-panel' style={{ ...getFade(), gridArea: '17 / 1 / span 8 / span 20' }}>Adventures</a.button>
@@ -31,7 +41,7 @@ function MainMenu(props) {
         <a.button onClick={() => navigate('/atlas')} className='disabled flex-center data-panel red-glow scanlines-back m3 main-menu-panel' style={{ ...getFade(), gridArea: '25 / 1 / span 8 / span 10' }}>Atlas</a.button>
         <a.button onClick={() => navigate('/notes')} className='disabled flex-center data-panel red-glow scanlines-back m3 main-menu-panel' style={{ ...getFade(), gridArea: '33 / 1 / span 8 / span 10' }}>Notes</a.button>
 
-        <a.button onClick={() => navigate('/roller')} className='disabled flex-center data-panel red-glow scanlines-back m3 main-menu-panel' style={{ ...getFade(), gridArea: '25 / 11 / span 16 / span 10' }}>Dice Roller</a.button>
+        <a.button onClick={() => navigate('/roller')} className='disabled flex-center data-panel red-glow scanlines-back m3 main-menu-panel' style={{ ...getFade(), gridArea: '25 / 11 / span 16 / span 10' }}>Dice Roller</a.button> */}
       </div>
     </div>
   );
