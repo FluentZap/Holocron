@@ -1,5 +1,5 @@
-import React, { useRef } from 'react';
-import { getSkills, getStatValue, getSkillValue, getCareerSkill } from '../../../models/CharacterStats';
+import React, { useRef, useEffect } from 'react';
+import { getSkills, getStatValue, getSkillValue, getCareerSkill, getSkillBuyCost, getSkillSellCost } from '../../../models/CharacterStats';
 import uuid from 'uuid';
 import GetSkillSymbols from '../../Universal/Symbol';
 import FadeInBuilder from '../../FadeInBuilder';
@@ -99,11 +99,12 @@ export const CharacteristicsBuySell = ({ setCharacter, character, selectStat, ds
 }
 
 export const SkillBuySell = ({ setCharacter, character, selectSkill, ds }) => {
-  const buyCost = (getSkillValue(character, selectSkill) + 1) * 10;
-  const sellCost = (getSkillValue(character, selectSkill)) * 10;
+  const buyCost = getSkillBuyCost(character, selectSkill);
+  const sellCost = getSkillSellCost(character, selectSkill);
   const canBuy = character.unusedXp >= buyCost;
   selectSkill = selectSkill.replace(' ', '_');
 
+  
   const buySkill = () => {
     let stat = getSkillValue(character, selectSkill);
     if (character.unusedXp >= buyCost && stat < 5) {

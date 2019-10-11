@@ -1,7 +1,7 @@
 import React, { useState, useEffect, useMemo } from 'react';
 import uuid from 'uuid';
 import FadeInBuilder from '../../FadeInBuilder';
-import { getSkillValue, getCareerSkill } from '../../../models/CharacterStats';
+import { getSkillValue, getCareerSkill, recalculateXp } from '../../../models/CharacterStats';
 import GetSkillSymbols from '../../Universal/Symbol';
 import DescriptionBox from '../../Universal/DescriptionBox';
 import { a } from 'react-spring'
@@ -14,33 +14,41 @@ const CareerInfo = ({ ds, career, changeCareer, specialization, changeSpecializa
 
   const setCareerSkill = skill => {
     if (character.skillsCareer.includes(skill)) {
-      setCharacter({
+      let newCharacter = {
         ...character,
         skillsCareer: character.skillsCareer.filter(x => x !== skill),
         skillsCareerFree: character.skillsCareerFree.filter(x => x !== skill)
-      })
+      };
+      let [xp, skills] = recalculateXp(ds, newCharacter);
+      console.log(xp, skills, newCharacter);
+      setCharacter({ ...newCharacter, xp: xp, unusedXp: xp, skillsBuy: skills })
     } else if (character.skillsCareer.length < character.freeCareerRanks) {
-      setCharacter({
+      let newCharacter = {
         ...character,
         skillsCareer: [...character.skillsCareer, skill],
         skillsCareerFree: [...character.skillsCareerFree, skill]
-      })
+      };
+      let [xp, skills] = recalculateXp(ds, newCharacter);
+      console.log(xp, skills, newCharacter);
+      setCharacter({ ...newCharacter, xp: xp, unusedXp: xp, skillsBuy: skills })
     }
   }
 
   const setSpecSkill = skill => {
     if (character.skillsSpecFree.includes(skill)) {
-      setCharacter({
+      let newCharacter = {
         ...character,
-        // skillsSpec: character.skillsSpec.filter(x => x !== skill),
         skillsSpecFree: character.skillsSpecFree.filter(x => x !== skill)
-      })
+      }
+      let [xp, skills] = recalculateXp(ds, newCharacter);
+      setCharacter({ ...newCharacter, xp: xp, unusedXp: xp, skillsBuy: skills })
     } else if (character.skillsSpecFree.length < character.freeSpecRanks) {
-      setCharacter({
+      let newCharacter = {
         ...character,
-        // skillsSpec: [...character.skillsSpec, skill],
         skillsSpecFree: [...character.skillsSpecFree, skill]
-      })
+      }
+      let [xp, skills] = recalculateXp(ds, newCharacter);
+      setCharacter({ ...newCharacter, xp: xp, unusedXp: xp, skillsBuy: skills })
     }
   }
 

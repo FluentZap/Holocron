@@ -60,13 +60,13 @@
 //   }
 // }
 
-export function newCharacter(species) {
+export function newCharacter(species, name) {
   const { Name, StartingChars, StartingAttrs, Description, Key } = species;
   const { Agility, Brawn, Cunning, Intellect, Presence, Willpower } = StartingChars[0];
   const { Experience, StrainThreshold, WoundThreshold } = StartingAttrs[0];
 
   return {
-    name: 'Scoundrel',
+    name: name ? name : 'Scoundrel',
     credits: 500,
     career: 'SMUG',
     freeCareerRanks: 4,
@@ -161,7 +161,7 @@ export function getStatValue(character, stat) {
 export function getSkillValue(character, skill) {
   return character.skillsBuy[skill]
     + (character.skillsCareerFree.includes(skill) ? 1 : 0)
-      + (character.skillsSpecFree.includes(skill) ? 1 : 0);
+    + (character.skillsSpecFree.includes(skill) ? 1 : 0);
 }
 
 export function getCareerSkill(character, skill) {
@@ -176,11 +176,67 @@ export function setCharacterCareer(ds, character, career) {
   newChar.specializations = [ds.careers[career].Specializations[0].Key[0]];
   newChar.freeCareerRanks = parseInt(ds.careers[career].FreeRanks[0]);
   newChar.skillsSpecFree = [];
-  newChar.skillsSpec = [...ds.specializations[newChar.specializations].CareerSkills[0].Key];  
+  newChar.skillsSpec = [...ds.specializations[newChar.specializations].CareerSkills[0].Key];
   return newChar;
 }
 
 
+export function recalculateXp(ds, character) {
+  let startXp = parseInt(ds.species[character.species].StartingAttrs[0].Experience[0]);
+  let freeSkills = {};
+  let newSkillsBuy = {};
+
+  character.skillsCareerFree.forEach(skill => {
+    if (freeSkills[skill]) {
+      freeSkills[skill] += 1;
+    } else {
+      freeSkills[skill] = 1;
+    }
+  });
+
+  character.skillsSpecFree.forEach(skill => {
+    if (freeSkills[skill]) {
+      freeSkills[skill] += 1;
+    } else {
+      freeSkills[skill] = 1;
+    }
+  });
+  console.log(freeSkills);
+  
+  let skills = Object.keys(character.skillsBuy);
+  for (let i = 0; i < skills.length; i++) {
+    let skill = skills[i];
+    newSkillsBuy[skill] = 0;
+
+    let freeRanks = freeSkills[skill] ? freeSkills[skill] : 0
+
+    for (let rank = 0; rank < character.skillsBuy[skill]; rank++) {
+      let cost = getCareerSkill(character, skill) ?
+        (freeRanks + newSkillsBuy[skill] + 1) * 5 :
+        (freeRanks + newSkillsBuy[skill] + 1) * 5 + 5;      
+      if (cost <= startXp && newSkillsBuy[skill] + freeRanks < 5) {
+        newSkillsBuy[skill]++;
+        startXp -= cost;
+      }
+    }
+  }
+  // console.log(freeSkills);
+  // console.log(newSkillsBuy, startXp);
+  return [startXp, newSkillsBuy]
+}
+
+
+export function getSkillBuyCost(character, skill) {  
+  return getCareerSkill(character, skill) ?
+    (getSkillValue(character, skill) + 1) * 5 :
+    (getSkillValue(character, skill) + 1) * 5 + 5;
+}
+
+export function getSkillSellCost(character, skill) {
+  return getCareerSkill(character, skill) ?
+    getSkillValue(character, skill) * 5 :
+    getSkillValue(character, skill) * 5 + 5;
+}
 
 // export function getSkillName(skillList, skill) {
 //   return character.skills[skill] + character.skillsBuy[skill];
