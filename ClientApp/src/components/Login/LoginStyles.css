@@ -37,8 +37,7 @@
     font-size: 4vmin;
     text-align: center;
     color: #37a2cc;
-    box-sizing: border-box;
-    user-select: none;
+    box-sizing: border-box;    
 }
 
 .login-input:focus {    

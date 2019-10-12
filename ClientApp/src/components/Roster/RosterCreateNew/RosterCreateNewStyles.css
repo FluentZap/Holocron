@@ -1,7 +1,7 @@
 .roster-root {
     display: grid;
     /* width: 20rem; */
-    width: 100vmin;
+    width: 100vh;
     /* max-width: 432px; */
 }
 

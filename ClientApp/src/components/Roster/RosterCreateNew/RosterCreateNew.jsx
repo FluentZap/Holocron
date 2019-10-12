@@ -169,7 +169,7 @@ const SpeciesBox = ({ species, ds, setShowInfo }) => {
   const { Experience, StrainThreshold, WoundThreshold } = StartingAttrs[0];
   return (
     <div className='flex-center data-panel red-flat scanlines-back m2 p2' style={{ gridArea: '14 / 8 / span 24 / span 13', justifyContent: 'start' }} >
-      <div ref={speciesRef} className='flex-center' style={{ display: 'block', overflowY: 'auto', width: '99%', margin: '.5vmin 0' }} >
+      <div ref={speciesRef} className='flex-center' style={{ display: 'block', overflowY: 'auto', width: '99%', margin: '.5vh 0' }} >
         <div className='z-5 m2 p2 flex-left data-panel gray-flat font-small'
           style={{ marginTop: 0 }}>
           <h4 className='m2 center'>{Name}</h4>
@@ -196,10 +196,10 @@ const SpeciesList = ({ species, changeSpecies, ds, fadeIn }) => {
   // const fadeClass = fadeIn === true ? 'animate-fade-in ' : ' '
   const speciesCount = Object.keys(ds.species).length;
   return <div className={`${fadeIn} flex-center data-panel red-flat scanlines-back m2 p2`} style={{ gridArea: '14 / 1 / span 24 / span 7', justifyContent: 'start' }} >
-    <div className={`${fadeIn} flex-center`} style={{ display: 'block', overflowY: 'auto', width: '99%', margin: '.5vmin 0' }} >
+    <div className={`${fadeIn} flex-center`} style={{ display: 'block', overflowY: 'auto', width: '99%', margin: '.5vh 0' }} >
       {Object.entries(ds.species).map(([key, value], i) =>
         <div key={uuid.v4()} className={`${fadeIn} z-5 m2 p2 flex-center center data-panel font-small ${species === key ? 'orange-glow' : 'gray-flat-hover'}`}
-          style={{ marginTop: i === 0 ? 0 : '0.5vmin', marginBottom: i === speciesCount - 1 ? 0 : '0.5vmin' }}
+          style={{ marginTop: i === 0 ? 0 : '0.5vh', marginBottom: i === speciesCount - 1 ? 0 : '0.5vh' }}
           onClick={() => changeSpecies(key)}
         >
           {value.Name}

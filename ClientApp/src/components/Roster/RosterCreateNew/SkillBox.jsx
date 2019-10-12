@@ -28,10 +28,10 @@ export const SkillBox = ({ character, selectStat, selectSkill, setSelectSkill, d
 
   return (
     <div className='flex-center data-panel red-flat scanlines-back m2 p2' style={{ gridArea: grid, justifyContent: 'start' }} >
-      <div ref={skillsRef} className='flex-center' style={{ display: 'block', overflowY: 'auto', width: '99%', margin: '.5vmin 0' }} >
+      <div ref={skillsRef} className='flex-center' style={{ display: 'block', overflowY: 'auto', width: '99%', margin: '.5vh 0' }} >
         {selectSkill === '' ? getSkills(ds, selectStat).map(([key, value], i) => {
           return <div key={uuid.v4()} className='z-5 m2 p2 flex-left data-panel gray-flat-hover'
-            style={{ marginTop: i === 0 ? 0 : '.5vmin', marginBottom: i === skillCount - 1 ? 0 : '.5vmin' }}
+            style={{ marginTop: i === 0 ? 0 : '.5vh', marginBottom: i === skillCount - 1 ? 0 : '.5vh' }}
             onClick={() => updateSelectSkill(key)} >
             <div className='font-small'>{value} ({getSkillValue(character, key)}){getCareerSkill(character, key) ? ' - C' : ''}</div> <GetSkillSymbols skill={key} {...{ character, ds }} />
           </div>
@@ -84,7 +84,7 @@ export const CharacteristicsBuySell = ({ setCharacter, character, selectStat, ds
 
 
   return <div className='flex-center data-panel red-flat scanlines-back m2 font-small'
-    style={{ marginLeft: '.5vmin', marginRight: '.5vmin', justifyContent: 'space-evenly', gridArea: '14 / 8 / span 5 / span 13' }} >
+    style={{ marginLeft: '.5vh', marginRight: '.5vh', justifyContent: 'space-evenly', gridArea: '14 / 8 / span 5 / span 13' }} >
     Characteristic ({ds.characteristics[selectStat].Name[0]})
     <div className='flex-row-center full-width'>
       <div className={`z-5 m2 p2 flex-left data-panel scanlines-back full-width ${character.characteristicsBuy[selectStat] > 0 ? 'blue-glow' : 'gray-flat'}`}
@@ -132,7 +132,7 @@ export const SkillBuySell = ({ setCharacter, character, selectSkill, ds }) => {
 
 
   return <div className='flex-center data-panel red-flat scanlines-back m2 font-small'
-    style={{ marginLeft: '.5vmin', marginRight: '.5vmin', justifyContent: 'space-evenly', gridArea: '14 / 8 / span 5 / span 13' }} >
+    style={{ marginLeft: '.5vh', marginRight: '.5vh', justifyContent: 'space-evenly', gridArea: '14 / 8 / span 5 / span 13' }} >
     Skill ({ds.skills[selectSkill].Name[0]})
     <div className='flex-row-center full-width'>
       <div className={`z-5 m2 p2 flex-left data-panel scanlines-back full-width ${character.skillsBuy[selectSkill] > 0 ? 'blue-glow' : 'gray-flat'}`}

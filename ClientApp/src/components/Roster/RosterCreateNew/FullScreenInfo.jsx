@@ -11,9 +11,9 @@ const FullScreenInfo = ({ text, onClick }) => {
 
   return <>
     <a.div className='flex-center data-panel red-flat scanlines-back m2 p2 z-overlay' style={{ ...getFade(), gridArea: '4 / 1 / span 37 / span 20', justifyContent: 'start' }} />
-    <a.div className='flex-center z-overlay-child m2' style={{ ...getFade(), gridArea: '8 / 2 / span 32 / span 18', display: 'block', overflowY: 'auto', width: '99%', margin: '.5vmin 0' }} >
+    <a.div className='flex-center z-overlay-child m2' style={{ ...getFade(), gridArea: '8 / 2 / span 32 / span 18', display: 'block', overflowY: 'auto', width: '99%', margin: '.5vh 0' }} >
       <a.div className='z-5 p4 flex-left data-panel gray-flat font-small'
-        style={{ ...getFade(), marginLeft: '.5vmin', marginRight: '.5vmin' }}>
+        style={{ ...getFade(), marginLeft: '.5vh', marginRight: '.5vh' }}>
         <div dangerouslySetInnerHTML={{ __html: text }} />
       </a.div>
     </a.div>

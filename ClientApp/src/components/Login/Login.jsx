@@ -30,13 +30,13 @@ function Login(props) {
         } className='login-input' style={{ gridArea: '7 / 2 / span 2 / span 10' }} placeholder={'Password'} type="password" onChange={event => setPassword(event.target.value)} />
         {userName === '' || password === '' ?
           <>
-            <button className='flex-center data-panel disabled' style={{ gridArea: '10 / 2 / span 2 / span 4', fontSize: '4vmin' }}>Login</button>
-            <button className='flex-center data-panel disabled' style={{ gridArea: '10 / 8 / span 2 / span 4', fontSize: '4vmin' }}>Register</button>
+            <button className='flex-center data-panel disabled' style={{ gridArea: '10 / 2 / span 2 / span 4', fontSize: '4vh' }}>Login</button>
+            <button className='flex-center data-panel disabled' style={{ gridArea: '10 / 8 / span 2 / span 4', fontSize: '4vh' }}>Register</button>
           </>
           :
           <>
-            <button onClick={LoginUser} className='flex-center data-panel red-glow' style={{ gridArea: '10 / 2 / span 2 / span 4', fontSize: '4vmin' }}>Login</button>
-            <button onClick={AddUser} className='flex-center data-panel red-glow' style={{ gridArea: '10 / 8 / span 2 / span 4', fontSize: '4vmin' }}>Register</button>
+            <button onClick={LoginUser} className='flex-center data-panel red-glow' style={{ gridArea: '10 / 2 / span 2 / span 4', fontSize: '4vh' }}>Login</button>
+            <button onClick={AddUser} className='flex-center data-panel red-glow' style={{ gridArea: '10 / 8 / span 2 / span 4', fontSize: '4vh' }}>Register</button>
           </>
         }
       </div>

@@ -98,11 +98,11 @@ const CareerList = ({ ds, changeCareer, career }) => {
   })
   return <a.div className='flex-center data-panel red-flat scanlines-back m2 p2'
     style={{ ...getFade(), gridArea: '14 / 1 / span 12 / span 7', justifyContent: 'start' }}>
-    <div className={`flex-center`} style={{ display: 'block', overflowY: 'auto', width: '99%', margin: '.5vmin 0' }} >
+    <div className={`flex-center`} style={{ display: 'block', overflowY: 'auto', width: '99%', margin: '.5vh 0' }} >
 
       {Object.entries(ds.careers).map(([key, value], i) =>
         <a.div key={uuid.v4()} className={`z-5 m2 p2 flex-center center data-panel font-small ${career === key ? 'orange-glow' : 'gray-flat-hover'}`}
-          style={{ ...getFade(), marginTop: i === 0 ? 0 : '0.5vmin', marginBottom: i === careerCount - 1 ? 0 : '0.5vmin' }}
+          style={{ ...getFade(), marginTop: i === 0 ? 0 : '0.5vh', marginBottom: i === careerCount - 1 ? 0 : '0.5vh' }}
           onClick={() => changeCareer(key)}
         >
           {value.Name}
@@ -146,7 +146,7 @@ const CareerInfoBox = ({ ds, career, setShowInfo }) => {
   return <>
     <a.div className='flex-center data-panel red-flat scanlines-back m2 p2'
       style={{ ...getFade(), gridArea: '17 / 8 / span 21 / span 13', justifyContent: 'center' }}>
-      <div className='flex-center' style={{ display: 'block', overflowY: 'auto', width: '99%', margin: '.5vmin 0' }} >
+      <div className='flex-center' style={{ display: 'block', overflowY: 'auto', width: '99%', margin: '.5vh 0' }} >
         <DescriptionBox text={ds.careers[career].Description[0]} setShowInfo={setShowInfo} />
       </div>
     </a.div>
@@ -161,7 +161,7 @@ const SpecInfoBox = ({ ds, specialization, setShowInfo }) => {
   return <>
     <a.div className='flex-center data-panel red-flat scanlines-back m2 p2'
       style={{ ...getFade(), gridArea: '17 / 8 / span 21 / span 13', justifyContent: 'center' }}>
-      <div className='flex-center' style={{ display: 'block', overflowY: 'auto', width: '99%', margin: '.5vmin 0' }} >
+      <div className='flex-center' style={{ display: 'block', overflowY: 'auto', width: '99%', margin: '.5vh 0' }} >
         <DescriptionBox text={ds.specializations[specialization].Description[0]} setShowInfo={setShowInfo} />
       </div>
     </a.div>
@@ -174,10 +174,10 @@ const Specs = ({ ds, character, career, specialization, changeSpecialization }) 
   const specCount = specList.length;
   return <>
     <div className='flex-center data-panel red-flat scanlines-back m2 p2' style={{ gridArea: '26 / 1 / span 12 / span 7', justifyContent: 'start' }} >
-      <div className='flex-center' style={{ display: 'block', overflowY: 'auto', width: '99%', margin: '.5vmin 0' }} >
+      <div className='flex-center' style={{ display: 'block', overflowY: 'auto', width: '99%', margin: '.5vh 0' }} >
         {specList.map((key, i) =>
           <div key={uuid.v4()} className={`z-5 m2 p2 flex-center center data-panel font-small ${specialization === key ? 'orange-glow' : 'gray-flat-hover'}`}
-            style={{ marginTop: i === 0 ? 0 : '.5vmin', marginBottom: i === specCount - 1 ? 0 : '.5vmin' }}
+            style={{ marginTop: i === 0 ? 0 : '.5vh', marginBottom: i === specCount - 1 ? 0 : '.5vh' }}
             onClick={() => changeSpecialization(key)} >
             <div>{ds.specializations[key].Name[0]}</div>
           </div>
