@@ -11,10 +11,9 @@ namespace Holocron.Context
     public DbSet<User> Users { get; set; }
     public DbSet<Character> Characters { get; set; }
 
-    protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
-    {
-      optionsBuilder.UseMySQL("server=localhost;database=holocron;user=root;password=root;port=3306;");
-    }
+    protected override void OnConfiguring(DbContextOptionsBuilder options)
+      => options.UseSqlite("Data Source=holocron.db");
+    // optionsBuilder.UseMySQL("server=localhost;database=holocron;user=root;password=root;port=3306;");      
 
   }
 

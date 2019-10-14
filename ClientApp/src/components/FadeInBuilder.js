@@ -1,5 +1,3 @@
-import { useTrail } from "react-spring";
-
 function shuffle(array) {
     var currentIndex = array.length, temporaryValue, randomIndex;
     while (0 !== currentIndex) {
@@ -12,36 +10,6 @@ function shuffle(array) {
     return array;
 }
 
-
-
-export default function FadeInBuilder() {
-    const [trail, set] = useTrail(3, () => ({ opacity: 0, config: { mass: 1, tension: 210, friction: 25 } }))
-    const shuffledTrail = shuffle(trail);
-
-    let i = 0;
-    const getFade = () => {
-        i++;
-        if (i >= 3) i = 0;
-        return shuffledTrail[i]
-    };
-    return [set, getFade]
-}
-
-export function FadeInBuilderStart() {
-    const [trail, set] = useTrail(3, () => ({ from: { opacity: 0 }, to: { opacity: 1 }, config: { mass: 1, tension: 210, friction: 25 } }))
-    const shuffledTrail = shuffle(trail);
-
-    let i = 0;
-    const getFade = () => {
-        i++;
-        if (i >= 3) i = 0;
-        if (trail !== undefined) {
-            return shuffledTrail[i]
-        }
-        return {}
-    };
-    return [set, getFade]
-}
 
 // export default class FadeInBuilder {
 //     numberArray = [];

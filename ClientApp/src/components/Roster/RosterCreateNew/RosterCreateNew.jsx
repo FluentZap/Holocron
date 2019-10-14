@@ -3,14 +3,12 @@ import { connect } from 'react-redux'
 import { navigate } from "@reach/router";
 import uuid from 'uuid';
 import './RosterCreateNewStyles.css';
-import FadeInBuilder from '../../FadeInBuilder';
 import CharacterCard from '../CharacterCard/CharacterCard';
 import { newCharacter, setCharacterCareer } from '../../../models/CharacterStats';
 import { SkillBuySell, CharacteristicsBuySell, SkillBox } from './SkillBox';
 import FullScreenInfo from './FullScreenInfo';
 import CareerInfo from './CareerInfo';
 import DescriptionBox from '../../Universal/DescriptionBox';
-import { a } from 'react-spring'
 
 // const panelFade = new FadeInBuilder(0, 0.1, 2);
 // const childFade = new FadeInBuilder(0.1, 0.2, 4);
@@ -74,26 +72,22 @@ function Roster({ dataSet, dispatch }) {
     navigate('/roster');
   }
 
-  const [setFade, getFade] = new FadeInBuilder();
-  useEffect(() => {
-    setFade({ opacity: 1 })
-  })
 
   return (
     <div className='flex-center full-screen'>
       <div className='data-container'>
-        <a.button onClick={() => navigate('/menu')} className='flex-center data-panel red-glow scanlines-back m2'
-          style={{ ...getFade(), gridArea: '1 / 1 / span 3 / span 7' }}>Menu</a.button>
-        <a.button className='flex-center data-panel red-glow scanlines-back m2'
-          style={{ ...getFade(), gridArea: '1 / 14 / span 3 / span 7' }}
-          onClick={saveCharacter}>Create</a.button>
+        <button onClick={() => navigate('/menu')} className='flex-center data-panel red-glow scanlines-back m2'
+          style={{gridArea: '1 / 1 / span 3 / span 7' }}>Menu</button>
+        <button className='flex-center data-panel red-glow scanlines-back m2'
+          style={{gridArea: '1 / 14 / span 3 / span 7' }}
+          onClick={saveCharacter}>Create</button>
         {/* <div className='flex-center data-panel red-glow scanlines' style={{ gridArea: '2 / 1 / span 3 / span 9', margin: 5, animationDelay: fadeInTime() }}> */}
         <CharacterCard {...{ character, ds, setCharacter }} newCharacter={true} />
         {/* </div> */}
 
         {category === 'Stats' ?
           <>
-            <a.div className='roster-new-characteristics-list flex-center data-panel red-flat scanlines-back m2' style={{ ...getFade(), gridArea: '14 / 1 / span 24 / span 7' }}>
+            <div className='roster-new-characteristics-list flex-center data-panel red-flat scanlines-back m2' style={{gridArea: '14 / 1 / span 24 / span 7' }}>
               {Object.entries(character.characteristics).map(([key, value]) =>
                 <StatBox key={uuid.v4()} name={ds.characteristics[key].Name[0]} value={value + character.characteristicsBuy[key]} value2={character.characteristicsBuy[key]} selected={key === selectStat} onClick={() => {
                   if (selectStat === key && selectSkill === '') {
@@ -105,7 +99,7 @@ function Roster({ dataSet, dispatch }) {
                   }
                 }} />
               )}
-            </a.div>
+            </div>
             {(selectSkill !== '') ?
               <SkillBuySell {...{ setCharacter, character, selectSkill, ds }} /> :
               (selectStat !== '') ?
@@ -125,15 +119,15 @@ function Roster({ dataSet, dispatch }) {
               <CareerInfo {...{ career, changeCareer, specialization, changeSpecialization, ds, character, setCharacter, setShowInfo, careerCategory, setCareerCategory }} />
               : ''
         }
-        <a.button className={'flex-center data-panel scanlines-back m2 ' + (category === 'Species' ? 'orange-glow' : 'red-glow')}
+        <button className={'flex-center data-panel scanlines-back m2 ' + (category === 'Species' ? 'orange-glow' : 'red-glow')}
           onClick={() => setCategory('Species')}
-          style={{ ...getFade(), gridArea: '38 / 1 / span 3 / span 7' }}>Species</a.button>
-        <a.button className={'flex-center data-panel scanlines-back m2 ' + (category === 'Career' ? 'orange-glow' : 'red-glow')}
+          style={{gridArea: '38 / 1 / span 3 / span 7' }}>Species</button>
+        <button className={'flex-center data-panel scanlines-back m2 ' + (category === 'Career' ? 'orange-glow' : 'red-glow')}
           onClick={() => setCategory('Career')}
-          style={{ ...getFade(), gridArea: '38 / 8 / span 3 / span 7' }}>Career</a.button>
-        <a.button className={'flex-center data-panel scanlines-back m2 ' + (category === 'Stats' ? 'orange-glow' : 'red-glow')}
+          style={{gridArea: '38 / 8 / span 3 / span 7' }}>Career</button>
+        <button className={'flex-center data-panel scanlines-back m2 ' + (category === 'Stats' ? 'orange-glow' : 'red-glow')}
           onClick={() => setCategory('Stats')}
-          style={{ ...getFade(), gridArea: '38 / 15 / span 3 / span 7' }}>Stats</a.button>
+          style={{gridArea: '38 / 15 / span 3 / span 7' }}>Stats</button>
         {showInfo ? <FullScreenInfo onClick={() => setShowInfo('')} text={showInfo} /> : ''}
       </div>
     </div >
