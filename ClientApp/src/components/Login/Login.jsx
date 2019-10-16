@@ -7,9 +7,10 @@ import './LoginStyles.css';
 function Login(props) {
   const { dispatch } = props;
   const [userName, setUserName] = useState('');
-  const [password, setPassword] = useState('');
+  const [password, setPassword] = useState('');  
+  
 
-  const AddUser = () => {
+  const AddUser = () => {    
     dispatch({ type: 'SERVER_CREATE_USER', userName: userName, password: password });
   }
 
