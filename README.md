@@ -23,7 +23,7 @@ To build a Star Wars: Edge of the Empire definitive companion app.
 <img src="https://github.com/FluentZap/Holocron/blob/master/Readme/CreatorStats.png?raw=true" width="300px" />
 <br>
 
-### Dynamic load of population from XML Datasets for owners of Edge of the Empire Rulebooks.
+### Dynamic load from XML Datasets for owners of Edge of the Empire Rulebooks.
 
 
 Component structure and basic inheritance is listed in the Design Doc. Included in the Design directory.
