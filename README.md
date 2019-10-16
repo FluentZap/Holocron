@@ -11,16 +11,16 @@ To build a Star Wars: Edge of the Empire definitive companion app.
 * SignalR used for websocket connections injected into Redux middleware for real time database updates
 
 
-<img src="https://github.com/FluentZap/Holocron/blob/master/Readme/Login.png?raw=true" style="max-width: 300px;" />
-<img src="https://github.com/FluentZap/Holocron/blob/master/Readme/MainMenu.png?raw=true" style="max-width: 300px;" />
+<img src="https://github.com/FluentZap/Holocron/blob/master/Readme/Login.png?raw=true" width="300px" />
+<img src="https://github.com/FluentZap/Holocron/blob/master/Readme/MainMenu.png?raw=true" width="300px" />
 <br>
 
 ### Full stack App with user authentication stored in MySQL database
 
 <br>
-<img src="https://github.com/FluentZap/Holocron/blob/master/Readme/CreatorList.png?raw=true" style="max-width: 300px;" />
-<img src="https://github.com/FluentZap/Holocron/blob/master/Readme/CreatorCareer.png?raw=true" style="max-width: 300px;" />
-<img src="https://github.com/FluentZap/Holocron/blob/master/Readme/CreatorStats.png?raw=true" style="max-width: 300px;" />
+<img src="https://github.com/FluentZap/Holocron/blob/master/Readme/CreatorList.png?raw=true" width="300px" />
+<img src="https://github.com/FluentZap/Holocron/blob/master/Readme/CreatorCareer.png?raw=true" width="300px" />
+<img src="https://github.com/FluentZap/Holocron/blob/master/Readme/CreatorStats.png?raw=true" width="300px" />
 <br>
 
 ### Dynamic load of population from XML Datasets for owners of Edge of the Empire Rulebooks.
