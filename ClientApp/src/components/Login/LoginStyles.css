@@ -7,11 +7,7 @@
     display: grid;
     grid-template-columns: repeat(20, calc(100% / 20));
     grid-template-rows: repeat(40, calc(100% / 40));
-    flex-direction: column;
-    background: url('./../../background.svg');
-    background-repeat: no-repeat;
-    background-size: contain;
-    background-position-y: center;
+    flex-direction: column;    
     width: calc(1vh * 100 * 0.5625);        
     height: 100%;
     box-sizing: border-box;    
@@ -20,6 +16,13 @@
     height: 100%;
     position: fixed;
     overflow: hidden;
+}
+
+.login-background {
+    background: url('./../../background.svg');
+    background-repeat: no-repeat;
+    background-size: contain;
+    background-position-y: center;
 }
 
 .login-heading {    
@@ -31,8 +34,7 @@
 
 .login-input {
     font-family: SymbolBold;
-    cursor: pointer;
-    height: 100%;
+    cursor: pointer;    
     background: none;
     box-shadow: 0px 0px 0.5vmin #c72f2f;
     border: .5vmin solid #c72f2f;
