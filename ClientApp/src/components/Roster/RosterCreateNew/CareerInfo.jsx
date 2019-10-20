@@ -3,7 +3,7 @@ import uuid from 'uuid';
 import { getSkillValue, getCareerSkill, recalculateXp } from '../../../models/CharacterStats';
 import GetSkillSymbols from '../../Universal/Symbol';
 import DescriptionBox from '../../Universal/DescriptionBox';
-import ScrollPanel from '../../Panels/Panels';
+import { ScrollPanel } from '../../Panels/Panels';
 
 const CareerInfo = ({ ds, career, changeCareer, specialization, changeSpecialization, character, setCharacter, setShowInfo, careerCategory, setCareerCategory }) => {
 

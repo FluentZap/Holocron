@@ -4,18 +4,18 @@ import uuid from 'uuid';
 import GetSkillSymbols from '../../Universal/Symbol';
 import FadeInBuilder from '../../FadeInBuilder';
 import DescriptionBox from '../../Universal/DescriptionBox';
-import ScrollPanel from '../../Panels/Panels';
+import { ScrollPanel } from '../../Panels/Panels';
 
 // const panelFade = new FadeInBuilder(0, 0.1, 2);
 // const childFade = new FadeInBuilder(0.1, 0.2, 4);
 
-export const SkillBox = ({ character, selectStat, selectSkill, setSelectSkill, ds, setShowInfo, showInfo }) => {  
+export const SkillBox = ({ character, selectStat, selectSkill, setSelectSkill, ds, setShowInfo, showInfo }) => {
   // const characteristics = character.characteristics[selectStat];
   // useEffect(() => {
   //   setSelectSkill('');
   // }, [selectStat, setSelectSkill])
 
-  const updateSelectSkill = skill => {    
+  const updateSelectSkill = skill => {
     if (skill === selectSkill) {
       setSelectSkill('')
     } else {

@@ -1,6 +1,6 @@
 import React, { useRef, useEffect } from 'react';
 
-function ScrollPanel({ gridArea, className, children, reset }) {
+export function ScrollPanel({ gridArea, className, children, reset }) {
   const panelRef = useRef(null)
 
   useEffect(() => {
@@ -18,8 +18,13 @@ function ScrollPanel({ gridArea, className, children, reset }) {
   )
 };
 
-export default ScrollPanel
-
+export function Panel({ gridArea, className, children }) {
+  return (
+    <div className={`flex-center data-panel ${className} scanlines-back m2 p2`} style={{ gridArea: gridArea, justifyContent: 'start' }} >
+      {children}
+    </div>
+  )
+};
 
 export function Button({ onClick, className, gridArea, children }) {
   return <button onClick={onClick} className={`${className} flex-center center data-panel scanlines-back m2`}

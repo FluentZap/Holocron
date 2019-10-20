@@ -9,7 +9,7 @@ import { SkillBuySell, CharacteristicsBuySell, SkillBox } from './SkillBox';
 import FullScreenInfo from './FullScreenInfo';
 import CareerInfo from './CareerInfo';
 import DescriptionBox from '../../Universal/DescriptionBox';
-import ScrollPanel from '../../Panels/Panels';
+import { ScrollPanel } from '../../Panels/Panels';
 
 // const panelFade = new FadeInBuilder(0, 0.1, 2);
 // const childFade = new FadeInBuilder(0.1, 0.2, 4);
