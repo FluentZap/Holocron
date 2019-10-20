@@ -48,17 +48,25 @@ namespace Holocron.Hubs
       if (user.Name != "" && user.Password != "")
       {
         TokenReturn tokenReturn = await HoloData.LoginUser(new User() { Name = user.Name, Password = user.Password });
-        if (connectedUsers.ContainsKey(Context.ConnectionId))
+        if (tokenReturn.LoggedIn)
         {
-          connectedUsers[Context.ConnectionId].UserName = user.Name;
-          connectedUsers[Context.ConnectionId].SessionToken = tokenReturn.SessionToken.ToString();
-          await Clients.Caller.SendAsync("ServerLogin", tokenReturn);
-          System.Console.WriteLine(tokenReturn.LoggedIn);
-          System.Console.WriteLine(tokenReturn.SessionToken);
+          if (connectedUsers.ContainsKey(Context.ConnectionId))
+          {
+            connectedUsers[Context.ConnectionId].UserName = user.Name;
+            connectedUsers[Context.ConnectionId].SessionToken = tokenReturn.SessionToken.ToString();
+            await Clients.Caller.SendAsync("ServerLogin", tokenReturn);
+            System.Console.WriteLine(tokenReturn.LoggedIn);
+            System.Console.WriteLine(tokenReturn.SessionToken);
+          }
+          else
+          {
+            System.Console.WriteLine("Bad Client Token");
+          }
         }
-        else
+        else 
         {
-          System.Console.WriteLine("Bad Client Token");
+          System.Console.WriteLine("Login Rejected");
+          await Clients.Caller.SendAsync("ServerLogin", new TokenReturn());
         }
       }
     }
@@ -73,15 +81,15 @@ namespace Holocron.Hubs
     }
 
     public async Task CreateCharacter(CharacterData character)
-    {      
+    {
       Character NewCharacter = character;
-      NewCharacter.Specializations = string.Join( ",", character.SpecializationsList);
-      NewCharacter.SkillsCareer = string.Join( ",", character.SkillsCareerList);
-      NewCharacter.SkillsCareerFree = string.Join( ",", character.SkillsCareerFreeList);
-      NewCharacter.SkillsSpec = string.Join( ",", character.SkillsSpecList);
-      NewCharacter.SkillsSpecFree = string.Join( ",", character.SkillsSpecFreeList);
+      NewCharacter.Specializations = string.Join(",", character.SpecializationsList);
+      NewCharacter.SkillsCareer = string.Join(",", character.SkillsCareerList);
+      NewCharacter.SkillsCareerFree = string.Join(",", character.SkillsCareerFreeList);
+      NewCharacter.SkillsSpec = string.Join(",", character.SkillsSpecList);
+      NewCharacter.SkillsSpecFree = string.Join(",", character.SkillsSpecFreeList);
       await HoloData.CreateCharacter(connectedUsers[Context.ConnectionId].UserName, NewCharacter);
-      
+
       if (connectedUsers.ContainsKey(Context.ConnectionId))
       {
         List<Character> characters = await HoloData.FetchCharacters(new User() { Name = connectedUsers[Context.ConnectionId].UserName });
@@ -93,10 +101,10 @@ namespace Holocron.Hubs
     public async Task VT49Connect(string verificationCode)
     {
       if (verificationCode == "34f6d465a525aa589271e66648d73773")
-      {        
+      {
         connectedUsers[Context.ConnectionId].UserName = "VT49";
         connectedUsers[Context.ConnectionId].SessionToken = Context.ConnectionId;
-      }      
+      }
     }
 
 

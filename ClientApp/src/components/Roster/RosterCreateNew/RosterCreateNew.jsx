@@ -80,7 +80,7 @@ function Roster({ dataSet, dispatch }) {
         <button onClick={() => navigate('/roster')} className='flex-center data-panel red-glow scanlines-back m2'
           style={{ gridArea: '1 / 1 / span 3 / span 7' }}>Roster</button>
         <button className='flex-center data-panel red-glow scanlines-back m2'
-          style={{ gridArea: '1 / 14 / span 3 / span 7' }}
+          style={{ gridArea: '1 / 16 / span 3 / span 7' }}
           onClick={saveCharacter}>Create</button>
         {/* <div className='flex-center data-panel red-glow scanlines' style={{ gridArea: '2 / 1 / span 3 / span 9', margin: 5, animationDelay: fadeInTime() }}> */}
         <CharacterCard {...{ character, ds, setCharacter }} newCharacter={true} />

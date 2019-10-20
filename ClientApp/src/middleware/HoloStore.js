@@ -69,7 +69,7 @@ export function holocronMiddleware({ dispatch, getState }) {
 
 		if (action.type === 'SET_SESSION_TOKEN') {
 			let state = getState();
-			if (state.sessionToken !== null) {
+      if (state.sessionToken !== null && state.sessionToken !== "rejected") {
 				// navigate('/');
 				navigate('/menu');
 			} else {
@@ -133,7 +133,6 @@ const setHubCallbacks = (connection, dispatch) => {
 	});
 
 	connection.on("ServerLogin", data => {
-		// console.log('Login ' + data['loggedIn'] + 'SessionToken: ' + data['sessionToken']);
 		console.log(data);
 
 		if (data['loggedIn']) {
@@ -144,7 +143,7 @@ const setHubCallbacks = (connection, dispatch) => {
 		} else {
 			dispatch({
 				type: 'SET_SESSION_TOKEN',
-				sessionToken: null
+				sessionToken: 'rejected'
 			})
 		}
 		// document.cookie = `username=${}`

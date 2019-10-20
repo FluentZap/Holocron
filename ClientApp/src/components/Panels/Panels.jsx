@@ -19,3 +19,9 @@ function ScrollPanel({ gridArea, className, children, reset }) {
 };
 
 export default ScrollPanel
+
+
+export function Button({ onClick, className, gridArea, children }) {
+  return <button onClick={onClick} className={`${className} flex-center center data-panel scanlines-back m2`}
+    style={{ gridArea: gridArea }}>{children}</button>
+}
