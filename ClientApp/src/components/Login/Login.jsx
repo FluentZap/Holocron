@@ -21,7 +21,7 @@ function Login(props) {
   return (
     <div className='flex-center login-root'>
       <div className='login-container'>
-        <div class="lds-dual-ring" style={{ gridArea: '1 / 1 / span 64 / span 36' }}/>
+        {/* <div className="lds-dual-ring" style={{ gridArea: '1 / 1 / span 64 / span 36' }}/> */}
         <div className='flex-center login-background' style={{ gridArea: '1 / 1 / span 64 / span 36' }} />
         <div className='flex-center login-heading' style={{ gridArea: '17 / 4 / span 5 / span 30' }} >HoloCron</div>
         <input className='login-input m2 p2' style={{ gridArea: '25 / 6 / span 6 / span 26' }} placeholder={'Username'} type="text" onChange={event => setUserName(event.target.value)} />

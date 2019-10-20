@@ -4,19 +4,18 @@ import uuid from 'uuid';
 import GetSkillSymbols from '../../Universal/Symbol';
 import FadeInBuilder from '../../FadeInBuilder';
 import DescriptionBox from '../../Universal/DescriptionBox';
+import ScrollPanel from '../../Panels/Panels';
 
 // const panelFade = new FadeInBuilder(0, 0.1, 2);
 // const childFade = new FadeInBuilder(0.1, 0.2, 4);
 
-export const SkillBox = ({ character, selectStat, selectSkill, setSelectSkill, ds, setShowInfo, showInfo }) => {
-  const skillsRef = useRef(null)
+export const SkillBox = ({ character, selectStat, selectSkill, setSelectSkill, ds, setShowInfo, showInfo }) => {  
   // const characteristics = character.characteristics[selectStat];
   // useEffect(() => {
   //   setSelectSkill('');
   // }, [selectStat, setSelectSkill])
 
-  const updateSelectSkill = skill => {
-    skillsRef.current.scrollTop = 0;
+  const updateSelectSkill = skill => {    
     if (skill === selectSkill) {
       setSelectSkill('')
     } else {
@@ -26,30 +25,26 @@ export const SkillBox = ({ character, selectStat, selectSkill, setSelectSkill, d
   const grid = (selectStat === '' && selectSkill === '') ? '14 / 8 / span 24 / span 15' : '19 / 8 / span 19 / span 15'
   const skillCount = Object.keys(ds.skills).length;
 
-  return (
-    <div className='flex-center data-panel red-flat scanlines-back m2 p2' style={{ gridArea: grid, justifyContent: 'start' }} >
-      <div ref={skillsRef} className='flex-center' style={{ display: 'block', overflowY: 'auto', width: '99%', margin: '.5vh 0' }} >
-        {selectSkill === '' ? getSkills(ds, selectStat).map(([key, value], i) => {
-          return <div key={uuid.v4()} className='z-5 m2 p2 flex-left data-panel gray-flat-hover'
-            style={{ marginTop: i === 0 ? 0 : '.5vh', marginBottom: i === skillCount - 1 ? 0 : '.5vh' }}
-            onClick={() => updateSelectSkill(key)} >
-            <div className='font-small'>{value} ({getSkillValue(character, key)}){getCareerSkill(character, key) ? ' - C' : ''}</div> <GetSkillSymbols skill={key} {...{ character, ds }} />
-          </div>
-        })
-          :
-          <>
-            <div className='z-5 m2 p2 flex-left data-panel orange-glow scanlines-back'
-              style={{ marginTop: 0 }}
-              onClick={() => setSelectSkill('')} >
-              {/* {selectSkill}: {character.skills[selectSkill]} */}
-              <div className='font-small'>{ds.skills[selectSkill].Name[0]} ({getSkillValue(character, selectSkill)}){getCareerSkill(character, selectSkill) ? ' - C' : ''}</div> <GetSkillSymbols skill={selectSkill} {...{ character, ds }} />
-            </div>
-            <DescriptionBox text={ds.skills[selectSkill].Description[0]} {...{ setShowInfo }} />
-          </>
-        }
+  return <ScrollPanel reset className='red-flat' gridArea={grid}>
+    {selectSkill === '' ? getSkills(ds, selectStat).map(([key, value], i) => {
+      return <div key={uuid.v4()} className='z-5 m2 p2 flex-left data-panel gray-flat-hover'
+        style={{ marginTop: i === 0 ? 0 : '.5vh', marginBottom: i === skillCount - 1 ? 0 : '.5vh' }}
+        onClick={() => updateSelectSkill(key)} >
+        <div className='font-small'>{value} ({getSkillValue(character, key)}){getCareerSkill(character, key) ? ' - C' : ''}</div> <GetSkillSymbols skill={key} {...{ character, ds }} />
       </div>
-    </div>
-  )
+    })
+      :
+      <>
+        <div className='z-5 m2 p2 flex-left data-panel orange-glow scanlines-back'
+          style={{ marginTop: 0 }}
+          onClick={() => setSelectSkill('')} >
+          {/* {selectSkill}: {character.skills[selectSkill]} */}
+          <div className='font-small'>{ds.skills[selectSkill].Name[0]} ({getSkillValue(character, selectSkill)}){getCareerSkill(character, selectSkill) ? ' - C' : ''}</div> <GetSkillSymbols skill={selectSkill} {...{ character, ds }} />
+        </div>
+        <DescriptionBox text={ds.skills[selectSkill].Description[0]} {...{ setShowInfo }} />
+      </>
+    }
+  </ScrollPanel>
 }
 
 export const CharacteristicsBuySell = ({ setCharacter, character, selectStat, ds }) => {
@@ -104,7 +99,7 @@ export const SkillBuySell = ({ setCharacter, character, selectSkill, ds }) => {
   const canBuy = character.unusedXp >= buyCost;
   selectSkill = selectSkill.replace(' ', '_');
 
-  
+
   const buySkill = () => {
     let stat = getSkillValue(character, selectSkill);
     if (character.unusedXp >= buyCost && stat < 5) {
