@@ -22,10 +22,10 @@ function Roster({ characters, ds, dispatch}) {
         <button onClick={() => navigate('/menu')} className='flex-center data-panel red-glow scanlines-back m2'
           style={{ gridArea: '1 / 1 / span 3 / span 7', }}>Menu</button>
         <button onClick={() => navigate('/createnew')} className='flex-center data-panel red-glow scanlines-back m2'
-          style={{ gridArea: '38 / 1 / span 3 / span 20', }}>Create New</button>
+          style={{ gridArea: '38 / 1 / span 3 / span 22', }}>Create New</button>
         {/* <div className='flex-center data-panel gray-flat roster-character-list m2 p4' style={{ ...getFade() }}> */}
 
-        <div className='flex-center data-panel gray-flat scanlines-back m2 p2' style={{ justifyContent: 'start', gridArea: '4 / 1 / span 34 / span 20' }}>
+        <div className='flex-center data-panel gray-flat scanlines-back m2 p2' style={{ justifyContent: 'start', gridArea: '4 / 1 / span 34 / span 22' }}>
           <div className='scroll-container'>
 
             {characters ?

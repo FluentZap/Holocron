@@ -23,7 +23,7 @@ export const SkillBox = ({ character, selectStat, selectSkill, setSelectSkill, d
       setSelectSkill(skill)
     }
   }
-  const grid = (selectStat === '' && selectSkill === '') ? '14 / 8 / span 24 / span 13' : '19 / 8 / span 19 / span 13'
+  const grid = (selectStat === '' && selectSkill === '') ? '14 / 8 / span 24 / span 15' : '19 / 8 / span 19 / span 15'
   const skillCount = Object.keys(ds.skills).length;
 
   return (
@@ -84,7 +84,7 @@ export const CharacteristicsBuySell = ({ setCharacter, character, selectStat, ds
 
 
   return <div className='flex-center data-panel red-flat scanlines-back m2 font-small'
-    style={{ marginLeft: '.5vh', marginRight: '.5vh', justifyContent: 'space-evenly', gridArea: '14 / 8 / span 5 / span 13' }} >
+    style={{ marginLeft: '.5vh', marginRight: '.5vh', justifyContent: 'space-evenly', gridArea: '14 / 8 / span 5 / span 15' }} >
     Characteristic ({ds.characteristics[selectStat].Name[0]})
     <div className='flex-row-center full-width'>
       <div className={`z-5 m2 p2 flex-left data-panel scanlines-back full-width ${character.characteristicsBuy[selectStat] > 0 ? 'blue-glow' : 'gray-flat'}`}
@@ -132,7 +132,7 @@ export const SkillBuySell = ({ setCharacter, character, selectSkill, ds }) => {
 
 
   return <div className='flex-center data-panel red-flat scanlines-back m2 font-small'
-    style={{ marginLeft: '.5vh', marginRight: '.5vh', justifyContent: 'space-evenly', gridArea: '14 / 8 / span 5 / span 13' }} >
+    style={{ marginLeft: '.5vh', marginRight: '.5vh', justifyContent: 'space-evenly', gridArea: '14 / 8 / span 5 / span 15' }} >
     Skill ({ds.skills[selectSkill].Name[0]})
     <div className='flex-row-center full-width'>
       <div className={`z-5 m2 p2 flex-left data-panel scanlines-back full-width ${character.skillsBuy[selectSkill] > 0 ? 'blue-glow' : 'gray-flat'}`}

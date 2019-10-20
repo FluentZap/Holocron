@@ -233,16 +233,14 @@ code {
 
 .data-container {
     display: grid;
-    grid-template-columns: repeat(20, calc(100% / 20));
-    grid-template-rows: repeat(40, calc(100% / 40));
-    background-repeat: no-repeat;
-    background-size: contain;    
+    grid-template-columns: repeat(22, calc(100% / 22));
+    grid-template-rows: repeat(40, calc(100% / 40));    
     box-sizing: border-box;
     top: 0;
     height: 100%;    
     width: calc(1vh * 100 * 0.5625);    
     position: fixed;
-    padding: 0.5vh calc(1vh * 0.5625);
+    padding: 0 calc(10vh * 0.0625);
     /* max-height: calc(100vw * 1.78); */
     overflow: hidden;
 }
@@ -257,6 +255,23 @@ code {
   /* transition: background-color 5000s ease-in-out 0s; */
   /* background: #671818 !important; */
 /* } */
+
+
+input:-webkit-autofill,
+input:-webkit-autofill:hover, 
+input:-webkit-autofill:focus,
+textarea:-webkit-autofill,
+textarea:-webkit-autofill:hover,
+textarea:-webkit-autofill:focus,
+select:-webkit-autofill,
+select:-webkit-autofill:hover,
+select:-webkit-autofill:focus {
+  border: 1px solid f7d08b;
+  -webkit-text-fill-color: white;
+  -webkit-text-size-adjust: 4vh;
+  -webkit-box-shadow: 0 0 0px 1000px #f2aa2a inset;
+  transition: background-color 5000s ease-in-out 0s;
+}
 
 
 
@@ -359,3 +374,28 @@ code {
      background: #cc3333;
      /* background: #f4bc5c; */
  }
+
+ .lds-dual-ring {
+  display: inline-block;
+  width: 64px;
+  height: 64px;
+}
+.lds-dual-ring:after {
+  content: " ";
+  display: block;
+  width: 46px;
+  height: 46px;
+  margin: 1px;
+  border-radius: 50%;
+  border: 5px solid #fff;
+  border-color: #fff transparent #fff transparent;
+  animation: lds-dual-ring 1.2s linear infinite;
+}
+@keyframes lds-dual-ring {
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(360deg);
+  }
+}

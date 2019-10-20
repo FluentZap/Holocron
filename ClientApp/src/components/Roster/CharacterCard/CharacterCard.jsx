@@ -21,8 +21,8 @@ const CharacterCard = ({ ds, character, character: { name, species, career, woun
 	}
 
 	return (
-		<div className='roster-character-card' style={{ gridArea: '4 / 1 / span 10 / span 20' }}>
-			<div className='data-panel red-flat scanlines-back m2 p2' style={{ gridArea: '1 / 1 / span 10 / span 20' }} />
+		<div className='roster-character-card' style={{ gridArea: '4 / 1 / span 10 / span 22' }}>
+			<div className='data-panel red-flat scanlines-back m2 p2' style={{ gridArea: '1 / 1 / span 10 / span 22' }} />
 			<TextBox area={[2, 7, 2, 13]}
 				text={`Name: ${name}`} edit={true} onChange={changeName} />
 

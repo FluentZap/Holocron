@@ -5,8 +5,8 @@
 
 .login-container {
     display: grid;
-    grid-template-columns: repeat(20, calc(100% / 20));
-    grid-template-rows: repeat(40, calc(100% / 40));
+    grid-template-columns: repeat(36, calc(100% / 36));
+    grid-template-rows: repeat(64, calc(100% / 64));
     flex-direction: column;    
     width: calc(1vh * 100 * 0.5625);        
     height: 100%;

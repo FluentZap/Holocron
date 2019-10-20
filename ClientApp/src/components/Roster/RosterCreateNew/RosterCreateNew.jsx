@@ -113,7 +113,7 @@ function Roster({ dataSet, dispatch }) {
             <>
               <SpeciesList {...{ species, changeSpecies, ds }} />
               {species ? <SpeciesBox {...{ species, ds, setShowInfo }} /> :
-                <div className='flex-center data-panel red-flat scanlines-back m2 p2' style={{ gridArea: '14 / 8 / span 24 / span 13', justifyContent: 'start' }} />}
+                <div className='flex-center data-panel red-flat scanlines-back m2 p2' style={{ gridArea: '14 / 8 / span 24 / span 15', justifyContent: 'start' }} />}
             </>
             : category === 'Career' ?
               <CareerInfo {...{ career, changeCareer, specialization, changeSpecialization, ds, character, setCharacter, setShowInfo, careerCategory, setCareerCategory }} />
@@ -124,10 +124,10 @@ function Roster({ dataSet, dispatch }) {
           style={{gridArea: '38 / 1 / span 3 / span 7' }}>Species</button>
         <button className={'flex-center data-panel scanlines-back m2 ' + (category === 'Career' ? 'orange-glow' : 'red-glow')}
           onClick={() => setCategory('Career')}
-          style={{gridArea: '38 / 8 / span 3 / span 7' }}>Career</button>
+          style={{gridArea: '38 / 8 / span 3 / span 8' }}>Career</button>
         <button className={'flex-center data-panel scanlines-back m2 ' + (category === 'Stats' ? 'orange-glow' : 'red-glow')}
           onClick={() => setCategory('Stats')}
-          style={{gridArea: '38 / 15 / span 3 / span 7' }}>Stats</button>
+          style={{gridArea: '38 / 16 / span 3 / span 7' }}>Stats</button>
         {showInfo ? <FullScreenInfo onClick={() => setShowInfo('')} text={showInfo} /> : ''}
       </div>
     </div >
@@ -162,7 +162,7 @@ const SpeciesBox = ({ species, ds, setShowInfo }) => {
   const { Agility, Brawn, Cunning, Intellect, Presence, Willpower } = StartingChars[0];
   const { Experience, StrainThreshold, WoundThreshold } = StartingAttrs[0];
   return (
-    <div className='flex-center data-panel red-flat scanlines-back m2 p2' style={{ gridArea: '14 / 8 / span 24 / span 13', justifyContent: 'start' }} >
+    <div className='flex-center data-panel red-flat scanlines-back m2 p2' style={{ gridArea: '14 / 8 / span 24 / span 15', justifyContent: 'start' }} >
       <div ref={speciesRef} className='flex-center' style={{ display: 'block', overflowY: 'auto', width: '99%', margin: '.5vh 0' }} >
         <div className='z-5 m2 p2 flex-left data-panel gray-flat font-small'
           style={{ marginTop: 0 }}>
