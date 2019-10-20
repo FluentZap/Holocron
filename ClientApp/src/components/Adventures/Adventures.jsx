@@ -3,26 +3,25 @@ import { connect } from 'react-redux'
 import { navigate } from "@reach/router";
 import uuid from 'uuid';
 import './AdventuresStyles.css';
-import { Button, Panel, ScrollPanel } from '../Panels/Panels';
+import { Button, ScrollPanel, CRend, TextBox, Panel } from '../Panels/Panels';
 
 function Adventures({ ds, characters, dispatch }) {
   const [selectedCharacter, setSelectedCharacter] = useState('')
 
-
   useEffect(() => {
     if (!characters) {
       dispatch({ type: 'SERVER_FETCH_ROSTER' })
-    }    
+    }
   }, [])
-  console.log(characters);
 
   return (
     <div className='flex-center full-screen'>
       <div className='data-container'>
-        <Button onClick={() => navigate('/menu')} className='red-glow' gridArea='1 / 1 / span 3 / span 7'>Menu</Button>
-        <ScrollPanel className='gray-flat' gridArea='4 / 1 / span 17 / span 22'>
+        <Button onClick={() => navigate('/menu')} className='red-glow' area={[1, 1, 3, 7]}>Menu</Button>
+        <ScrollPanel className='gray-flat' gridArea='4 / 1 / span 22 / span 22'>
           {characters && characters.map(character =>
-            <div className='m4 p2 data-panel red-glow scanlines-back' key={uuid.v4()}
+            <div onClick={() => setSelectedCharacter(character.id)}
+              className={CRend(selectedCharacter === character.id, 'orange-glow', 'red-glow', 'm4 p2 data-panel scanlines-back')} key={uuid.v4()}
               style={{ gridTemplate: 'repeat(4, 1fr) / repeat(8, 1fr)', display: 'grid' }}>
               {/* <CharacterCard fadeDelay={fadeIn()} stats={character} /> */}
               <div className='flex-center data-panel m2 p2 font-small center'
@@ -40,6 +39,13 @@ function Adventures({ ds, characters, dispatch }) {
             </div>
           )}
         </ScrollPanel>
+        <Panel className='red-flat' area={[26, 1, 11, 22]} />
+        <TextBox area={[27, 4, 4, 16]} edit text='Adventure Id Code' />
+        <TextBox area={[31, 4, 4, 16]} edit text='Password' type="password" />
+        
+        <Button className='red-glow' area={[37, 12, 4, 11]}>Join Adventure</Button>
+        <Button className='red-glow' area={[37, 1, 4, 11]}>Create Adventure</Button>
+
       </div>
     </div>
   );

@@ -18,15 +18,33 @@ export function ScrollPanel({ gridArea, className, children, reset }) {
   )
 };
 
-export function Panel({ gridArea, className, children }) {
+export function Panel({ area, className, children }) {
   return (
-    <div className={`flex-center data-panel ${className} scanlines-back m2 p2`} style={{ gridArea: gridArea, justifyContent: 'start' }} >
+    <div className={`flex-center data-panel ${className} scanlines-back m2 p2`} style={{
+      gridArea: `${area[0]} / ${area[1]} / span ${area[2]} / span ${area[3]}`, justifyContent: 'start'
+    }} >
       {children}
     </div>
   )
 };
 
-export function Button({ onClick, className, gridArea, children }) {
+export function Button({ onClick, className, area, children }) {
   return <button onClick={onClick} className={`${className} flex-center center data-panel scanlines-back m2`}
-    style={{ gridArea: gridArea }}>{children}</button>
+    style={{ gridArea: `${area[0]} / ${area[1]} / span ${area[2]} / span ${area[3]}` }}>{children}</button>
+}
+
+export function CRend(condition, valueTrue, valueFalse, classNames) {
+  return (condition ? valueTrue : valueFalse) + " " + classNames;
+}
+
+export const TextBox = (props) => {
+  let { text, area, className, edit, fade, onChange } = props;
+  if (!className) className = '';  
+  return edit ?
+    <input {...props} onChange={onChange} className={className + ' font-small z-5 m2 p2 flex-left data-panel blue-glow scanlines-back roster-text'}
+      style={{ ...fade, gridArea: `${area[0]} / ${area[1]} / span ${area[2]} / span ${area[3]}` }} placeholder={text} />
+    :
+    <div {...props} className={className + ' font-small z-5 m2 p2 flex-left data-panel gray-flat scanlines-back roster-text'}
+      style={{ ...fade, gridArea: `${area[0]} / ${area[1]} / span ${area[2]} / span ${area[3]}` }} placeholder={text}>
+      {text}</div>
 }

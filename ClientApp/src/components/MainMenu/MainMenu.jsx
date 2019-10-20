@@ -13,7 +13,7 @@ function MainMenu({ sessionToken }) {
     <div className='flex-center full-screen' style={{ overflow: 'hidden' }}>
 
       <div className='data-container scanlines-background'>
-        <Button onClick={() => navigate('/roster')} className='red-glow' gridArea='1 / 1 / span 16 / span 11'>Roster</Button>
+        <Button onClick={() => navigate('/roster')} className='red-glow' area={[1, 1, 16, 11]}>Roster</Button>
 
         <button className='disabled flex-center data-panel red-glow scanlines-back m2 main-menu-panel'
           style={{ gridArea: '1 / 12 / span 8 / span 11' }}>Archives</button>
