@@ -45,7 +45,15 @@ namespace Holocron.Context
     {
       using (var db = new HolocronContext())
       {
-        User dataUser = await db.Users.Where(x => x.Name == user.Name).Include("Characters").FirstOrDefaultAsync();
+        User dataUser = await db.Users.Where(x => x.Name == user.Name)
+        .Include(u => u.Characters)
+          .ThenInclude(c => c.SkillsBuy)
+        .Include(u => u.Characters)
+          .ThenInclude(c => c.Characteristics)
+        .Include(u => u.Characters)
+          .ThenInclude(c => c.CharacteristicsBuy)
+        .FirstOrDefaultAsync();
+
         if (dataUser != null)
         {
           return dataUser.Characters;

@@ -149,10 +149,22 @@ const setHubCallbacks = (connection, dispatch) => {
 		// document.cookie = `username=${}`
 	});
 
-	connection.on("ClientGetCharacters", data => {
-		dispatch({
+	connection.on("ClientGetCharacters", data => {    
+    dispatch({
 			type: 'CLIENT_CHARACTERS',
-			payload: data
+      payload: parseCharacterData(data)
 		})
 	});
+}
+
+
+
+function parseCharacterData(data) {  
+  return data.map(c => {
+    c.skillsCareer = c.skillsCareer.split(',');
+    c.skillsCareerFree = c.skillsCareerFree.split(',');
+    c.skillsSpec = c.skillsSpec.split(',');
+    c.skillsSpecFree = c.skillsSpecFree.split(',');
+    return c
+  })
 }

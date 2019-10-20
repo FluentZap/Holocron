@@ -5,16 +5,12 @@ import uuid from 'uuid';
 import './RosterStyles.css';
 
 function Roster({ characters, ds, dispatch }) {
-
-
   //Load characters
   useEffect(() => {
     if (!characters) {
       dispatch({ type: 'SERVER_FETCH_ROSTER' })
     }
-  }, [])
-  console.log(characters);
-
+  }, [])  
 
   return (
     <div className='flex-center full-screen'>
