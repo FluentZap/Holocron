@@ -9,7 +9,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Holocron.Migrations
 {
     [DbContext(typeof(HolocronContext))]
-    [Migration("20191006204613_InitialCreate")]
+    [Migration("20191022071134_InitialCreate")]
     partial class InitialCreate
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -80,6 +80,40 @@ namespace Holocron.Migrations
                     b.ToTable("Characters");
                 });
 
+            modelBuilder.Entity("Holocron.Context.CharacterInventory", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd();
+
+                    b.Property<int?>("CharacterId");
+
+                    b.Property<string>("Location");
+
+                    b.Property<string>("Name");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("CharacterId");
+
+                    b.ToTable("CharacterInventory");
+                });
+
+            modelBuilder.Entity("Holocron.Context.CharacterShip", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd();
+
+                    b.Property<int?>("CharacterId");
+
+                    b.Property<string>("Name");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("CharacterId");
+
+                    b.ToTable("CharacterShip");
+                });
+
             modelBuilder.Entity("Holocron.Context.Characteristics", b =>
                 {
                     b.Property<int>("Id")
@@ -109,31 +143,78 @@ namespace Holocron.Migrations
 
                     b.Property<string>("ConnectionId");
 
-                    b.Property<int>("Name");
-
-                    b.Property<int?>("UserId");
+                    b.Property<string>("Name");
 
                     b.HasKey("Id");
 
-                    b.HasIndex("UserId");
-
-                    b.ToTable("Group");
+                    b.ToTable("Groups");
                 });
 
-            modelBuilder.Entity("Holocron.Context.Item", b =>
+            modelBuilder.Entity("Holocron.Context.GroupCharacter", b =>
+                {
+                    b.Property<int>("GroupId");
+
+                    b.Property<int>("CharacterId");
+
+                    b.HasKey("GroupId", "CharacterId");
+
+                    b.HasIndex("CharacterId");
+
+                    b.ToTable("GroupCharacters");
+                });
+
+            modelBuilder.Entity("Holocron.Context.GroupInventory", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd();
 
-                    b.Property<int?>("CharacterId");
+                    b.Property<int?>("GroupId");
+
+                    b.Property<string>("Location");
 
                     b.Property<string>("Name");
 
                     b.HasKey("Id");
 
-                    b.HasIndex("CharacterId");
+                    b.HasIndex("GroupId");
 
-                    b.ToTable("Item");
+                    b.ToTable("GroupInventory");
+                });
+
+            modelBuilder.Entity("Holocron.Context.GroupShip", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd();
+
+                    b.Property<int?>("GroupId");
+
+                    b.Property<string>("Name");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("GroupId");
+
+                    b.ToTable("GroupShip");
+                });
+
+            modelBuilder.Entity("Holocron.Context.Permission", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd();
+
+                    b.Property<int?>("GroupId");
+
+                    b.Property<string>("PermissionGroup");
+
+                    b.Property<int?>("UserId");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("GroupId");
+
+                    b.HasIndex("UserId");
+
+                    b.ToTable("Permissions");
                 });
 
             modelBuilder.Entity("Holocron.Context.Skills", b =>
@@ -253,18 +334,56 @@ namespace Holocron.Migrations
                         .HasForeignKey("UserId");
                 });
 
-            modelBuilder.Entity("Holocron.Context.Group", b =>
-                {
-                    b.HasOne("Holocron.Context.User")
-                        .WithMany("Groups")
-                        .HasForeignKey("UserId");
-                });
-
-            modelBuilder.Entity("Holocron.Context.Item", b =>
+            modelBuilder.Entity("Holocron.Context.CharacterInventory", b =>
                 {
                     b.HasOne("Holocron.Context.Character")
                         .WithMany("Inventory")
                         .HasForeignKey("CharacterId");
+                });
+
+            modelBuilder.Entity("Holocron.Context.CharacterShip", b =>
+                {
+                    b.HasOne("Holocron.Context.Character")
+                        .WithMany("Ships")
+                        .HasForeignKey("CharacterId");
+                });
+
+            modelBuilder.Entity("Holocron.Context.GroupCharacter", b =>
+                {
+                    b.HasOne("Holocron.Context.Character", "Character")
+                        .WithMany("GroupCharacters")
+                        .HasForeignKey("CharacterId")
+                        .OnDelete(DeleteBehavior.Cascade);
+
+                    b.HasOne("Holocron.Context.Group", "Group")
+                        .WithMany("GroupCharacters")
+                        .HasForeignKey("GroupId")
+                        .OnDelete(DeleteBehavior.Cascade);
+                });
+
+            modelBuilder.Entity("Holocron.Context.GroupInventory", b =>
+                {
+                    b.HasOne("Holocron.Context.Group")
+                        .WithMany("Inventory")
+                        .HasForeignKey("GroupId");
+                });
+
+            modelBuilder.Entity("Holocron.Context.GroupShip", b =>
+                {
+                    b.HasOne("Holocron.Context.Group")
+                        .WithMany("Ships")
+                        .HasForeignKey("GroupId");
+                });
+
+            modelBuilder.Entity("Holocron.Context.Permission", b =>
+                {
+                    b.HasOne("Holocron.Context.Group", "Group")
+                        .WithMany("Permissions")
+                        .HasForeignKey("GroupId");
+
+                    b.HasOne("Holocron.Context.User", "User")
+                        .WithMany()
+                        .HasForeignKey("UserId");
                 });
 #pragma warning restore 612, 618
         }

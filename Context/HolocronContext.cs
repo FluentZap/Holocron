@@ -10,12 +10,22 @@ namespace Holocron.Context
   {
     public DbSet<User> Users { get; set; }
     public DbSet<Character> Characters { get; set; }
+    public DbSet<Group> Groups { get; set; }
+    public DbSet<GroupCharacter> GroupCharacters { get; set; }    
+    public DbSet<Permission> Permissions { get; set; }
 
     protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
     {
       // optionsBuilder.UseMySQL("server=localhost;database=holocron;user=holocron;password=digi;port=3306;");
       optionsBuilder.UseMySQL("server=localhost;database=holocron;user=holocron;password=digi;port=3306;");
     }
+
+    protected override void OnModelCreating(ModelBuilder builder)
+    {
+      base.OnModelCreating(builder);
+      builder.Entity<GroupCharacter>().HasKey(x => new { x.GroupId, x.CharacterId });      
+    }
+
   }
 
   public class User
@@ -23,17 +33,37 @@ namespace Holocron.Context
     public int Id { get; set; }
     public string SessionToken { get; set; }
     public string Name { get; set; }
-    public string Password { get; set; }
+    public string Password { get; set; }    
     public List<Character> Characters { get; set; } = new List<Character>();
-    public List<Group> Groups { get; set; } = new List<Group>();
   }
 
+  [JsonObject]
   public class Group
   {
     public int Id { get; set; }
-    public int Name { get; set; }
+    public string Name { get; set; }
     public string ConnectionId { get; set; }
-    public List<Character> Characters = new List<Character>();
+    public List<Permission> Permissions { get; set; } = new List<Permission>();
+    public ICollection<GroupCharacter> GroupCharacters { get; set; }    
+    public List<GroupShip> Ships { get; set; } = new List<GroupShip>();
+    public List<GroupInventory> Inventory { get; set; } = new List<GroupInventory>();
+  }
+
+  public class GroupCharacter
+  {
+    public int GroupId { get; set; }
+    public Group Group { get; set; }
+
+    public int CharacterId { get; set; }
+    public Character Character { get; set; }
+  }
+
+  public class Permission
+  {
+    public int Id { get; set; }
+    public Group Group { get; set; }
+    public User User { get; set; }
+    public string PermissionGroup { get; set; }
   }
 
   [JsonObject]
@@ -55,6 +85,8 @@ namespace Holocron.Context
 
     public string Specializations { get; set; }
 
+    public ICollection<GroupCharacter> GroupCharacters { get; set; }
+
     public Characteristics Characteristics { get; set; }
     public Characteristics CharacteristicsBuy { get; set; }
     public int Soak { get; set; }
@@ -67,7 +99,8 @@ namespace Holocron.Context
     public Skills SkillsBuy { get; set; }
     public string Species { get; set; }
 
-    public List<Item> Inventory { get; set; } = new List<Item>();
+    public List<CharacterInventory> Inventory { get; set; } = new List<CharacterInventory>();
+    public List<CharacterShip> Ships { get; set; } = new List<CharacterShip>();
   }
 
   [JsonObject]
@@ -130,13 +163,21 @@ namespace Holocron.Context
   public class Item
   {
     public int Id { get; set; }
+    public string Location { get; set; }
     public string Name { get; set; }
   }
+
 
   public class Ship
   {
     public int Id { get; set; }
     public string Name { get; set; }
   }
+
+  public class GroupShip : Ship { }
+  public class CharacterShip : Ship { }
+
+  public class GroupInventory : Item { }
+  public class CharacterInventory : Item { }
 
 }

@@ -25,6 +25,20 @@ namespace Holocron.Migrations
                 });
 
             migrationBuilder.CreateTable(
+                name: "Groups",
+                columns: table => new
+                {
+                    Id = table.Column<int>(nullable: false)
+                        .Annotation("MySQL:AutoIncrement", true),
+                    Name = table.Column<string>(nullable: true),
+                    ConnectionId = table.Column<string>(nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Groups", x => x.Id);
+                });
+
+            migrationBuilder.CreateTable(
                 name: "Skills",
                 columns: table => new
                 {
@@ -88,6 +102,47 @@ namespace Holocron.Migrations
                 });
 
             migrationBuilder.CreateTable(
+                name: "GroupInventory",
+                columns: table => new
+                {
+                    Id = table.Column<int>(nullable: false)
+                        .Annotation("MySQL:AutoIncrement", true),
+                    Location = table.Column<string>(nullable: true),
+                    Name = table.Column<string>(nullable: true),
+                    GroupId = table.Column<int>(nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_GroupInventory", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_GroupInventory_Groups_GroupId",
+                        column: x => x.GroupId,
+                        principalTable: "Groups",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Restrict);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "GroupShip",
+                columns: table => new
+                {
+                    Id = table.Column<int>(nullable: false)
+                        .Annotation("MySQL:AutoIncrement", true),
+                    Name = table.Column<string>(nullable: true),
+                    GroupId = table.Column<int>(nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_GroupShip", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_GroupShip_Groups_GroupId",
+                        column: x => x.GroupId,
+                        principalTable: "Groups",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Restrict);
+                });
+
+            migrationBuilder.CreateTable(
                 name: "Characters",
                 columns: table => new
                 {
@@ -146,20 +201,26 @@ namespace Holocron.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "Group",
+                name: "Permissions",
                 columns: table => new
                 {
                     Id = table.Column<int>(nullable: false)
                         .Annotation("MySQL:AutoIncrement", true),
-                    Name = table.Column<int>(nullable: false),
-                    ConnectionId = table.Column<string>(nullable: true),
-                    UserId = table.Column<int>(nullable: true)
+                    GroupId = table.Column<int>(nullable: true),
+                    UserId = table.Column<int>(nullable: true),
+                    PermissionGroup = table.Column<string>(nullable: true)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Group", x => x.Id);
+                    table.PrimaryKey("PK_Permissions", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_Group_Users_UserId",
+                        name: "FK_Permissions_Groups_GroupId",
+                        column: x => x.GroupId,
+                        principalTable: "Groups",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Restrict);
+                    table.ForeignKey(
+                        name: "FK_Permissions_Users_UserId",
                         column: x => x.UserId,
                         principalTable: "Users",
                         principalColumn: "Id",
@@ -167,7 +228,28 @@ namespace Holocron.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "Item",
+                name: "CharacterInventory",
+                columns: table => new
+                {
+                    Id = table.Column<int>(nullable: false)
+                        .Annotation("MySQL:AutoIncrement", true),
+                    Location = table.Column<string>(nullable: true),
+                    Name = table.Column<string>(nullable: true),
+                    CharacterId = table.Column<int>(nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_CharacterInventory", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_CharacterInventory_Characters_CharacterId",
+                        column: x => x.CharacterId,
+                        principalTable: "Characters",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Restrict);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "CharacterShip",
                 columns: table => new
                 {
                     Id = table.Column<int>(nullable: false)
@@ -177,14 +259,43 @@ namespace Holocron.Migrations
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Item", x => x.Id);
+                    table.PrimaryKey("PK_CharacterShip", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_Item_Characters_CharacterId",
+                        name: "FK_CharacterShip_Characters_CharacterId",
                         column: x => x.CharacterId,
                         principalTable: "Characters",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Restrict);
                 });
+
+            migrationBuilder.CreateTable(
+                name: "GroupCharacters",
+                columns: table => new
+                {
+                    GroupId = table.Column<int>(nullable: false),
+                    CharacterId = table.Column<int>(nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_GroupCharacters", x => new { x.GroupId, x.CharacterId });
+                    table.ForeignKey(
+                        name: "FK_GroupCharacters_Characters_CharacterId",
+                        column: x => x.CharacterId,
+                        principalTable: "Characters",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                    table.ForeignKey(
+                        name: "FK_GroupCharacters_Groups_GroupId",
+                        column: x => x.GroupId,
+                        principalTable: "Groups",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.CreateIndex(
+                name: "IX_CharacterInventory_CharacterId",
+                table: "CharacterInventory",
+                column: "CharacterId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_Characters_CharacteristicsBuyId",
@@ -207,26 +318,61 @@ namespace Holocron.Migrations
                 column: "UserId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Group_UserId",
-                table: "Group",
-                column: "UserId");
+                name: "IX_CharacterShip_CharacterId",
+                table: "CharacterShip",
+                column: "CharacterId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Item_CharacterId",
-                table: "Item",
+                name: "IX_GroupCharacters_CharacterId",
+                table: "GroupCharacters",
                 column: "CharacterId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_GroupInventory_GroupId",
+                table: "GroupInventory",
+                column: "GroupId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_GroupShip_GroupId",
+                table: "GroupShip",
+                column: "GroupId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Permissions_GroupId",
+                table: "Permissions",
+                column: "GroupId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Permissions_UserId",
+                table: "Permissions",
+                column: "UserId");
         }
 
         protected override void Down(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.DropTable(
-                name: "Group");
+                name: "CharacterInventory");
 
             migrationBuilder.DropTable(
-                name: "Item");
+                name: "CharacterShip");
+
+            migrationBuilder.DropTable(
+                name: "GroupCharacters");
+
+            migrationBuilder.DropTable(
+                name: "GroupInventory");
+
+            migrationBuilder.DropTable(
+                name: "GroupShip");
+
+            migrationBuilder.DropTable(
+                name: "Permissions");
 
             migrationBuilder.DropTable(
                 name: "Characters");
+
+            migrationBuilder.DropTable(
+                name: "Groups");
 
             migrationBuilder.DropTable(
                 name: "Characteristics");

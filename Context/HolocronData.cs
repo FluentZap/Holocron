@@ -7,6 +7,14 @@ using Microsoft.EntityFrameworkCore;
 namespace Holocron.Context
 {
 
+  public enum ListOf_DBResult
+  {
+    Success,
+    Duplicate,
+    NotFound,
+    FormatError
+  }
+
 
   public class TokenReturn
   {
@@ -16,12 +24,20 @@ namespace Holocron.Context
 
   public static class HoloData
   {
-    public static async Task CreateUser(User user)
+    public static async Task<ListOf_DBResult> CreateUser(User user)
     {
       using (var db = new HolocronContext())
       {
-        await db.Users.AddAsync(user);
-        await db.SaveChangesAsync();
+        if (await db.Users.CountAsync(x => x.Name == user.Name) == 0)
+        {
+          await db.Users.AddAsync(user);
+          await db.SaveChangesAsync();
+          return ListOf_DBResult.Success;
+        }
+        else
+        {
+          return ListOf_DBResult.Duplicate;
+        }
       }
     }
 
@@ -62,18 +78,77 @@ namespace Holocron.Context
       }
     }
 
+    public static async Task<List<Group>> FetchGroups(User user)
+    {
+      using (var db = new HolocronContext())
+      {
+        // List<Group> groups = await db.GroupUsers.Select(x => x.Group).Where(x => x.)
+        // List<Group> groups = await db.Permissions.Where(x => x.User.Name == user.Name).Include(x => x.Group).ToListAsync();        
 
-    public static async Task CreateCharacter(string UserName, Character character)
+        List<Group> groups = await db.Permissions.Where(x => x.User.Name == user.Name).Select(x => x.Group)
+        .Include(g => g.Permissions)
+          .ThenInclude(x => x.User)
+        .Include(g => g.GroupCharacters)
+        .Include(g => g.Inventory)
+        .Include(g => g.Ships)
+        .ToListAsync();
+        if (groups != null)
+        {
+          foreach (var item in groups)
+          {
+            foreach (var per in item.Permissions)
+            {
+              per.Group = null;
+              per.User = new User() { Name = per.User.Name, Id = per.Id };
+            }
+          }
+          return groups;
+        }
+        return new List<Group>();
+      }
+    }
+
+    public static async Task<ListOf_DBResult> CreateCharacter(string UserName, Character character)
     {
       using (var db = new HolocronContext())
       {
         User dataUser = await db.Users.Where(x => x.Name == UserName).Include("Characters").FirstOrDefaultAsync();
         dataUser.Characters.Add(character);
         await db.SaveChangesAsync();
+        return ListOf_DBResult.Success;
       }
     }
 
-
+    public static async Task<ListOf_DBResult> CreateGroup(string UserName, Group group)
+    {
+      using (var db = new HolocronContext())
+      {
+        User dataUser = await db.Users.Where(x => x.Name == UserName).FirstOrDefaultAsync();
+        if (await db.Groups.CountAsync(x => x.Name == group.Name) == 0)
+        {
+          if (group.ConnectionId != "" && group.Name != "")
+          {
+            // group.Users.Add(dataUser);
+            group.Permissions.Add(new Permission()
+            {
+              User = dataUser,
+              PermissionGroup = "Admin"
+            });
+            db.Groups.Add(group);
+            await db.SaveChangesAsync();
+            return ListOf_DBResult.Success;
+          }
+          else
+          {
+            return ListOf_DBResult.FormatError;
+          }
+        }
+        else
+        {
+          return ListOf_DBResult.Duplicate;
+        }
+      }
+    }
   }
 
 

@@ -63,7 +63,7 @@ namespace Holocron.Hubs
             System.Console.WriteLine("Bad Client Token");
           }
         }
-        else 
+        else
         {
           System.Console.WriteLine("Login Rejected");
           await Clients.Caller.SendAsync("ServerLogin", new TokenReturn());
@@ -77,6 +77,15 @@ namespace Holocron.Hubs
       {
         List<Character> characters = await HoloData.FetchCharacters(new User() { Name = user.Name });
         await Clients.Caller.SendAsync("ClientGetCharacters", characters);
+      }
+    }
+
+    public async Task FetchGroups(UserData user)
+    {
+      if (connectedUsers.ContainsKey(Context.ConnectionId) && user.sessionToken == connectedUsers[Context.ConnectionId].SessionToken)
+      {
+        List<Group> groups = await HoloData.FetchGroups(new User() { Name = user.Name });
+        await Clients.Caller.SendAsync("ClientGetGroups", groups);
       }
     }
 
@@ -97,6 +106,15 @@ namespace Holocron.Hubs
       }
     }
 
+    public async Task CreateGroup(Group NewGroup)
+    {
+      await HoloData.CreateGroup(connectedUsers[Context.ConnectionId].UserName, new Group() { Name = NewGroup.Name, ConnectionId = NewGroup.ConnectionId });
+      if (connectedUsers.ContainsKey(Context.ConnectionId))
+      {
+        List<Group> groups = await HoloData.FetchGroups(new User() { Name = connectedUsers[Context.ConnectionId].UserName });
+        await Clients.Caller.SendAsync("ClientGetGroups", groups);
+      }
+    }
 
     public async Task VT49Connect(string verificationCode)
     {

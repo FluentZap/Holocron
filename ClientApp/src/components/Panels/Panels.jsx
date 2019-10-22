@@ -34,17 +34,22 @@ export function Button({ onClick, className, area, children }) {
 }
 
 export function CRend(condition, valueTrue, valueFalse, classNames) {
+  if (classNames === undefined) {
+    classNames = '';
+  }
   return (condition ? valueTrue : valueFalse) + " " + classNames;
 }
 
 export const TextBox = (props) => {
-  let { text, area, className, edit, fade, onChange } = props;
-  if (!className) className = '';  
+  let { text, area, className, edit, fade, onChange, type, alert, onAnimationEnd } = props;
+  if (!className) className = '';
+  if (alert) className += ' reject-animation';
+
   return edit ?
-    <input {...props} onChange={onChange} className={className + ' font-small z-5 m2 p2 flex-left data-panel blue-glow scanlines-back roster-text'}
+    <input onAnimationEnd={onAnimationEnd} type={type} onChange={onChange} className={className + ' font-small z-5 m2 p2 flex-left data-panel blue-glow scanlines-back roster-text'}
       style={{ ...fade, gridArea: `${area[0]} / ${area[1]} / span ${area[2]} / span ${area[3]}` }} placeholder={text} />
     :
-    <div {...props} className={className + ' font-small z-5 m2 p2 flex-left data-panel gray-flat scanlines-back roster-text'}
+    <div type={type} className={className + ' font-small z-5 m2 p2 flex-left data-panel gray-flat scanlines-back roster-text'}
       style={{ ...fade, gridArea: `${area[0]} / ${area[1]} / span ${area[2]} / span ${area[3]}` }} placeholder={text}>
       {text}</div>
 }

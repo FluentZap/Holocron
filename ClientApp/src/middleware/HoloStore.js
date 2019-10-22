@@ -54,15 +54,22 @@ export function holocronMiddleware({ dispatch, getState }) {
 			}).catch(function (err) {
 				return console.error(err.toString());
 			});
-		}
-
+    }
+    
 		if (action.type === 'SERVER_CREATE_CHARACTER') {
 			let state = getState();
 			connection.invoke("CreateCharacter", action.character
 			).catch(function (err) {
 				return console.error(err.toString());
 			});
-		}
+    }
+
+    if (action.type === 'SERVER_CREATE_GROUP') {
+      connection.invoke("CreateGroup", { name: action.groupName, connectionId: action.connectionId }
+      ).catch(function (err) {
+        return console.error(err.toString());
+      });
+    }    
 
 		// Call the next dispatch method in the middleware chain.
 		const returnValue = next(action)
@@ -93,7 +100,9 @@ export const holocronReducer = (state = initial_state, action) => {
 		case 'SERVER_LOGIN_USER':
 			return { ...state, userName: action.userName };
 		case 'CLIENT_CHARACTERS':
-			return { ...state, characters: action.payload };
+      return { ...state, characters: action.payload };
+    case 'CLIENT_GROUPS':
+      return { ...state, groups: action.payload };
 		case 'SET_DATASET':
 			return { ...state, dataSet: action.dataSet };
 		default:
@@ -106,7 +115,8 @@ const initial_state = {
 	userName: '',
 	sessionToken: null,
 	characters: null,
-	dataSet: null,
+  dataSet: null,
+  groups: null,
 }
 
 
@@ -154,7 +164,14 @@ const setHubCallbacks = (connection, dispatch) => {
 			type: 'CLIENT_CHARACTERS',
       payload: parseCharacterData(data)
 		})
-	});
+  });
+  
+  connection.on("ClientGetGroups", data => {
+    dispatch({
+      type: 'CLIENT_GROUPS',
+      payload: data
+    })
+  });
 }
 
 
