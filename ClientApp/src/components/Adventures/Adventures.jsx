@@ -17,11 +17,14 @@ function Adventures({ ds, characters, groups, dispatch }) {
 
 
   useEffect(() => {
-    // if (!characters) {
-      // dispatch({ type: 'SERVER_FETCH_ROSTER' })
-    // }
+    if (!characters) {
+      dispatch({ type: 'SERVER_FETCH_ROSTER' })
+    }
+    if (!groups) {
+      dispatch({ type: 'SERVER_FETCH_GROUPS' })
+    }
     console.log(groups);
-    
+
   }, [])
 
   const createAdventure = () => {
@@ -79,6 +82,23 @@ function Adventures({ ds, characters, groups, dispatch }) {
         {category === 'adventureList' &&
           <>
             <ScrollPanel className='gray-flat' gridArea='7 / 1 / span 30 / span 22'>
+              {groups && groups.map(group =>
+                <div 
+                  className={CRend(1 === 0, 'orange-glow', 'red-glow', 'm4 p2 data-panel scanlines-back')} key={uuid.v4()}
+                  style={{ gridTemplate: 'repeat(4, 1fr) / repeat(8, 1fr)', display: 'grid' }}>                  
+                  <div className='flex-center data-panel m2 p2 font-small center'
+                    style={{ gridArea: '1 / 1 / span 4 / span 3' }}>
+                    {group['name']}
+                    <br />                    
+                  </div>
+                  <div className='flex-center data-panel m2 p2 font-small center'
+                    style={{ gridArea: '1 / 4 / span 4 / span 5' }}>
+                    {/* {ds.careers[group['career']].Name[0]} */}
+                    <br />
+                    {/* {group.specializations.split(',').map(spec => spec !== '' ? <div className='center' key={uuid.v4()}>{ds.specializations[spec].Name[0]}</div> : '')} */}
+                  </div>
+                </div>
+              )}
             </ScrollPanel>
             <Button className='red-glow' area={[37, 1, 4, 22]}>Login</Button>
           </>}

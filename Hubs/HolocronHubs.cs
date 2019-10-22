@@ -32,7 +32,6 @@ namespace Holocron.Hubs
       await base.OnDisconnectedAsync(exception);
     }
 
-
     public async Task updateServer(string message)
     {
       await Clients.Caller.SendAsync("send", message + ": First Data And other things");
@@ -40,23 +39,28 @@ namespace Holocron.Hubs
 
     public async Task CreateUser(UserData user)
     {
-      await HoloData.CreateUser(new User() { Name = user.Name, Password = user.Password });
+      (ListOf_DBResult flag, TokenReturn tokenReturn) = await HoloData.CreateUser(new User() { Name = user.Name, Password = user.Password });
+      if (connectedUsers.ContainsKey(Context.ConnectionId))
+      {
+        connectedUsers[Context.ConnectionId].SessionToken = tokenReturn.SessionToken.ToString();
+        await Clients.Caller.SendAsync("ServerLogin", flag, tokenReturn);
+      }
     }
 
     public async Task LoginUser(UserData user)
     {
       if (user.Name != "" && user.Password != "")
       {
-        TokenReturn tokenReturn = await HoloData.LoginUser(new User() { Name = user.Name, Password = user.Password });
+        (ListOf_DBResult flag, TokenReturn tokenReturn) = await HoloData.LoginUser(new User() { Name = user.Name, Password = user.Password });
         if (tokenReturn.LoggedIn)
         {
           if (connectedUsers.ContainsKey(Context.ConnectionId))
           {
-            connectedUsers[Context.ConnectionId].UserName = user.Name;
             connectedUsers[Context.ConnectionId].SessionToken = tokenReturn.SessionToken.ToString();
-            await Clients.Caller.SendAsync("ServerLogin", tokenReturn);
+            await Clients.Caller.SendAsync("ServerLogin", flag, tokenReturn);
             System.Console.WriteLine(tokenReturn.LoggedIn);
-            System.Console.WriteLine(tokenReturn.SessionToken);
+            System.Console.WriteLine($"Connected User: {Context.ConnectionId}");
+            System.Console.WriteLine($"Session Token: {tokenReturn.SessionToken}");
           }
           else
           {
@@ -66,7 +70,34 @@ namespace Holocron.Hubs
         else
         {
           System.Console.WriteLine("Login Rejected");
-          await Clients.Caller.SendAsync("ServerLogin", new TokenReturn());
+          await Clients.Caller.SendAsync("ServerLogin", flag, null);
+        }
+      }
+    }
+
+    public async Task LoginUserToken(UserData user)
+    {
+      if (user.sessionToken != "")
+      {
+        (ListOf_DBResult flag, TokenReturn tokenReturn) = await HoloData.LoginUserToken(new User() { SessionToken = user.sessionToken });
+        if (tokenReturn.LoggedIn)
+        {
+          if (connectedUsers.ContainsKey(Context.ConnectionId))
+          {
+            connectedUsers[Context.ConnectionId].SessionToken = tokenReturn.SessionToken.ToString();
+            await Clients.Caller.SendAsync("ServerLogin", flag, tokenReturn);
+            System.Console.WriteLine($"Token User: {Context.ConnectionId}");
+            System.Console.WriteLine($"Session Token: {tokenReturn.SessionToken}");
+          }
+          else
+          {
+            System.Console.WriteLine("Bad Client Token");
+          }
+        }
+        else
+        {
+          System.Console.WriteLine("Login Rejected");
+          await Clients.Caller.SendAsync("ServerLogin", flag, null);
         }
       }
     }
@@ -75,8 +106,9 @@ namespace Holocron.Hubs
     {
       if (connectedUsers.ContainsKey(Context.ConnectionId) && user.sessionToken == connectedUsers[Context.ConnectionId].SessionToken)
       {
-        List<Character> characters = await HoloData.FetchCharacters(new User() { Name = user.Name });
-        await Clients.Caller.SendAsync("ClientGetCharacters", characters);
+        (ListOf_DBResult flag, List<Character> characters) = await HoloData.FetchCharacters(user.sessionToken);
+
+        await Clients.Caller.SendAsync("ClientGetCharacters", flag, characters);
       }
     }
 
@@ -84,8 +116,8 @@ namespace Holocron.Hubs
     {
       if (connectedUsers.ContainsKey(Context.ConnectionId) && user.sessionToken == connectedUsers[Context.ConnectionId].SessionToken)
       {
-        List<Group> groups = await HoloData.FetchGroups(new User() { Name = user.Name });
-        await Clients.Caller.SendAsync("ClientGetGroups", groups);
+        (ListOf_DBResult flag, List<Group> groups) = await HoloData.FetchGroups(connectedUsers[Context.ConnectionId].SessionToken);
+        await Clients.Caller.SendAsync("ClientGetGroups", flag, groups);
       }
     }
 
@@ -97,22 +129,28 @@ namespace Holocron.Hubs
       NewCharacter.SkillsCareerFree = string.Join(",", character.SkillsCareerFreeList);
       NewCharacter.SkillsSpec = string.Join(",", character.SkillsSpecList);
       NewCharacter.SkillsSpecFree = string.Join(",", character.SkillsSpecFreeList);
-      await HoloData.CreateCharacter(connectedUsers[Context.ConnectionId].UserName, NewCharacter);
+      await HoloData.CreateCharacter(connectedUsers[Context.ConnectionId].SessionToken, NewCharacter);
 
       if (connectedUsers.ContainsKey(Context.ConnectionId))
       {
-        List<Character> characters = await HoloData.FetchCharacters(new User() { Name = connectedUsers[Context.ConnectionId].UserName });
-        await Clients.Caller.SendAsync("ClientGetCharacters", characters);
+        (ListOf_DBResult flag, List<Character> characters) = await HoloData.FetchCharacters(connectedUsers[Context.ConnectionId].SessionToken);
+        foreach ((var key, var value) in connectedUsers.Where(x => x.Value.SessionToken == connectedUsers[Context.ConnectionId].SessionToken))
+        {
+          await Clients.Client(key).SendAsync("ClientGetCharacters", flag, characters);
+        }
       }
     }
 
     public async Task CreateGroup(Group NewGroup)
     {
-      await HoloData.CreateGroup(connectedUsers[Context.ConnectionId].UserName, new Group() { Name = NewGroup.Name, ConnectionId = NewGroup.ConnectionId });
+      await HoloData.CreateGroup(connectedUsers[Context.ConnectionId].SessionToken, new Group() { Name = NewGroup.Name, ConnectionId = NewGroup.ConnectionId });
       if (connectedUsers.ContainsKey(Context.ConnectionId))
       {
-        List<Group> groups = await HoloData.FetchGroups(new User() { Name = connectedUsers[Context.ConnectionId].UserName });
-        await Clients.Caller.SendAsync("ClientGetGroups", groups);
+        (ListOf_DBResult flag, List<Group> groups) = await HoloData.FetchGroups(connectedUsers[Context.ConnectionId].SessionToken);
+        foreach ((var key, var value) in connectedUsers.Where(x => x.Value.SessionToken == connectedUsers[Context.ConnectionId].SessionToken))
+        {
+          await Clients.Client(key).SendAsync("ClientGetGroups", flag, groups);
+        }
       }
     }
 
@@ -120,7 +158,7 @@ namespace Holocron.Hubs
     {
       if (verificationCode == "34f6d465a525aa589271e66648d73773")
       {
-        connectedUsers[Context.ConnectionId].UserName = "VT49";
+        // connectedUsers[Context.ConnectionId].UserName = "VT49";
         connectedUsers[Context.ConnectionId].SessionToken = Context.ConnectionId;
       }
     }

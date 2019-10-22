@@ -12,56 +12,70 @@ namespace Holocron.Context
     Success,
     Duplicate,
     NotFound,
-    FormatError
+    FormatError,
+    SessionExpired
   }
 
 
   public class TokenReturn
   {
-    public Guid SessionToken;
+    public string SessionToken;
     public bool LoggedIn = false;
   }
 
   public static class HoloData
   {
-    public static async Task<ListOf_DBResult> CreateUser(User user)
+    public static async Task<(ListOf_DBResult, TokenReturn)> CreateUser(User user)
     {
       using (var db = new HolocronContext())
       {
         if (await db.Users.CountAsync(x => x.Name == user.Name) == 0)
         {
+          Guid g = Guid.NewGuid();
+          user.SessionToken = g.ToString();
+
           await db.Users.AddAsync(user);
           await db.SaveChangesAsync();
-          return ListOf_DBResult.Success;
+          return (ListOf_DBResult.Success, new TokenReturn() { SessionToken = user.SessionToken, LoggedIn = true });
         }
         else
         {
-          return ListOf_DBResult.Duplicate;
+          return (ListOf_DBResult.Duplicate, null);
         }
       }
     }
 
-    public static async Task<TokenReturn> LoginUser(User user)
+    public static async Task<(ListOf_DBResult, TokenReturn)> LoginUser(User user)
     {
       using (var db = new HolocronContext())
       {
         User dataUser = await db.Users.Where(x => x.Name == user.Name).FirstOrDefaultAsync();
         if (dataUser != null && dataUser.Password == user.Password)
         {
-          Guid g = Guid.NewGuid();
-          dataUser.SessionToken = g.ToString();
-          await db.SaveChangesAsync();
-          return new TokenReturn() { SessionToken = g, LoggedIn = true };
+          return (ListOf_DBResult.Success, new TokenReturn() { SessionToken = dataUser.SessionToken, LoggedIn = true });
         }
-        return new TokenReturn();
+        return (ListOf_DBResult.NotFound, null);
       }
     }
 
-    public static async Task<List<Character>> FetchCharacters(User user)
+    public static async Task<(ListOf_DBResult, TokenReturn)> LoginUserToken(User user)
     {
       using (var db = new HolocronContext())
       {
-        User dataUser = await db.Users.Where(x => x.Name == user.Name)
+        User dataUser = await db.Users.Where(x => x.SessionToken == user.SessionToken).FirstOrDefaultAsync();
+        if (dataUser != null)
+        {
+          return (ListOf_DBResult.Success, new TokenReturn() { SessionToken = dataUser.SessionToken, LoggedIn = true });
+        }
+        return (ListOf_DBResult.NotFound, null);
+      }
+    }
+
+    public static async Task<(ListOf_DBResult, List<Character>)> FetchCharacters(string SessionToken)
+    {
+      using (var db = new HolocronContext())
+      {
+        User dataUser = await db.Users.Where(x => x.SessionToken == SessionToken)
         .Include(u => u.Characters)
           .ThenInclude(c => c.SkillsBuy)
         .Include(u => u.Characters)
@@ -72,58 +86,70 @@ namespace Holocron.Context
 
         if (dataUser != null)
         {
-          return dataUser.Characters;
+          return (ListOf_DBResult.Success, dataUser.Characters);
         }
-        return new List<Character>();
+        return (ListOf_DBResult.NotFound, null);
       }
     }
 
-    public static async Task<List<Group>> FetchGroups(User user)
+    public static async Task<(ListOf_DBResult, List<Group>)> FetchGroups(string SessionToken)
     {
-      using (var db = new HolocronContext())
+      if (SessionToken != null)
       {
-        // List<Group> groups = await db.GroupUsers.Select(x => x.Group).Where(x => x.)
-        // List<Group> groups = await db.Permissions.Where(x => x.User.Name == user.Name).Include(x => x.Group).ToListAsync();        
-
-        List<Group> groups = await db.Permissions.Where(x => x.User.Name == user.Name).Select(x => x.Group)
-        .Include(g => g.Permissions)
-          .ThenInclude(x => x.User)
-        .Include(g => g.GroupCharacters)
-        .Include(g => g.Inventory)
-        .Include(g => g.Ships)
-        .ToListAsync();
-        if (groups != null)
+        using (var db = new HolocronContext())
         {
-          foreach (var item in groups)
+          User dataUser = await db.Users.FirstAsync(x => x.SessionToken == SessionToken);
+          if (dataUser != null)
           {
-            foreach (var per in item.Permissions)
+            List<Group> groups = await db.Permissions.Where(x => x.User.Id == dataUser.Id).Select(x => x.Group)
+            .Include(g => g.Permissions)
+              .ThenInclude(x => x.User)
+            .Include(g => g.GroupCharacters)
+            .Include(g => g.Inventory)
+            .Include(g => g.Ships)
+            .ToListAsync();
+            if (groups != null)
             {
-              per.Group = null;
-              per.User = new User() { Name = per.User.Name, Id = per.Id };
+              foreach (var item in groups)
+              {
+                foreach (var per in item.Permissions)
+                {
+                  per.Group = null;
+                  per.User = new User() { Name = per.User.Name, Id = per.User.Id };
+                }
+              }
+              return (ListOf_DBResult.Success, groups);
             }
           }
-          return groups;
+          return (ListOf_DBResult.NotFound, null);
         }
-        return new List<Group>();
+      }
+      else
+      {
+        return (ListOf_DBResult.SessionExpired, null);
       }
     }
 
-    public static async Task<ListOf_DBResult> CreateCharacter(string UserName, Character character)
+    public static async Task<ListOf_DBResult> CreateCharacter(string SessionToken, Character character)
     {
       using (var db = new HolocronContext())
       {
-        User dataUser = await db.Users.Where(x => x.Name == UserName).Include("Characters").FirstOrDefaultAsync();
-        dataUser.Characters.Add(character);
-        await db.SaveChangesAsync();
-        return ListOf_DBResult.Success;
+        User dataUser = await db.Users.Where(x => x.SessionToken == SessionToken).Include("Characters").FirstOrDefaultAsync();
+        if (dataUser != null)
+        {
+          dataUser.Characters.Add(character);
+          await db.SaveChangesAsync();
+          return ListOf_DBResult.Success;
+        }
+        return ListOf_DBResult.FormatError;
       }
     }
 
-    public static async Task<ListOf_DBResult> CreateGroup(string UserName, Group group)
+    public static async Task<ListOf_DBResult> CreateGroup(string SessionToken, Group group)
     {
       using (var db = new HolocronContext())
       {
-        User dataUser = await db.Users.Where(x => x.Name == UserName).FirstOrDefaultAsync();
+        User dataUser = await db.Users.Where(x => x.SessionToken == SessionToken).FirstOrDefaultAsync();
         if (await db.Groups.CountAsync(x => x.Name == group.Name) == 0)
         {
           if (group.ConnectionId != "" && group.Name != "")

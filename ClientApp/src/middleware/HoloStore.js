@@ -3,65 +3,85 @@ import { navigate } from "@reach/router";
 import loadDataSet from './LoadDataSet';
 
 export function holocronMiddleware({ dispatch, getState }) {
-	const connection = new HubConnectionBuilder()
-		.withUrl("/Holocron")
-		.withAutomaticReconnect()
-		.configureLogging(LogLevel.Information)
-		.build();
+  const connection = new HubConnectionBuilder()
+    .withUrl("/Holocron")
+    .withAutomaticReconnect()
+    .configureLogging(LogLevel.Information)
+    .build();
 
-	loadDataSet(dispatch);
-
-	setHubCallbacks(connection, dispatch);
-	startConnection(connection, dispatch);
-	// connection.onclose(async () => {
-	//     await start();
-	// });
-
-	// connection.start().catch(function (err) {
-	//     return console.error(err.toString());
-	// }).then(() => {
-	//     dispatch({ type: 'SET_CONNECTED', payload: true });
-	//     console.log('connected');
-	// });
-
-	return next => action => {
-		//console.log('will dispatch', action)        
-
-		if (action.type === 'SERVER_CREATE_USER') {
-			console.log(action);
-			connection.invoke("CreateUser", {
-				userName: action.userName,
-				password: action.password
-			}).catch(function (err) {
-				return console.error(err.toString());
-			});
-		}
-
-		if (action.type === 'SERVER_LOGIN_USER') {
-			connection.invoke("LoginUser", {
-				userName: action.userName,
-				password: action.password
-			}).catch(function (err) {
-				return console.error(err.toString());
-			});
-		}
-
-		if (action.type === 'SERVER_FETCH_ROSTER') {
-			let state = getState();
-			connection.invoke("FetchRoster", {
-				userName: state.userName,
-				sessionToken: state.sessionToken
-			}).catch(function (err) {
-				return console.error(err.toString());
-			});
+  connection.onreconnected(() => {
+    let state = getState();
+    if (state.sessionToken !== null) {
+      connection.invoke("LoginUserToken", {
+        sessionToken: state.sessionToken,
+      }).catch(function (err) {
+        return console.error(err.toString());
+      });
+    } else {
+      navigate('/');
     }
-    
-		if (action.type === 'SERVER_CREATE_CHARACTER') {
-			let state = getState();
-			connection.invoke("CreateCharacter", action.character
-			).catch(function (err) {
-				return console.error(err.toString());
-			});
+  });
+
+  loadDataSet(dispatch);
+  setHubCallbacks(connection, dispatch);
+  startConnection(connection, dispatch);
+  // connection.onclose(async () => {
+  //     await start();
+  // });
+
+  // connection.start().catch(function (err) {
+  //     return console.error(err.toString());
+  // }).then(() => {
+  //     dispatch({ type: 'SET_CONNECTED', payload: true });
+  //     console.log('connected');
+  // });
+
+  return next => action => {
+    //console.log('will dispatch', action)        
+
+    if (action.type === 'SERVER_CREATE_USER') {
+      console.log(action);
+      connection.invoke("CreateUser", {
+        userName: action.userName,
+        password: action.password
+      }).catch(function (err) {
+        return console.error(err.toString());
+      });
+    }
+
+    if (action.type === 'SERVER_LOGIN_USER') {
+      connection.invoke("LoginUser", {
+        userName: action.userName,
+        password: action.password
+      }).catch(function (err) {
+        return console.error(err.toString());
+      });
+    }
+
+    if (action.type === 'SERVER_FETCH_ROSTER') {
+      let state = getState();
+      connection.invoke("FetchRoster", {        
+        sessionToken: state.sessionToken
+      }).catch(function (err) {
+        return console.error(err.toString());
+      });
+    }
+
+    if (action.type === 'SERVER_FETCH_GROUPS') {
+      let state = getState();
+      connection.invoke("FetchGroups", {        
+        sessionToken: state.sessionToken
+      }).catch(function (err) {
+        return console.error(err.toString());
+      });
+    }
+
+    if (action.type === 'SERVER_CREATE_CHARACTER') {
+      let state = getState();
+      connection.invoke("CreateCharacter", action.character
+      ).catch(function (err) {
+        return console.error(err.toString());
+      });
     }
 
     if (action.type === 'SERVER_CREATE_GROUP') {
@@ -69,104 +89,104 @@ export function holocronMiddleware({ dispatch, getState }) {
       ).catch(function (err) {
         return console.error(err.toString());
       });
-    }    
+    }
 
-		// Call the next dispatch method in the middleware chain.
-		const returnValue = next(action)
+    // Call the next dispatch method in the middleware chain.
+    const returnValue = next(action)
 
-		if (action.type === 'SET_SESSION_TOKEN') {
-			let state = getState();
+    if (action.type === 'SET_SESSION_TOKEN') {
+      let state = getState();
       if (state.sessionToken !== null && state.sessionToken !== "rejected") {
-				// navigate('/');
-				navigate('/menu');
-			} else {
-				navigate('/');
-			}
-		}
+        // navigate('/');
+        navigate('/menu');
+      } else {
+        navigate('/');
+      }
+    }
 
-		//console.log('state after dispatch', getState())
-		// This will likely be the action itself, unless
-		// a middleware further in chain changed it.
-		return returnValue
-	}
+    //console.log('state after dispatch', getState())
+    // This will likely be the action itself, unless
+    // a middleware further in chain changed it.
+    return returnValue
+  }
 }
 
 export const holocronReducer = (state = initial_state, action) => {
-	switch (action.type) {
-		case 'SET_SESSION_TOKEN':
-			return { ...state, sessionToken: action.sessionToken };
-		case 'SET_CONNECTED':
-			return { ...state, connected: true };
-		case 'SERVER_LOGIN_USER':
-			return { ...state, userName: action.userName };
-		case 'CLIENT_CHARACTERS':
+  switch (action.type) {
+    case 'SET_SESSION_TOKEN':
+      return { ...state, sessionToken: action.sessionToken };
+    case 'SET_CONNECTED':
+      return { ...state, connected: true };
+    case 'SERVER_LOGIN_USER':
+      return { ...state, userName: action.userName };
+    case 'CLIENT_CHARACTERS':
       return { ...state, characters: action.payload };
     case 'CLIENT_GROUPS':
       return { ...state, groups: action.payload };
-		case 'SET_DATASET':
-			return { ...state, dataSet: action.dataSet };
-		default:
-			return state;
-	}
+    case 'SET_DATASET':
+      return { ...state, dataSet: action.dataSet };
+    default:
+      return state;
+  }
 }
 
 const initial_state = {
-	connected: false,
-	userName: '',
-	sessionToken: null,
-	characters: null,
+  connected: false,
+  userName: '',
+  sessionToken: null,
+  characters: null,
   dataSet: null,
   groups: null,
 }
 
 
 const startConnection = async (connection, dispatch) => {
-	try {
-		await connection.start().then(() => {
-			dispatch({ type: 'SET_CONNECTED', payload: true });
-		});
-		console.log("connected");
-		// dispatch({ type: 'SERVER_LOGIN_USER', userName: 'root', password: 'root' });
-		//Auto Login Test Account        
-	} catch (err) {
-		console.log(err);
-		setTimeout(() => startConnection(), 5000);
-	}
+  try {
+    await connection.start().then(() => {
+      dispatch({ type: 'SET_CONNECTED', payload: true });
+    });
+    console.log("connected");
+    // dispatch({ type: 'SERVER_LOGIN_USER', userName: 'root', password: 'root' });
+    //Auto Login Test Account        
+  } catch (err) {
+    console.log(err);
+    setTimeout(() => startConnection(), 5000);
+  }
 }
 
 const setHubCallbacks = (connection, dispatch) => {
-	connection.on("send", data => {
-		dispatch({
-			type: 'ADD_TODO',
-			text: data
-		})
-	});
-
-	connection.on("ServerLogin", data => {
-		console.log(data);
-
-		if (data['loggedIn']) {
-			dispatch({
-				type: 'SET_SESSION_TOKEN',
-				sessionToken: data['sessionToken']
-			})
-		} else {
-			dispatch({
-				type: 'SET_SESSION_TOKEN',
-				sessionToken: 'rejected'
-			})
-		}
-		// document.cookie = `username=${}`
-	});
-
-	connection.on("ClientGetCharacters", data => {    
+  connection.on("send", (flag, data) => {
     dispatch({
-			type: 'CLIENT_CHARACTERS',
-      payload: parseCharacterData(data)
-		})
+      type: 'ADD_TODO',
+      text: data
+    })
   });
-  
-  connection.on("ClientGetGroups", data => {
+
+  connection.on("ServerLogin", (flag, data) => {
+    console.log(flag);
+    console.log(data);
+    if (data['loggedIn']) {
+      dispatch({
+        type: 'SET_SESSION_TOKEN',
+        sessionToken: data['sessionToken']
+      })
+    } else {
+      dispatch({
+        type: 'SET_SESSION_TOKEN',
+        sessionToken: 'rejected'
+      })
+    }
+    // document.cookie = `username=${}`
+  });
+
+  connection.on("ClientGetCharacters", (flag, data) => {
+    dispatch({
+      type: 'CLIENT_CHARACTERS',
+      payload: parseCharacterData(data)
+    })
+  });
+
+  connection.on("ClientGetGroups", (flag, data) => {
     dispatch({
       type: 'CLIENT_GROUPS',
       payload: data
@@ -176,7 +196,7 @@ const setHubCallbacks = (connection, dispatch) => {
 
 
 
-function parseCharacterData(data) {  
+function parseCharacterData(data) {
   return data.map(c => {
     c.skillsCareer = c.skillsCareer.split(',');
     c.skillsCareerFree = c.skillsCareerFree.split(',');
