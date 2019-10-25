@@ -7,7 +7,9 @@ import './RosterStyles.css';
 function Roster({ characters, ds, dispatch }) {
   //Load characters
   useEffect(() => {
-    if (!characters) {
+    console.log(characters);
+    
+    if (!characters || Object.keys(characters).length === 0) {
       dispatch({ type: 'SERVER_FETCH_ROSTER' })
     }
   }, [])  

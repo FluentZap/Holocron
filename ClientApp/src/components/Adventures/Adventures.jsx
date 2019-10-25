@@ -17,11 +17,11 @@ function Adventures({ ds, characters, groups, dispatch }) {
 
 
 
-  useEffect(() => {
-    if (!characters) {
+  useEffect(() => {    
+    if (!characters || Object.keys(characters).length === 0) {
       dispatch({ type: 'SERVER_FETCH_ROSTER' });
     }
-    if (!groups) {
+    if (!groups || Object.keys(groups).length === 0) {
       dispatch({ type: 'SERVER_FETCH_GROUPS' });
     }
   }, [])
@@ -42,8 +42,8 @@ function Adventures({ ds, characters, groups, dispatch }) {
     }
   }
 
-  
-  
+
+
 
   return (
     <div className='flex-center full-screen'>

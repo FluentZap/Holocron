@@ -4,7 +4,7 @@ import { navigate } from "@reach/router";
 import './MainMenuStyles.css';
 import { Button } from '../Panels/Panels';
 
-function MainMenu({ sessionToken }) {
+function MainMenu({ sessionToken, state }) {
 
   // const [springs, set, stop] = useSprings(4, index => ({ opacity: 1 }))  
   // const [panelFade, set] = useSpring(() => ({ opacity: 0, config: { mass: 1, tension: 280, friction: 1000 } }))
@@ -28,6 +28,7 @@ function MainMenu({ sessionToken }) {
           style={{ gridArea: '25 / 1 / span 8 / span 11' }}>Atlas</button>
 
         <button className='disabled flex-center data-panel red-glow scanlines-back m2 main-menu-panel'
+        onClick={() => console.log(state)}
           style={{ gridArea: '33 / 1 / span 8 / span 11' }}>Notes</button>
 
         <button className='disabled flex-center data-panel red-glow scanlines-back m2 main-menu-panel'
@@ -50,7 +51,8 @@ function MainMenu({ sessionToken }) {
 
 function mapStateToProps(state) {
   return {
-    sessionToken: state.sessionToken
+    sessionToken: state.sessionToken,
+    state: state
   };
 }
 

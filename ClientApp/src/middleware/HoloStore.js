@@ -1,7 +1,7 @@
 import { HubConnectionBuilder, LogLevel } from '@microsoft/signalr';
 import { navigate } from "@reach/router";
 import loadDataSet from './LoadDataSet';
-import { merge } from 'lodash'
+import { merge, cloneDeep } from 'lodash'
 
 export function holocronMiddleware({ dispatch, getState }) {
   const connection = new HubConnectionBuilder()
@@ -10,17 +10,20 @@ export function holocronMiddleware({ dispatch, getState }) {
     .configureLogging(LogLevel.Information)
     .build();
 
+  connection.onclose(() => {
+    dispatch({ type: 'SET_CONNECTED', status: false });
+  })
+
   connection.onreconnected(() => {
-    // let state = getState();
-    // if (state.sessionToken !== null) {
-    //   connection.invoke("LoginUserToken", {
-    //     sessionToken: state.sessionToken,
-    //   }).catch(function (err) {
-    //     return console.error(err.toString());
-    //   });
-    // } else {
-    //   navigate('/');
-    // }
+    let state = getState();
+    if (state.sessionToken !== null) {
+      connection.invoke("LoginUserToken", state.sessionToken
+      ).catch(function (err) {
+        return console.error(err.toString());
+      });
+    } else {
+      navigate('/');
+    }
   });
 
   loadDataSet(dispatch);
@@ -123,7 +126,7 @@ export function holocronReducer(state = {}, action) {
     case 'SET_SESSION_TOKEN':
       return { ...state, sessionToken: action.sessionToken, userName: action.userName };
     case 'SET_CONNECTED':
-      return { ...state, connected: true };
+      return { ...state, connected: action.status };
     case 'CLIENT_UPDATE':
       return parseUpdateModel(state, action.payload);
     case 'SET_DATASET':
@@ -146,7 +149,7 @@ export const initial_state = {
 const startConnection = async (connection, dispatch) => {
   try {
     await connection.start().then(() => {
-      dispatch({ type: 'SET_CONNECTED', payload: true });
+      dispatch({ type: 'SET_CONNECTED', status: true });
     });
     console.log("connected");
     // dispatch({ type: 'SERVER_LOGIN_USER', userName: 'root', password: 'root' });
@@ -205,12 +208,11 @@ const setHubCallbacks = (connection, dispatch) => {
 
 
 function parseUpdateModel(state, model) {
-  console.log(model);  
-  let s = merge(state, model);
-  // let s = mergeDeep(state, model);
-  let returnState = { ...s };
-  console.log(returnState);
-  return returnState;
+  console.log(model);
+  let newState = cloneDeep(state);
+  newState = merge(newState, model);
+  console.log(newState);
+  return newState;
 }
 
 // export function isObject(item) {
