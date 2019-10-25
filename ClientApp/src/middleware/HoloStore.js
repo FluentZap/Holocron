@@ -5,21 +5,21 @@ import loadDataSet from './LoadDataSet';
 export function holocronMiddleware({ dispatch, getState }) {
   const connection = new HubConnectionBuilder()
     .withUrl("/Holocron")
-    .withAutomaticReconnect()
+    .withAutomaticReconnect([5000, 5000, 5000, 5000, 5000, 5000, 10000, 10000, 10000])
     .configureLogging(LogLevel.Information)
     .build();
 
   connection.onreconnected(() => {
-    let state = getState();
-    if (state.sessionToken !== null) {
-      connection.invoke("LoginUserToken", {
-        sessionToken: state.sessionToken,
-      }).catch(function (err) {
-        return console.error(err.toString());
-      });
-    } else {
-      navigate('/');
-    }
+    // let state = getState();
+    // if (state.sessionToken !== null) {
+    //   connection.invoke("LoginUserToken", {
+    //     sessionToken: state.sessionToken,
+    //   }).catch(function (err) {
+    //     return console.error(err.toString());
+    //   });
+    // } else {
+    //   navigate('/');
+    // }
   });
 
   loadDataSet(dispatch);
@@ -60,24 +60,21 @@ export function holocronMiddleware({ dispatch, getState }) {
 
     if (action.type === 'SERVER_FETCH_ROSTER') {
       let state = getState();
-      connection.invoke("FetchRoster", {        
-        sessionToken: state.sessionToken
-      }).catch(function (err) {
+      connection.invoke("FetchRoster", state.sessionToken
+      ).catch(function (err) {
         return console.error(err.toString());
       });
     }
 
     if (action.type === 'SERVER_FETCH_GROUPS') {
       let state = getState();
-      connection.invoke("FetchGroups", {        
-        sessionToken: state.sessionToken
-      }).catch(function (err) {
+      connection.invoke("FetchGroups", state.sessionToken
+      ).catch(function (err) {
         return console.error(err.toString());
       });
     }
 
     if (action.type === 'SERVER_CREATE_CHARACTER') {
-      let state = getState();
       connection.invoke("CreateCharacter", action.character
       ).catch(function (err) {
         return console.error(err.toString());
@@ -86,6 +83,13 @@ export function holocronMiddleware({ dispatch, getState }) {
 
     if (action.type === 'SERVER_CREATE_GROUP') {
       connection.invoke("CreateGroup", { name: action.groupName, connectionId: action.connectionId }
+      ).catch(function (err) {
+        return console.error(err.toString());
+      });
+    }
+
+    if (action.type === 'SERVER_JOIN_GROUP') {
+      connection.invoke("JoinGroup", { name: action.groupName, connectionId: action.connectionId }
       ).catch(function (err) {
         return console.error(err.toString());
       });
@@ -111,18 +115,16 @@ export function holocronMiddleware({ dispatch, getState }) {
   }
 }
 
-export const holocronReducer = (state = initial_state, action) => {
+export function holocronReducer(state = {}, action) {
+  // console.log(state);
+
   switch (action.type) {
     case 'SET_SESSION_TOKEN':
-      return { ...state, sessionToken: action.sessionToken };
+      return { ...state, sessionToken: action.sessionToken, userName: action.userName };
     case 'SET_CONNECTED':
       return { ...state, connected: true };
-    case 'SERVER_LOGIN_USER':
-      return { ...state, userName: action.userName };
-    case 'CLIENT_CHARACTERS':
-      return { ...state, characters: action.payload };
-    case 'CLIENT_GROUPS':
-      return { ...state, groups: action.payload };
+    case 'CLIENT_UPDATE':
+      return parseUpdateModel(state, action.payload);
     case 'SET_DATASET':
       return { ...state, dataSet: action.dataSet };
     default:
@@ -130,7 +132,7 @@ export const holocronReducer = (state = initial_state, action) => {
   }
 }
 
-const initial_state = {
+export const initial_state = {
   connected: false,
   userName: '',
   sessionToken: null,
@@ -162,46 +164,54 @@ const setHubCallbacks = (connection, dispatch) => {
     })
   });
 
-  connection.on("ServerLogin", (flag, data) => {
-    console.log(flag);
-    console.log(data);
-    if (data['loggedIn']) {
+  connection.on("ServerLogin", (flag, sessionToken, userName) => {
+    if (flag !== 0) {
       dispatch({
         type: 'SET_SESSION_TOKEN',
-        sessionToken: data['sessionToken']
+        sessionToken: 'rejected'
       })
     } else {
       dispatch({
         type: 'SET_SESSION_TOKEN',
-        sessionToken: 'rejected'
+        sessionToken: sessionToken,
+        userName: userName,
       })
     }
     // document.cookie = `username=${}`
   });
 
-  connection.on("ClientGetCharacters", (flag, data) => {
-    dispatch({
-      type: 'CLIENT_CHARACTERS',
-      payload: parseCharacterData(data)
-    })
-  });
-
-  connection.on("ClientGetGroups", (flag, data) => {
-    dispatch({
-      type: 'CLIENT_GROUPS',
-      payload: data
-    })
+  connection.on("ClientUpdate", (flag, updateModel) => {
+    if (flag === 0) {
+      dispatch({
+        type: 'CLIENT_UPDATE',
+        payload: updateModel
+      })
+    }
   });
 }
 
 
 
-function parseCharacterData(data) {
-  return data.map(c => {
-    c.skillsCareer = c.skillsCareer.split(',');
-    c.skillsCareerFree = c.skillsCareerFree.split(',');
-    c.skillsSpec = c.skillsSpec.split(',');
-    c.skillsSpecFree = c.skillsSpecFree.split(',');
-    return c
-  })
+// function parseCharacterData(data) {
+//   return data.map(c => {
+//     c.skillsCareer = c.skillsCareer.split(',');
+//     c.skillsCareerFree = c.skillsCareerFree.split(',');
+//     c.skillsSpec = c.skillsSpec.split(',');
+//     c.skillsSpecFree = c.skillsSpecFree.split(',');
+//     return c
+//   })
+// }
+
+
+function parseUpdateModel(state, model) {
+  console.log(model);
+  let s = { ...state, ...model };
+
+  // if (model.characters != null) {
+  //   Object.assign(s, ...model);
+  // }
+
+
+  console.log(s);
+  return s;
 }

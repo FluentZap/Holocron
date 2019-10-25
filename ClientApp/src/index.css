@@ -51,6 +51,18 @@ b {
     color: gold;
 }
 
+.blue {
+    color: #2c249c;
+}
+
+.orange {
+    color: #f2aa2a;
+}
+
+.gold {
+    color: gold;
+}
+
 h4 {
     font-size: 2.4vh;
     margin: 2vh 0;

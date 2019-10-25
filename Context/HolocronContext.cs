@@ -44,7 +44,7 @@ namespace Holocron.Context
     public string Name { get; set; }
     public string ConnectionId { get; set; }
     public List<Permission> Permissions { get; set; } = new List<Permission>();
-    public ICollection<GroupCharacter> GroupCharacters { get; set; }    
+    public List<GroupCharacter> GroupCharacters { get; set; }    
     public List<GroupShip> Ships { get; set; } = new List<GroupShip>();
     public List<GroupInventory> Inventory { get; set; } = new List<GroupInventory>();
   }
@@ -70,7 +70,6 @@ namespace Holocron.Context
   public class Character
   {
     public int Id { get; set; }
-
     public string Name { get; set; }
     public int Credits { get; set; }
     public string Career { get; set; }
@@ -85,7 +84,7 @@ namespace Holocron.Context
 
     public string Specializations { get; set; }
 
-    public ICollection<GroupCharacter> GroupCharacters { get; set; }
+    public List<GroupCharacter> GroupCharacters { get; set; }
 
     public Characteristics Characteristics { get; set; }
     public Characteristics CharacteristicsBuy { get; set; }

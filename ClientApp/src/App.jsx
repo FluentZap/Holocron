@@ -1,6 +1,6 @@
 import React, { useEffect } from 'react';
 import { Provider } from 'react-redux';
-import { holocronMiddleware, holocronReducer } from './middleware/HoloStore';
+import { holocronMiddleware, holocronReducer, initial_state } from './middleware/HoloStore';
 import { createStore, applyMiddleware } from 'redux';
 
 import Archives from './components/Archives/Archives';
@@ -20,7 +20,7 @@ import { Router, Link, Redirect } from "@reach/router"
 import PrivateRoute from './components/PrivateRoute';
 import RosterCreateNew from './components/Roster/RosterCreateNew/RosterCreateNew';
 
-const store = createStore(holocronReducer, ['Use Redux'], applyMiddleware(holocronMiddleware));
+const store = createStore(holocronReducer, initial_state, applyMiddleware(holocronMiddleware));
 
 //fontFamily: 'Engli-Besh',
 

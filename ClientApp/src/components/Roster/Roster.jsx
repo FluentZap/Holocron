@@ -23,8 +23,8 @@ function Roster({ characters, ds, dispatch }) {
 
         {/* <div className='flex-center data-panel gray-flat roster-character-list m2 p4' style={{ ...getFade() }}> */}
         <div className='flex-center data-panel gray-flat scanlines-back m2 p2' style={{ justifyContent: 'start', gridArea: '4 / 1 / span 34 / span 22' }}>
-          <div className='scroll-container'>
-            {characters && characters.map(character =>
+          <div className='scroll-container'>            
+            {characters && Object.entries(characters).map(([key, character]) =>
               <div className='m4 p2 data-panel red-glow scanlines-back' key={uuid.v4()}
                 style={{ gridTemplate: 'repeat(4, 1fr) / repeat(8, 1fr)', display: 'grid' }}>
                 {/* <CharacterCard fadeDelay={fadeIn()} stats={character} /> */}
@@ -38,7 +38,7 @@ function Roster({ characters, ds, dispatch }) {
                   style={{ gridArea: '1 / 4 / span 4 / span 5' }}>
                   {ds.careers[character['career']].Name[0]}
                   <br />
-                  {character.specializations.split(',').map(spec => spec !== '' ? <div className='center' key={uuid.v4()}>{ds.specializations[spec].Name[0]}</div> : '')}
+                  {character.specializations.map(spec => spec !== '' ? <div className='center' key={uuid.v4()}>{ds.specializations[spec].Name[0]}</div> : '')}
                 </div>
               </div>
             )}
