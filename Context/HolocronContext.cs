@@ -11,7 +11,7 @@ namespace Holocron.Context
     public DbSet<User> Users { get; set; }
     public DbSet<Character> Characters { get; set; }
     public DbSet<Group> Groups { get; set; }
-    public DbSet<GroupCharacter> GroupCharacters { get; set; }    
+    public DbSet<GroupCharacter> GroupCharacters { get; set; }
     public DbSet<Permission> Permissions { get; set; }
 
     protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
@@ -44,7 +44,7 @@ namespace Holocron.Context
     public string Name { get; set; }
     public string ConnectionId { get; set; }
     public List<Permission> Permissions { get; set; } = new List<Permission>();
-    public List<GroupCharacter> GroupCharacters { get; set; }    
+    public ICollection<GroupCharacter> GroupCharacters { get; set; }    
     public List<GroupShip> Ships { get; set; } = new List<GroupShip>();
     public List<GroupInventory> Inventory { get; set; } = new List<GroupInventory>();
   }
@@ -84,7 +84,7 @@ namespace Holocron.Context
 
     public string Specializations { get; set; }
 
-    public List<GroupCharacter> GroupCharacters { get; set; }
+    public ICollection<GroupCharacter> GroupCharacters { get; set; }
 
     public Characteristics Characteristics { get; set; }
     public Characteristics CharacteristicsBuy { get; set; }

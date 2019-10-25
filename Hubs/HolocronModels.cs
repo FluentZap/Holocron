@@ -174,9 +174,9 @@ namespace Holocron.Hubs
         ConnectionId = group.ConnectionId,
         Name = group.Name,
         Permissions = group.Permissions?.ToDictionary(x => x.User.Id, x => x.PermissionGroup),
-        Characters = group.GroupCharacters.Select(x => x.CharacterId).ToList(),
-        Ships = group.Ships.ToDictionary(x => x.Id, x => new GroupShipModel() { Name = x.Name }),
-        Inventory = group.Inventory.ToDictionary(x => x.Id, x => new GroupInventoryModel()
+        Characters = group.GroupCharacters?.Select(x => x.Character.Id).ToList() ?? new List<int>(),
+        Ships = group.Ships?.ToDictionary(x => x.Id, x => new GroupShipModel() { Name = x.Name }),
+        Inventory = group.Inventory?.ToDictionary(x => x.Id, x => new GroupInventoryModel()
         {
           Name = x.Name,
           Location = x.Location

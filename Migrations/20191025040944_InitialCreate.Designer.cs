@@ -9,7 +9,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Holocron.Migrations
 {
     [DbContext(typeof(HolocronContext))]
-    [Migration("20191022071134_InitialCreate")]
+    [Migration("20191025040944_InitialCreate")]
     partial class InitialCreate
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)

@@ -42,6 +42,9 @@ function Adventures({ ds, characters, groups, dispatch }) {
     }
   }
 
+  
+  
+
   return (
     <div className='flex-center full-screen'>
       <div className='data-container'>
@@ -111,9 +114,9 @@ function Adventures({ ds, characters, groups, dispatch }) {
                   </div>
                   <div className='flex-center data-panel m2 p2 font-small center'
                     style={{ gridArea: '1 / 4 / span 4 / span 5' }}>
-                    Members {group.permissions.length}
+                    Members {group.permissions && Object.keys(group.permissions).length}
                     <br />
-                    Characters {group.groupCharacters.length}
+                    Characters {group.Characters && group.Characters.length}
                   </div>
                 </div>
               )}

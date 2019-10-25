@@ -1,6 +1,7 @@
 import { HubConnectionBuilder, LogLevel } from '@microsoft/signalr';
 import { navigate } from "@reach/router";
 import loadDataSet from './LoadDataSet';
+import { merge } from 'lodash'
 
 export function holocronMiddleware({ dispatch, getState }) {
   const connection = new HubConnectionBuilder()
@@ -204,14 +205,32 @@ const setHubCallbacks = (connection, dispatch) => {
 
 
 function parseUpdateModel(state, model) {
-  console.log(model);
-  let s = { ...state, ...model };
-
-  // if (model.characters != null) {
-  //   Object.assign(s, ...model);
-  // }
-
-
-  console.log(s);
-  return s;
+  console.log(model);  
+  let s = merge(state, model);
+  // let s = mergeDeep(state, model);
+  let returnState = { ...s };
+  console.log(returnState);
+  return returnState;
 }
+
+// export function isObject(item) {
+//   return (item && typeof item === 'object' && !Array.isArray(item));
+// }
+
+// export function mergeDeep(target, ...sources) {
+//   if (!sources.length) return target;
+//   const source = sources.shift();
+
+//   if (isObject(target) && isObject(source)) {
+//     for (const key in source) {
+//       if (isObject(source[key])) {
+//         if (!target[key]) target = { ...target, [key]: {} };
+//         mergeDeep(target[key], source[key]);
+//       } else {
+//         target = { ...target, [key]: source[key] };
+//       }
+//     }
+//   }
+
+//   return mergeDeep(target, ...sources);
+// }

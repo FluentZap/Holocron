@@ -111,8 +111,10 @@ namespace Holocron.Hubs
     {
       if (SessionToken != null && connectedUsers.ContainsKey(Context.ConnectionId) && SessionToken == connectedUsers[Context.ConnectionId].SessionToken)
       {
-        (ListOf_DBResult flag, List<Group> groups) = await HoloData.FetchGroups(connectedUsers[Context.ConnectionId].SessionToken);
-        await Clients.Caller.SendAsync("ClientGetGroups", flag, groups);
+        (ListOf_DBResult flag, List<Group> groups) = await HoloData.FetchGroups(SessionToken);
+        UpdateModel updateModel = new UpdateModel();
+        updateModel.AddGroups(groups);
+        ClientUpdates.SendUpdate(Clients.Caller, flag, updateModel);
       }
     }
 
@@ -142,49 +144,34 @@ namespace Holocron.Hubs
       if (SessionToken != null && connectedUsers.ContainsKey(Context.ConnectionId))
       {
         (ListOf_DBResult flag, Group group) = await HoloData.CreateGroup(SessionToken, new Group() { Name = NewGroup.Name, ConnectionId = NewGroup.ConnectionId });
-
-        // (ListOf_DBResult flag, List<Character> characters) = await HoloData.FetchCharacters(SessionToken);
-        UpdateModel updateModel = new UpdateModel();
-        updateModel.AddCharacters(characters);
-        ClientUpdates.SendUpdate(connectedUsers.Where(x => x.Value.SessionToken == SessionToken).Select(x => Clients.Client(x.Key)).ToList(), flag, updateModel);
-
-
-        foreach ((var key, var value) in connectedUsers.Where(x => x.Value.SessionToken == SessionToken))
+        if (flag == ListOf_DBResult.Success)
         {
-          await Clients.Client(key).SendAsync("ClientGetGroup", flag, group);
+          UpdateModel updateModel = new UpdateModel();
+          updateModel.AddGroup(group);
+          ClientUpdates.SendUpdate(connectedUsers.Where(x => x.Value.SessionToken == SessionToken).Select(x => Clients.Client(x.Key)).ToList(), flag, updateModel);
         }
-
+        else
+        {
+          ClientUpdates.SendUpdate(connectedUsers.Where(x => x.Value.SessionToken == SessionToken).Select(x => Clients.Client(x.Key)).ToList(), flag);
+        }
       }
     }
 
     public async Task JoinGroup(Group NewGroup)
     {
-      (ListOf_DBResult flag, Group group) = await HoloData.JoinGroup(connectedUsers[Context.ConnectionId].SessionToken, new Group() { Name = NewGroup.Name, ConnectionId = NewGroup.ConnectionId });
-
-      List<string> updateList = new List<string>();
-      foreach (var item in group.Permissions)
+      string SessionToken = connectedUsers[Context.ConnectionId].SessionToken;
+      if (SessionToken != null && connectedUsers.ContainsKey(Context.ConnectionId))
       {
-        updateList.Add(item.User.SessionToken);
-        item.Group = null;
-        item.User.Password = "";
-        item.User.SessionToken = "";
-      }
-
-      if (flag == ListOf_DBResult.Success)
-      {
-        foreach (var SessionToken in updateList)
+        (ListOf_DBResult flag, Group group) = await HoloData.JoinGroup(SessionToken, new Group() { Name = NewGroup.Name, ConnectionId = NewGroup.ConnectionId });
+        if (flag == ListOf_DBResult.Success)
         {
-          foreach ((var key, var value) in connectedUsers.Where(x => x.Value.SessionToken == SessionToken).ToList())
-          {
-            await Clients.Client(key).SendAsync("ClientGetGroup", flag, group);
-          }
+          UpdateModel updateModel = new UpdateModel();
+          updateModel.AddGroup(group);
+          ClientUpdates.SendUpdate(connectedUsers.Where(x => x.Value.SessionToken == SessionToken).Select(x => Clients.Client(x.Key)).ToList(), flag, updateModel);
         }
-      }
-      else
-      {
-        foreach ((var key, var value) in connectedUsers.Where(x => x.Value.SessionToken == connectedUsers[Context.ConnectionId].SessionToken))
+        else
         {
-          await Clients.Client(key).SendAsync("ClientGetGroup", flag, group);
+          ClientUpdates.SendUpdate(connectedUsers.Where(x => x.Value.SessionToken == SessionToken).Select(x => Clients.Client(x.Key)).ToList(), flag);
         }
       }
     }
@@ -197,98 +184,6 @@ namespace Holocron.Hubs
         connectedUsers[Context.ConnectionId].SessionToken = Context.ConnectionId;
       }
     }
-
-    // public async Task RequestFiefdomData()
-    // {			
-    // 	GameState gameState;
-    // 	List<Market> baseMarket;
-    // 	List<Market> buyPrice = new List<Market>();
-    // 	List<Market> sellPrice = new List<Market>();
-    // 	Fief fief;
-    // 	using (var db = new FiefContext())
-    // 	{
-    // 		gameState = db.GameState.FirstOrDefault();
-    // 		baseMarket = db.Market.ToList();								
-    // 		fief = db.Fiefdom.Where(f => f.SessionId == Context.ConnectionId).Include("FiefdomPlot").Include("FiefdomResources").FirstOrDefault();
-    // 	}
-
-    // 	for (int i = 0; i < baseMarket.Count; i++)
-    // 	{
-    // 		buyPrice.Add(new Market
-    // 		{
-    // 			Type = baseMarket[i].Type,
-    // 			Price = FiefdomActions.GetMarketBuyPrice(baseMarket[i].Type, baseMarket[i].Price)
-    // 		});
-    // 		sellPrice.Add(new Market
-    // 		{
-    // 			Type = baseMarket[i].Type,
-    // 			Price = FiefdomActions.GetMarketSellPrice(baseMarket[i].Type, baseMarket[i].Price)
-    // 		});
-    // 	}
-
-    // 	if (fief != null)
-    //     {
-    // 		await Clients.Caller.SendAsync("RecieveFiefdomData", fief, gameState,
-    // 				new GameValues
-    // 				{
-    // 					Ballots = FiefdomActions.Ballots,
-    // 					Edicts = FiefdomActions.Edicts,
-    // 					MarketTax = FiefdomActions.MarketTax,
-    // 					baseMarket = baseMarket,
-    // 					buyMarket = buyPrice,
-    // 					sellMarket = sellPrice
-    // 				});
-    // 	}
-    //     else
-    //     {				
-    //         await Clients.Caller.SendAsync("RecieveFiefdomData", null);
-    //     }
-    // }
-
-    // public async Task UserLogin(string name)
-    // {
-    //     name = name.ToLower();
-    //     if (FiefdomActions.UserExist(name))
-    //     {
-    //         FiefdomActions.UserUpdateSessionId(name, Context.ConnectionId);
-    //     }
-    //     else
-    //     {
-    //         FiefdomActions.CreateNewFiefdom(name, Context.ConnectionId);
-    //     }
-    //     await Clients.All.SendAsync("ServerMessage", name + " joined the session");
-    // }
-
-    // public async Task SubmitVote(int ballot, string vote)
-    // {
-    //     FiefdomActions.SubmitVote(Context.ConnectionId, ballot, vote);
-    // }
-
-    // public async Task BuyResource(string type, int quantity)
-    // {			
-    //     FiefdomActions.BuyResource(Context.ConnectionId, type, quantity);
-    // }
-
-    // public async Task SellResource(string type, int quantity)
-    // {			
-    // 	FiefdomActions.SellResource(Context.ConnectionId, type, quantity);
-    // }
-
-    //     public async Task BuyTitle()
-    // {			
-    // 	FiefdomActions.BuyTitle(Context.ConnectionId);
-    // }
-
-
-    // public async Task GetMarketPrice()
-    // {
-    // 	await Clients.Caller.SendAsync("ReceiveMarketPrices", FiefdomActions.GetMarketPrice());
-    // }
-    // public async Task BuildPlot(int id, string type)
-    // {
-
-    //     FiefdomActions.BuildPlot(Context.ConnectionId, id, type);
-    // }
 
   }
 
@@ -307,6 +202,14 @@ namespace Holocron.Hubs
     public static async void SendUpdate(IClientProxy client, ListOf_DBResult flag, UpdateModel updateModel)
     {
       await client.SendAsync("ClientUpdate", flag, updateModel);
+    }
+
+    public static async void SendUpdate(List<IClientProxy> clients, ListOf_DBResult flag)
+    {
+      foreach (var client in clients)
+      {
+        await client.SendAsync("ClientUpdate", flag);
+      }
     }
   }
 }
