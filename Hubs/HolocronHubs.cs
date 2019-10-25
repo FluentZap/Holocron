@@ -167,7 +167,8 @@ namespace Holocron.Hubs
         {
           UpdateModel updateModel = new UpdateModel();
           updateModel.AddGroup(group);
-          ClientUpdates.SendUpdate(connectedUsers.Where(x => x.Value.SessionToken == SessionToken).Select(x => Clients.Client(x.Key)).ToList(), flag, updateModel);
+          IEnumerable<string> playerTokens = group.Permissions.Select(x => x.User.SessionToken);
+          ClientUpdates.SendUpdate(connectedUsers.Where(x => playerTokens.Contains(x.Value.SessionToken)).Select(x => Clients.Client(x.Key)).ToList(), flag, updateModel);
         }
         else
         {

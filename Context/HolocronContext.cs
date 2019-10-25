@@ -69,6 +69,7 @@ namespace Holocron.Context
   [JsonObject]
   public class Character
   {
+    public User User { get; set; }
     public int Id { get; set; }
     public string Name { get; set; }
     public int Credits { get; set; }
@@ -83,7 +84,7 @@ namespace Holocron.Context
     public int UnusedXp { get; set; }
 
     public string Specializations { get; set; }
-
+    
     public ICollection<GroupCharacter> GroupCharacters { get; set; }
 
     public Characteristics Characteristics { get; set; }

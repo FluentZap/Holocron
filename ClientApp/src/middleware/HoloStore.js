@@ -6,7 +6,7 @@ import { merge, cloneDeep } from 'lodash'
 export function holocronMiddleware({ dispatch, getState }) {
   const connection = new HubConnectionBuilder()
     .withUrl("/Holocron")
-    .withAutomaticReconnect([5000, 5000, 5000, 5000, 5000, 5000, 10000, 10000, 10000])
+    .withAutomaticReconnect([4000, 4000, 10000, 10000, 30000, 30000, 60000, 60000])
     .configureLogging(LogLevel.Information)
     .build();
 
@@ -16,6 +16,13 @@ export function holocronMiddleware({ dispatch, getState }) {
 
   connection.onreconnected(() => {
     let state = getState();
+    dispatch({
+      type: 'CLIENT_UPDATE',
+      payload: {
+        characters: null,
+        groups: null,
+      }
+    })
     if (state.sessionToken !== null) {
       connection.invoke("LoginUserToken", state.sessionToken
       ).catch(function (err) {

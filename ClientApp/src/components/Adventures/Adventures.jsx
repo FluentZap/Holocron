@@ -17,7 +17,7 @@ function Adventures({ ds, characters, groups, dispatch }) {
 
 
 
-  useEffect(() => {    
+  useEffect(() => {
     if (!characters || Object.keys(characters).length === 0) {
       dispatch({ type: 'SERVER_FETCH_ROSTER' });
     }
@@ -116,7 +116,7 @@ function Adventures({ ds, characters, groups, dispatch }) {
                     style={{ gridArea: '1 / 4 / span 4 / span 5' }}>
                     Members {group.permissions && Object.keys(group.permissions).length}
                     <br />
-                    Characters {group.Characters && group.Characters.length}
+                    Characters {group.Characters ? group.Characters.length : 0}
                   </div>
                 </div>
               )}
