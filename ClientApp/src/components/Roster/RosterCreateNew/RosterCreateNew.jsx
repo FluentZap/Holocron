@@ -15,8 +15,7 @@ import { ScrollPanel } from '../../Panels/Panels';
 // const childFade = new FadeInBuilder(0.1, 0.2, 4);
 
 
-function Roster({ dataSet, dispatch }) {
-  const ds = dataSet;
+function Roster({ ds, dispatch }) {  
 
   const [character, setCharacter] = useState(newCharacter(ds.species['HUMAN']));
   const [selectStat, setSelectStat] = useState('')
@@ -185,10 +184,9 @@ const SpeciesList = ({ species, changeSpecies, ds, fadeIn }) => {
   return (
     <ScrollPanel className='red-flat' gridArea='14 / 1 / span 24 / span 7'>
       {Object.entries(ds.species).map(([key, value], i) =>
-        <div key={uuid.v4()} className={`${fadeIn} z-5 m2 p2 flex-center center data-panel font-small ${species === key ? 'orange-glow' : 'gray-flat-hover'}`}
+        <div key={uuid.v4()} className={`z-5 m2 p2 flex-center center data-panel font-small ${species === key ? 'orange-glow' : 'gray-flat-hover'}`}
           style={{ marginTop: i === 0 ? 0 : '0.5vh', marginBottom: i === speciesCount - 1 ? 0 : '0.5vh' }}
-          onClick={() => changeSpecies(key)}
-        >
+          onClick={() => changeSpecies(key)} >
           {value.Name}
         </div>
       )}
@@ -199,7 +197,7 @@ const SpeciesList = ({ species, changeSpecies, ds, fadeIn }) => {
 function mapStateToProps(state) {
   return {
     characters: state.characters,
-    dataSet: state.dataSet,
+    ds: state.dataSet,
   };
 }
 

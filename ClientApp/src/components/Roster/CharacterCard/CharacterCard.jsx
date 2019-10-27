@@ -36,8 +36,9 @@ const CharacterCard = ({ ds, character, character: { name, species, career, woun
       <TextBox area={[6, 15, 4, 5]}
         text={specializations.map(spec => spec !== '' ? <div className='center' key={uuid.v4()}>{ds.specializations[spec].Name[0]}</div> : '')} />
 
-      <TextBox area={[2, 2, 5, 5]}
-        text={''} />
+
+      <ImageBox area={[2, 2, 5, 5]}
+        src={ds.species[species].Image} />
 
       <TextBox area={[7, 2, 3, 5]}
         text={<>
@@ -50,5 +51,15 @@ const CharacterCard = ({ ds, character, character: { name, species, career, woun
     </div>
   );
 }
+
+
+const ImageBox = ({ src, area, className, fade, onAnimationEnd }) => {
+  if (!className) className = '';
+  return <div className={className + ' z-5 m2 p2 data-panel gray-flat scanlines flex-center'}
+    style={{ ...fade, gridArea: `${area[0]} / ${area[1]} / span ${area[2]} / span ${area[3]}`, backgroundColor: 'white' }}>
+    {src && <img src={src} alt='Species' onAnimationEnd={onAnimationEnd} style={{ height: '100%' }} />}
+  </div>
+}
+
 
 export default CharacterCard;
