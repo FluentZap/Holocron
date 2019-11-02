@@ -4,7 +4,8 @@ import { holocronMiddleware, holocronReducer, initial_state } from './middleware
 import { createStore, applyMiddleware } from 'redux';
 
 import Archives from './components/Archives/Archives';
-import Adventures from './components/Adventures/Adventures';
+import ChangeAdventures from './components/Adventures/ChangeAdventures';
+
 import Atlas from './components/Atlas/Atlas';
 import Game from './components/Game/Game';
 import Hanger from './components/Hanger/Hanger';
@@ -19,6 +20,9 @@ import Roster from './components/Roster/Roster';
 import { Router, Link, Redirect } from "@reach/router"
 import PrivateRoute from './components/PrivateRoute';
 import RosterCreateNew from './components/Roster/RosterCreateNew/RosterCreateNew';
+import AdventureMenu from './components/Adventures/AdventureMenu/AdventureMenu';
+import Play from './components/Adventures/Play/Play';
+import Inventory from './components/Adventures/Inventory/Inventory';
 
 const store = createStore(holocronReducer, initial_state, applyMiddleware(holocronMiddleware));
 
@@ -57,7 +61,8 @@ function App() {
       <Router>
         <Login path="/" default />
         {/* <Roster path="/" default/> */}
-        <PrivateRoute Component={Adventures} path="adventures" />
+        <PrivateRoute Component={ChangeAdventures} path="changeadventures" />
+        <PrivateRoute Component={AdventureMenu} path="adventure" />
         <PrivateRoute Component={Archives} path="archives" />
         <PrivateRoute Component={Atlas} path="atlas" />
         <PrivateRoute Component={Game} path="game" />
@@ -67,6 +72,12 @@ function App() {
         <PrivateRoute Component={Roller} path="roller" />
         <PrivateRoute Component={Roster} path="roster" />
         <PrivateRoute Component={RosterCreateNew} path="createnew" />
+
+        <PrivateRoute Component={Play} path="adventure/play" />
+        <PrivateRoute Component={Inventory} path="adventure/inventory" />
+        {/* <PrivateRoute Component={RosterCreateNew} path="adventure/" /> */}
+        {/* <PrivateRoute Component={RosterCreateNew} path="adventure/" /> */}
+        {/* <PrivateRoute Component={RosterCreateNew} path="adventure/" /> */}
       </Router>
     </Provider>
   );

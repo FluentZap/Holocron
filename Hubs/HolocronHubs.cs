@@ -46,26 +46,36 @@ namespace Holocron.Hubs
     {
       if (user.Name != "" && user.Password != "")
       {
-        (ListOf_DBResult flag, string SessionToken) = await HoloData.LoginUser(new User() { Name = user.Name, Password = user.Password });
-        if (flag == ListOf_DBResult.Success && SessionToken != null)
+        (ListOf_DBResult flag, User dataUser) = await HoloData.LoginUser(new User() { Name = user.Name, Password = user.Password });
+        if (connectedUsers.ContainsKey(Context.ConnectionId))
         {
-          if (connectedUsers.ContainsKey(Context.ConnectionId))
+          if (dataUser != null)
           {
-            connectedUsers[Context.ConnectionId].SessionToken = SessionToken.ToString();
-            await Clients.Caller.SendAsync("ServerLogin", flag, SessionToken, user.Name);
-            System.Console.WriteLine($"Connected User: {Context.ConnectionId}");
-            System.Console.WriteLine($"Session Token: {SessionToken}");
+            connectedUsers[Context.ConnectionId].SessionToken = dataUser.SessionToken.ToString();
           }
-          else
-          {
-            System.Console.WriteLine("Bad Client Token");
-          }
+
+          UpdateModel updateModel = new UpdateModel();
+          updateModel.AddUser(dataUser);
+          await Clients.Caller.SendAsync("ServerLogin", flag, updateModel);
+          System.Console.WriteLine($"Connected User: {Context.ConnectionId}");
+          System.Console.WriteLine($"Session Token: {dataUser.SessionToken}");
         }
         else
         {
-          System.Console.WriteLine("Login Rejected");
-          await Clients.Caller.SendAsync("ServerLogin", flag, null);
+          System.Console.WriteLine("Bad Client Token");
         }
+      }
+    }
+
+    public async Task LogoutUser()
+    {
+      if (connectedUsers.ContainsKey(Context.ConnectionId))
+      {
+        await Task.Run(() => connectedUsers[Context.ConnectionId].SessionToken = "");
+      }
+      else
+      {
+        System.Console.WriteLine("Bad Client Token");
       }
     }
 

@@ -302,6 +302,8 @@ namespace Holocron.Migrations
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd();
 
+                    b.Property<int?>("CurrentAdventureId");
+
                     b.Property<string>("Name");
 
                     b.Property<string>("Password");
@@ -309,6 +311,8 @@ namespace Holocron.Migrations
                     b.Property<string>("SessionToken");
 
                     b.HasKey("Id");
+
+                    b.HasIndex("CurrentAdventureId");
 
                     b.ToTable("Users");
                 });
@@ -327,7 +331,7 @@ namespace Holocron.Migrations
                         .WithMany()
                         .HasForeignKey("SkillsBuyId");
 
-                    b.HasOne("Holocron.Context.User")
+                    b.HasOne("Holocron.Context.User", "User")
                         .WithMany("Characters")
                         .HasForeignKey("UserId");
                 });
@@ -382,6 +386,13 @@ namespace Holocron.Migrations
                     b.HasOne("Holocron.Context.User", "User")
                         .WithMany()
                         .HasForeignKey("UserId");
+                });
+
+            modelBuilder.Entity("Holocron.Context.User", b =>
+                {
+                    b.HasOne("Holocron.Context.Group", "CurrentAdventure")
+                        .WithMany()
+                        .HasForeignKey("CurrentAdventureId");
                 });
 #pragma warning restore 612, 618
         }

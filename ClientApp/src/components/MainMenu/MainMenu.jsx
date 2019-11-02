@@ -4,45 +4,30 @@ import { navigate } from "@reach/router";
 import './MainMenuStyles.css';
 import { Button } from '../Panels/Panels';
 
-function MainMenu({ sessionToken, state }) {
-
+function MainMenu({ currentAdventure, dispatch }) {  
   // const [springs, set, stop] = useSprings(4, index => ({ opacity: 1 }))  
   // const [panelFade, set] = useSpring(() => ({ opacity: 0, config: { mass: 1, tension: 280, friction: 1000 } }))
 
+  const logout = () => {
+    dispatch({ type: 'SERVER_LOGOUT_USER' });
+    navigate('/');
+  }
+
+
   return (
     <div className='flex-center full-screen' style={{ overflow: 'hidden' }}>
-
       <div className='data-container scanlines-background'>
-        <Button onClick={() => navigate('/roster')} className='red-glow' area={[1, 1, 16, 11]}>Roster</Button>
-
-        <button className='disabled flex-center data-panel red-glow scanlines-back m2 main-menu-panel'
-          style={{ gridArea: '1 / 12 / span 8 / span 11' }}>Archives</button>
-
-        <button className='disabled flex-center data-panel red-glow scanlines-back m2 main-menu-panel'
-          style={{ gridArea: '9 / 12 / span 8 / span 11' }}>Hanger</button>
-
-        <button onClick={() => navigate('/adventures')} className='flex-center data-panel red-glow scanlines-back m2 main-menu-panel'
-          style={{ gridArea: '17 / 1 / span 8 / span 22' }}>Adventures</button>
-
-        <button className='disabled flex-center data-panel red-glow scanlines-back m2 main-menu-panel'
-          style={{ gridArea: '25 / 1 / span 8 / span 11' }}>Atlas</button>
-
-        <button className='disabled flex-center data-panel red-glow scanlines-back m2 main-menu-panel'
-        onClick={() => console.log(state)}
-          style={{ gridArea: '33 / 1 / span 8 / span 11' }}>Notes</button>
-
-        <button className='disabled flex-center data-panel red-glow scanlines-back m2 main-menu-panel'
-          style={{ gridArea: '25 / 12 / span 16 / span 11' }}>Dice Roller</button>
-
-        {/* <button onClick={() => navigate('/archives')} className='disabled flex-center data-panel red-glow scanlines-back m2 main-menu-panel' style={{ gridArea: '1 / 11 / span 8 / span 10' }}>Archives</button>
-        <button onClick={() => navigate('/hanger')} className='disabled flex-center data-panel red-glow scanlines-back m2 main-menu-panel' style={{ gridArea: '9 / 11 / span 8 / span 10' }}>Hanger</button>
-
-        <button onClick={() => navigate('/adventures')} className='disabled flex-center data-panel red-glow scanlines-back m2 main-menu-panel' style={{ gridArea: '17 / 1 / span 8 / span 20' }}>Adventures</button>
-
-        <button onClick={() => navigate('/atlas')} className='disabled flex-center data-panel red-glow scanlines-back m2 main-menu-panel' style={{ gridArea: '25 / 1 / span 8 / span 10' }}>Atlas</button>
-        <button onClick={() => navigate('/notes')} className='disabled flex-center data-panel red-glow scanlines-back m2 main-menu-panel' style={{ gridArea: '33 / 1 / span 8 / span 10' }}>Notes</button>
-
-        <button onClick={() => navigate('/roller')} className='disabled flex-center data-panel red-glow scanlines-back m2 main-menu-panel' style={{ gridArea: '25 / 11 / span 16 / span 10' }}>Dice Roller</button> */}
+        <Button onClick={() => currentAdventure !== null ? navigate('/adventure') : navigate('/changeadventure')} className='red-glow' area={[1, 8, 3, 8]}>Adventure</Button>
+        <Button onClick={() => logout()} className='red-glow' area={[1, 16, 3, 7]}>Logout</Button>
+        <Button onClick={() => navigate('/roster')} className='red-glow' area={[4, 1, 14, 11]}>Roster</Button>
+        <Button onClick={() => { }} className='disabled' area={[4, 12, 7, 11]}>Archives</Button>
+        <Button onClick={() => { }} className='disabled' area={[11, 12, 7, 11]}>Hanger</Button>
+        {currentAdventure !== null ? 
+        <Button onClick={() => navigate('/adventure')} className='red-glow' area={[18, 1, 9, 22]}>Continue Adventure</Button> :
+          <Button className='disabled' area={[18, 1, 9, 22]}>Continue Adventure</Button>}
+        <Button onClick={() => navigate('/changeadventures')} className='red-glow' area={[27, 1, 7, 11]}>New Adventure</Button>
+        <Button onClick={() => { }} className='disabled' area={[34, 1, 7, 11]}>Atlas</Button>
+        <Button onClick={() => { }} className='disabled' area={[27, 12, 16, 11]}>Dice Roller</Button>
       </div>
     </div>
   );
@@ -51,8 +36,8 @@ function MainMenu({ sessionToken, state }) {
 
 function mapStateToProps(state) {
   return {
-    sessionToken: state.sessionToken,
-    state: state
+    sessionToken: state.user.sessionToken,
+    currentAdventure: state.currentAdventure
   };
 }
 

@@ -6,7 +6,7 @@ function PrivateRoute(props) {
   const { sessionToken, Component } = props;
 
   return <div>
-    {sessionToken === undefined && navigate('/') ?
+    {sessionToken === null ?
       <Redirect to={'/'} noThrow />
       :
       <Component {...props} />
@@ -15,7 +15,7 @@ function PrivateRoute(props) {
 }
 
 const mapStateToProps = state => ({
-  sessionToken: state.sessionToken,
+  sessionToken: state.user.sessionToken,
 });
 
 export default connect(mapStateToProps)(PrivateRoute);

@@ -33,13 +33,17 @@ namespace Holocron.Hubs
     public List<string> SkillsSpecFreeList { get; set; }
   }
 
+  
   public class UpdateModel
   {
+
     public class UserModel
     {
       public string SessionToken { get; set; }
-      public string UserName { get; set; }
+      public string Name { get; set; }
+      public int? CurrentAdventure { get; set; }
     }
+
 
     public class CharacterModel
     {
@@ -102,8 +106,10 @@ namespace Holocron.Hubs
     public class GroupInventoryModel : ItemModel { }
     public class CharacterInventoryModel : ItemModel { }
 
+    public UserModel User;
     public Dictionary<int, CharacterModel> Characters { get; set; } = new Dictionary<int, CharacterModel>();
     public Dictionary<int, GroupModel> Groups { get; set; } = new Dictionary<int, GroupModel>();
+
 
     public void AddCharacter(Character character)
     {
@@ -153,7 +159,6 @@ namespace Holocron.Hubs
       };
     }
 
-
     public void AddGroup(Group group)
     {
       _AddGroup(group);
@@ -184,7 +189,14 @@ namespace Holocron.Hubs
       };
     }
 
-
+    public void AddUser(User user)
+    {
+      this.User = new UserModel {
+        CurrentAdventure = user?.CurrentAdventureId,
+        SessionToken = user?.SessionToken,
+        Name = user?.Name,
+      };
+    }
   }
 
 

@@ -49,7 +49,7 @@ function Login({ dispatch, sessionToken }) {
 
 function mapStateToProps(state) {
   return {
-    sessionToken: state.sessionToken
+    sessionToken: state.user.sessionToken
   };
 }
 

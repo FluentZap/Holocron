@@ -1,7 +1,7 @@
 import { HubConnectionBuilder, LogLevel } from '@microsoft/signalr';
 import { navigate } from "@reach/router";
 import loadDataSet from './LoadDataSet';
-import { merge, cloneDeep } from 'lodash'
+import { merge, cloneDeep, pickBy, identity } from 'lodash'
 
 export function holocronMiddleware({ dispatch, getState }) {
   const connection = new HubConnectionBuilder()
@@ -12,6 +12,7 @@ export function holocronMiddleware({ dispatch, getState }) {
 
   connection.onclose(() => {
     dispatch({ type: 'SET_CONNECTED', status: false });
+    navigate('/');
   })
 
   connection.onreconnected(() => {
@@ -23,8 +24,8 @@ export function holocronMiddleware({ dispatch, getState }) {
         groups: null,
       }
     })
-    if (state.sessionToken !== null) {
-      connection.invoke("LoginUserToken", state.sessionToken
+    if (state.user.sessionToken !== null) {
+      connection.invoke("LoginUserToken", state.user.sessionToken
       ).catch(function (err) {
         return console.error(err.toString());
       });
@@ -69,9 +70,15 @@ export function holocronMiddleware({ dispatch, getState }) {
       });
     }
 
+    if (action.type === 'SERVER_LOGOUT_USER') {
+      connection.invoke("LogoutUser").catch(function (err) {
+        return console.error(err.toString());
+      });
+    }
+
     if (action.type === 'SERVER_FETCH_ROSTER') {
       let state = getState();
-      connection.invoke("FetchRoster", state.sessionToken
+      connection.invoke("FetchRoster", state.user.sessionToken
       ).catch(function (err) {
         return console.error(err.toString());
       });
@@ -79,7 +86,7 @@ export function holocronMiddleware({ dispatch, getState }) {
 
     if (action.type === 'SERVER_FETCH_GROUPS') {
       let state = getState();
-      connection.invoke("FetchGroups", state.sessionToken
+      connection.invoke("FetchGroups", state.user.sessionToken
       ).catch(function (err) {
         return console.error(err.toString());
       });
@@ -109,10 +116,9 @@ export function holocronMiddleware({ dispatch, getState }) {
     // Call the next dispatch method in the middleware chain.
     const returnValue = next(action)
 
-    if (action.type === 'SET_SESSION_TOKEN') {
+    if (action.type === 'CLIENT_LOGIN') {
       let state = getState();
-      if (state.sessionToken !== null && state.sessionToken !== "rejected") {
-        // navigate('/');
+      if (state.user.sessionToken !== null && state.user.sessionToken !== "rejected") {
         navigate('/menu');
       } else {
         navigate('/');
@@ -130,8 +136,8 @@ export function holocronReducer(state = {}, action) {
   // console.log(state);
 
   switch (action.type) {
-    case 'SET_SESSION_TOKEN':
-      return { ...state, sessionToken: action.sessionToken, userName: action.userName };
+    case 'CLIENT_LOGIN':
+      return parseUpdateModel(state, action.payload);
     case 'SET_CONNECTED':
       return { ...state, connected: action.status };
     case 'CLIENT_UPDATE':
@@ -145,8 +151,7 @@ export function holocronReducer(state = {}, action) {
 
 export const initial_state = {
   connected: false,
-  userName: '',
-  sessionToken: null,
+  user: { sessionToken: null, name: "", currentAdventure: null },
   characters: null,
   dataSet: null,
   groups: null,
@@ -175,17 +180,16 @@ const setHubCallbacks = (connection, dispatch) => {
     })
   });
 
-  connection.on("ServerLogin", (flag, sessionToken, userName) => {
+  connection.on("ServerLogin", (flag, updateModel) => {
     if (flag !== 0) {
       dispatch({
-        type: 'SET_SESSION_TOKEN',
-        sessionToken: 'rejected'
+        type: 'CLIENT_LOGIN',
+        payload: { user: { sessionToken: 'rejected' } }
       })
     } else {
       dispatch({
-        type: 'SET_SESSION_TOKEN',
-        sessionToken: sessionToken,
-        userName: userName,
+        type: 'CLIENT_LOGIN',
+        payload: updateModel
       })
     }
     // document.cookie = `username=${}`
@@ -215,6 +219,8 @@ const setHubCallbacks = (connection, dispatch) => {
 
 
 function parseUpdateModel(state, model) {
+  console.log(model);
+  model = pickBy(model, identity);
   console.log(model);
   let newState = cloneDeep(state);
   newState = merge(newState, model);

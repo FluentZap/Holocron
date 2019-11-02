@@ -45,14 +45,14 @@ namespace Holocron.Context
       }
     }
 
-    public static async Task<(ListOf_DBResult, string)> LoginUser(User user)
+    public static async Task<(ListOf_DBResult, User)> LoginUser(User user)
     {
       using (var db = new HolocronContext())
       {
-        User dataUser = await db.Users.FirstOrDefaultAsync(x => x.Name == user.Name);
+        User dataUser = await db.Users.Include(x => x.CurrentAdventure).FirstOrDefaultAsync(x => x.Name == user.Name);
         if (dataUser != null && dataUser.Password == user.Password)
         {
-          return (ListOf_DBResult.Success, dataUser.SessionToken);
+          return (ListOf_DBResult.Success, dataUser);
         }
         return (ListOf_DBResult.NotFound, null);
       }
@@ -183,6 +183,7 @@ namespace Holocron.Context
               PermissionGroup = "Admin"
             });
             db.Groups.Add(group);
+            dataUser.CurrentAdventure = group;
             await db.SaveChangesAsync();
             return (ListOf_DBResult.Success, group);
           }
@@ -218,6 +219,7 @@ namespace Holocron.Context
                 User = dataUser,
                 PermissionGroup = "Player"
               });
+              dataUser.CurrentAdventure = group;
               await db.SaveChangesAsync();
               return (ListOf_DBResult.Success, group);
             }

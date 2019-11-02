@@ -35,6 +35,8 @@ namespace Holocron.Context
     public string Name { get; set; }
     public string Password { get; set; }    
     public List<Character> Characters { get; set; } = new List<Character>();
+    public int CurrentAdventureId { get; set; }
+    public Group CurrentAdventure { get; set; }
   }
 
   [JsonObject]

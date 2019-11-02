@@ -87,21 +87,6 @@ namespace Holocron.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "Users",
-                columns: table => new
-                {
-                    Id = table.Column<int>(nullable: false)
-                        .Annotation("MySQL:AutoIncrement", true),
-                    SessionToken = table.Column<string>(nullable: true),
-                    Name = table.Column<string>(nullable: true),
-                    Password = table.Column<string>(nullable: true)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_Users", x => x.Id);
-                });
-
-            migrationBuilder.CreateTable(
                 name: "GroupInventory",
                 columns: table => new
                 {
@@ -143,11 +128,34 @@ namespace Holocron.Migrations
                 });
 
             migrationBuilder.CreateTable(
+                name: "Users",
+                columns: table => new
+                {
+                    Id = table.Column<int>(nullable: false)
+                        .Annotation("MySQL:AutoIncrement", true),
+                    SessionToken = table.Column<string>(nullable: true),
+                    Name = table.Column<string>(nullable: true),
+                    Password = table.Column<string>(nullable: true),
+                    CurrentAdventureId = table.Column<int>(nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Users", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_Users_Groups_CurrentAdventureId",
+                        column: x => x.CurrentAdventureId,
+                        principalTable: "Groups",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Restrict);
+                });
+
+            migrationBuilder.CreateTable(
                 name: "Characters",
                 columns: table => new
                 {
                     Id = table.Column<int>(nullable: false)
                         .Annotation("MySQL:AutoIncrement", true),
+                    UserId = table.Column<int>(nullable: true),
                     Name = table.Column<string>(nullable: true),
                     Credits = table.Column<int>(nullable: false),
                     Career = table.Column<string>(nullable: true),
@@ -168,8 +176,7 @@ namespace Holocron.Migrations
                     SkillsSpec = table.Column<string>(nullable: true),
                     SkillsSpecFree = table.Column<string>(nullable: true),
                     SkillsBuyId = table.Column<int>(nullable: true),
-                    Species = table.Column<string>(nullable: true),
-                    UserId = table.Column<int>(nullable: true)
+                    Species = table.Column<string>(nullable: true)
                 },
                 constraints: table =>
                 {
@@ -346,6 +353,11 @@ namespace Holocron.Migrations
                 name: "IX_Permissions_UserId",
                 table: "Permissions",
                 column: "UserId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Users_CurrentAdventureId",
+                table: "Users",
+                column: "CurrentAdventureId");
         }
 
         protected override void Down(MigrationBuilder migrationBuilder)
@@ -372,9 +384,6 @@ namespace Holocron.Migrations
                 name: "Characters");
 
             migrationBuilder.DropTable(
-                name: "Groups");
-
-            migrationBuilder.DropTable(
                 name: "Characteristics");
 
             migrationBuilder.DropTable(
@@ -382,6 +391,9 @@ namespace Holocron.Migrations
 
             migrationBuilder.DropTable(
                 name: "Users");
+
+            migrationBuilder.DropTable(
+                name: "Groups");
         }
     }
 }

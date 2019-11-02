@@ -2,10 +2,9 @@ import React, { useEffect, useState } from 'react';
 import { connect } from 'react-redux'
 import { navigate } from "@reach/router";
 import uuid from 'uuid';
-import './AdventuresStyles.css';
 import { Button, ScrollPanel, CRend, TextBox, Panel } from '../Panels/Panels';
 
-function Adventures({ ds, characters, groups, dispatch }) {
+function ChangeAdventures({ ds, characters, groups, dispatch }) {
   const [selectedCharacter, setSelectedCharacter] = useState('');
   const [category, setCategory] = useState('adventureList');
   const [selectedGroup, setSelectedGroup] = useState('');
@@ -54,37 +53,9 @@ function Adventures({ ds, characters, groups, dispatch }) {
         <Button onClick={() => setCategory('joinAdventure')} className={CRend(category === 'joinAdventure', 'orange-glow', 'red-glow')} area={[4, 12, 3, 11]}>New</Button>
         {category === 'joinAdventure' &&
           <>
-            {!characters && <div className="lds-dual-ring" style={{ gridArea: '18 / 8 / span 8 / span 8' }} />}
-            <ScrollPanel className='gray-flat' gridArea='18 / 1 / span 19 / span 22'>
-              {characters && Object.entries(characters).map(([id, character]) =>
-                <div onClick={() => {
-                  if (selectedCharacter === id) {
-                    setSelectedCharacter('')
-                  } else {
-                    setSelectedCharacter(id)
-                  }
-                }}
-                  className={CRend(selectedCharacter === id, 'orange-glow', 'red-glow', 'm4 p2 data-panel scanlines-back')} key={uuid.v4()}
-                  style={{ gridTemplate: 'repeat(4, 1fr) / repeat(8, 1fr)', display: 'grid' }}>
-                  {/* <CharacterCard fadeDelay={fadeIn()} stats={character} /> */}
-                  <div className='flex-center data-panel m2 p2 font-small center'
-                    style={{ gridArea: '1 / 1 / span 4 / span 3' }}>
-                    {character['name']}
-                    <br />
-                    Xp: {character['xp']}
-                  </div>
-                  <div className='flex-center data-panel m2 p2 font-small center'
-                    style={{ gridArea: '1 / 4 / span 4 / span 5' }}>
-                    {ds.careers[character['career']].Name[0]}
-                    <br />
-                    {character.specializations.map(spec => spec !== '' ? <div className='center' key={uuid.v4()}>{ds.specializations[spec].Name[0]}</div> : '')}
-                  </div>
-                </div>
-              )}
-            </ScrollPanel>
-            <Panel className='red-flat' area={[7, 1, 11, 22]} />
-            <TextBox onAnimationEnd={() => setAlertInput(false)} alert={alertInput} onChange={event => setGroupName(event.target.value)} area={[8, 4, 4, 16]} edit text='Group Name' />
-            <TextBox alert={alertInput} onChange={event => setConnectionId(event.target.value)} area={[12, 4, 4, 16]} edit text='Adventure Id Code' />
+            <Panel className='red-flat' area={[7, 1, 30, 22]} />
+            <TextBox onAnimationEnd={() => setAlertInput(false)} alert={alertInput} onChange={event => setGroupName(event.target.value)} area={[16, 4, 5, 16]} edit text='Group Name' />
+            <TextBox alert={alertInput} onChange={event => setConnectionId(event.target.value)} area={[22, 4, 5, 16]} edit text='Adventure Id Code' />
 
             <Button onClick={() => createAdventure()} className='red-glow' area={[37, 1, 4, 11]}>Create Adventure</Button>
             <Button onClick={() => joinAdventure()} className={CRend(selectedCharacter === '', 'disabled', 'red-glow')} area={[37, 12, 4, 11]}>Join Adventure</Button>
@@ -121,7 +92,7 @@ function Adventures({ ds, characters, groups, dispatch }) {
                 </div>
               )}
             </ScrollPanel>
-            <Button className={CRend(selectedGroup === '', 'disabled', 'red-glow')} area={[37, 1, 4, 22]}>Login</Button>
+            <Button className={CRend(selectedGroup === '', 'disabled', 'red-glow')} area={[37, 1, 4, 22]}>Join</Button>
           </>}
 
 
@@ -139,4 +110,4 @@ function mapStateToProps(state) {
   };
 }
 
-export default connect(mapStateToProps)(Adventures);
+export default connect(mapStateToProps)(ChangeAdventures);
