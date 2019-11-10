@@ -4,9 +4,15 @@ import { navigate } from "@reach/router";
 import './MainMenuStyles.css';
 import { Button } from '../Panels/Panels';
 
-function MainMenu({ currentAdventure, dispatch }) {  
+function MainMenu({ currentAdventure, groups, dispatch }) {
   // const [springs, set, stop] = useSprings(4, index => ({ opacity: 1 }))  
   // const [panelFade, set] = useSpring(() => ({ opacity: 0, config: { mass: 1, tension: 280, friction: 1000 } }))
+
+  useEffect(() => {
+    if (!groups) {
+      dispatch({ type: 'SERVER_FETCH_GROUPS' })
+    }
+  }, [])
 
   const logout = () => {
     dispatch({ type: 'SERVER_LOGOUT_USER' });
@@ -22,10 +28,11 @@ function MainMenu({ currentAdventure, dispatch }) {
         <Button onClick={() => navigate('/roster')} className='red-glow' area={[4, 1, 14, 11]}>Roster</Button>
         <Button onClick={() => { }} className='disabled' area={[4, 12, 7, 11]}>Archives</Button>
         <Button onClick={() => { }} className='disabled' area={[11, 12, 7, 11]}>Hanger</Button>
-        {currentAdventure !== null ? 
-        <Button onClick={() => navigate('/adventure')} className='red-glow' area={[18, 1, 9, 22]}>Continue Adventure</Button> :
-          <Button className='disabled' area={[18, 1, 9, 22]}>Continue Adventure</Button>}
-        <Button onClick={() => navigate('/changeadventures')} className='red-glow' area={[27, 1, 7, 11]}>New Adventure</Button>
+        {/* {currentAdventure !== null ?
+          <Button onClick={() => navigate('/adventure')} className='red-glow gold' area={[18, 1, 9, 22]}>Continue Adventure</Button> :
+          <Button className='disabled' area={[18, 1, 9, 22]}>Continue Adventure</Button>} */}
+        <Button className='disabled' area={[18, 1, 9, 22]}>Continue Adventure</Button>
+        <Button onClick={() => navigate('/changeadventures')} className='red-glow' area={[27, 1, 7, 11]}>Manage Adventure</Button>
         <Button onClick={() => { }} className='disabled' area={[34, 1, 7, 11]}>Atlas</Button>
         <Button onClick={() => { }} className='disabled' area={[27, 12, 16, 11]}>Dice Roller</Button>
       </div>
@@ -37,7 +44,8 @@ function MainMenu({ currentAdventure, dispatch }) {
 function mapStateToProps(state) {
   return {
     sessionToken: state.user.sessionToken,
-    currentAdventure: state.currentAdventure
+    currentAdventure: state.currentAdventure,
+    groups: state.groups,
   };
 }
 

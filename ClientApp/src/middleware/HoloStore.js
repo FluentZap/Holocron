@@ -113,6 +113,13 @@ export function holocronMiddleware({ dispatch, getState }) {
       });
     }
 
+    if (action.type === 'SERVER_LOGIN_GROUP') {
+      connection.invoke("LoginGroup", action.id
+      ).catch(function (err) {
+        return console.error(err.toString());
+      });
+    }
+
     // Call the next dispatch method in the middleware chain.
     const returnValue = next(action)
 
@@ -144,6 +151,8 @@ export function holocronReducer(state = {}, action) {
       return parseUpdateModel(state, action.payload);
     case 'SET_DATASET':
       return { ...state, dataSet: action.dataSet };
+    case 'SERVER_LOGIN_GROUP':
+      return { ...state, user: { ...state.user, currentAdventure: action.id } };
     default:
       return state;
   }

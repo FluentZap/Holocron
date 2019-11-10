@@ -28,6 +28,7 @@ function ChangeAdventures({ ds, characters, groups, dispatch }) {
   const createAdventure = () => {
     if (groupName !== '' && connectionId !== '') {
       dispatch({ type: 'SERVER_CREATE_GROUP', groupName: groupName, connectionId: connectionId })
+      setCategory('adventureList');
     } else {
       setAlertInput(true);
     }
@@ -40,6 +41,15 @@ function ChangeAdventures({ ds, characters, groups, dispatch }) {
       setAlertInput(true);
     }
   }
+
+  const loginAdventure = () => {
+    if (selectedGroup !== '') {
+      dispatch({ type: 'SERVER_LOGIN_GROUP', id: parseInt(selectedGroup) });
+      navigate('/adventure');
+    }
+  }
+
+
 
 
 
@@ -92,7 +102,7 @@ function ChangeAdventures({ ds, characters, groups, dispatch }) {
                 </div>
               )}
             </ScrollPanel>
-            <Button className={CRend(selectedGroup === '', 'disabled', 'red-glow')} area={[37, 1, 4, 22]}>Join</Button>
+            <Button onClick={() => loginAdventure()} className={CRend(selectedGroup === '', 'disabled', 'red-glow')} area={[37, 1, 4, 22]}>Join</Button>
           </>}
 
 

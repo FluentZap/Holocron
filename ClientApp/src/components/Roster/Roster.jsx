@@ -12,7 +12,7 @@ function Roster({ characters, ds, dispatch }) {
     if (!characters || Object.keys(characters).length === 0) {
       dispatch({ type: 'SERVER_FETCH_ROSTER' })
     }
-  }, [])  
+  }, [])
 
   return (
     <div className='flex-center full-screen'>

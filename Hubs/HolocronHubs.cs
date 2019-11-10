@@ -53,6 +53,7 @@ namespace Holocron.Hubs
           {
             connectedUsers[Context.ConnectionId].SessionToken = dataUser.SessionToken.ToString();
           }
+          // (ListOf_DBResult flag, User dataUser) = await HoloData.LoginUser(new User() { Name = user.Name, Password = user.Password });
 
           UpdateModel updateModel = new UpdateModel();
           updateModel.AddUser(dataUser);
@@ -187,12 +188,21 @@ namespace Holocron.Hubs
       }
     }
 
+    public async Task LoginGroup(int id)
+    {
+      string SessionToken = connectedUsers[Context.ConnectionId].SessionToken;
+      if (SessionToken != null && connectedUsers.ContainsKey(Context.ConnectionId))
+      {
+        ListOf_DBResult flag = await HoloData.LoginGroup(SessionToken, id);        
+      }
+    }
+
     public async Task VT49Connect(string verificationCode)
     {
       if (verificationCode == "34f6d465a525aa589271e66648d73773")
       {
         // connectedUsers[Context.ConnectionId].UserName = "VT49";
-        connectedUsers[Context.ConnectionId].SessionToken = Context.ConnectionId;
+        await Task.Run(() => connectedUsers[Context.ConnectionId].SessionToken = Context.ConnectionId);
       }
     }
 

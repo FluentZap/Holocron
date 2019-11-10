@@ -239,6 +239,30 @@ namespace Holocron.Context
         }
       }
     }
+
+    public static async Task<ListOf_DBResult> LoginGroup(string SessionToken, int id)
+    {
+      using (var db = new HolocronContext())
+      {
+        User dataUser = await db.Users.FirstOrDefaultAsync(x => x.SessionToken == SessionToken);
+
+        Group group = await db.Groups.Where(x => x.Id == id)
+        .Include(g => g.Permissions)
+          .ThenInclude(x => x.User)
+        .FirstOrDefaultAsync();
+
+        if (dataUser != null && group != null && group.Permissions.Any(x => x.User.Id == dataUser.Id))
+        {
+          dataUser.CurrentAdventure = group;
+          await db.SaveChangesAsync();
+          return ListOf_DBResult.Success;
+        }
+        else
+        {
+          return ListOf_DBResult.NotFound;
+        }
+      }
+    }
   }
 
 }
