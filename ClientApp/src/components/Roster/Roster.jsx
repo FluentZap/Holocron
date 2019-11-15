@@ -7,11 +7,9 @@ import './RosterStyles.css';
 function Roster({ characters, ds, dispatch }) {
   //Load characters
   useEffect(() => {
-    console.log(characters);
-    
-    if (!characters || Object.keys(characters).length === 0) {
-      dispatch({ type: 'SERVER_FETCH_ROSTER' })
-    }
+    // if (!characters || Object.keys(characters).length === 0) {
+    dispatch({ type: 'SERVER_FETCH_ROSTER' })
+    // }
   }, [])
 
   return (
@@ -25,7 +23,7 @@ function Roster({ characters, ds, dispatch }) {
 
         {/* <div className='flex-center data-panel gray-flat roster-character-list m2 p4' style={{ ...getFade() }}> */}
         <div className='flex-center data-panel gray-flat scanlines-back m2 p2' style={{ justifyContent: 'start', gridArea: '4 / 1 / span 34 / span 22' }}>
-          <div className='scroll-container'>            
+          <div className='scroll-container'>
             {characters && Object.entries(characters).map(([key, character]) =>
               <div className='m4 p2 data-panel red-glow scanlines-back' key={uuid.v4()}
                 style={{ gridTemplate: 'repeat(4, 1fr) / repeat(8, 1fr)', display: 'grid' }}>

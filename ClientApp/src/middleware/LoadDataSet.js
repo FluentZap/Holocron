@@ -87,8 +87,7 @@ const loadDataSet = (dispatch) => {
     ]
   ).then(fullList => {
     let returnValue = {};
-    fullList.forEach(([key, value]) => returnValue[key] = value);
-    console.log(returnValue);
+    fullList.forEach(([key, value]) => returnValue[key] = value);    
 
     dispatch({
       type: 'SET_DATASET',

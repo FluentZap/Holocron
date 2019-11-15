@@ -200,8 +200,7 @@ export function recalculateXp(ds, character) {
     } else {
       freeSkills[skill] = 1;
     }
-  });
-  console.log(freeSkills);
+  });  
   
   let skills = Object.keys(character.skillsBuy);
   for (let i = 0; i < skills.length; i++) {

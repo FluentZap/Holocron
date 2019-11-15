@@ -52,7 +52,6 @@ export function holocronMiddleware({ dispatch, getState }) {
     //console.log('will dispatch', action)        
 
     if (action.type === 'SERVER_CREATE_USER') {
-      console.log(action);
       connection.invoke("CreateUser", {
         userName: action.userName,
         password: action.password
@@ -228,12 +227,9 @@ const setHubCallbacks = (connection, dispatch) => {
 
 
 function parseUpdateModel(state, model) {
-  console.log(model);
   model = pickBy(model, identity);
-  console.log(model);
   let newState = cloneDeep(state);
   newState = merge(newState, model);
-  console.log(newState);
   return newState;
 }
 

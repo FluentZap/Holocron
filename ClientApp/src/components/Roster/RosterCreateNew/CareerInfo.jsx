@@ -15,7 +15,6 @@ const CareerInfo = ({ ds, career, changeCareer, specialization, changeSpecializa
         skillsCareerFree: character.skillsCareerFree.filter(x => x !== skill)
       };
       let [xp, skills] = recalculateXp(ds, newCharacter);
-      console.log(xp, skills, newCharacter);
       setCharacter({ ...newCharacter, xp: xp, unusedXp: xp, skillsBuy: skills })
     } else if (character.skillsCareer.length < character.freeCareerRanks) {
       let newCharacter = {
@@ -24,7 +23,6 @@ const CareerInfo = ({ ds, career, changeCareer, specialization, changeSpecializa
         skillsCareerFree: [...character.skillsCareerFree, skill]
       };
       let [xp, skills] = recalculateXp(ds, newCharacter);
-      console.log(xp, skills, newCharacter);
       setCharacter({ ...newCharacter, xp: xp, unusedXp: xp, skillsBuy: skills })
     }
   }

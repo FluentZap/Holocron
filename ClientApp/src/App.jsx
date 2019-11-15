@@ -23,8 +23,9 @@ import RosterCreateNew from './components/Roster/RosterCreateNew/RosterCreateNew
 import AdventureMenu from './components/Adventures/AdventureMenu/AdventureMenu';
 import Play from './components/Adventures/Play/Play';
 import Inventory from './components/Adventures/Inventory/Inventory';
+import logger from 'redux-logger'
 
-const store = createStore(holocronReducer, initial_state, applyMiddleware(holocronMiddleware));
+const store = createStore(holocronReducer, initial_state, applyMiddleware(holocronMiddleware, logger));
 
 //fontFamily: 'Engli-Besh',
 

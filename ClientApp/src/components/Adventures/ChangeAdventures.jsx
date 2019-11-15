@@ -17,12 +17,12 @@ function ChangeAdventures({ ds, characters, groups, dispatch }) {
 
 
   useEffect(() => {
-    if (!characters || Object.keys(characters).length === 0) {
+    // if (!characters || Object.keys(characters).length === 0) {
       dispatch({ type: 'SERVER_FETCH_ROSTER' });
-    }
-    if (!groups || Object.keys(groups).length === 0) {
+    // }
+    // if (!groups || Object.keys(groups).length === 0) {
       dispatch({ type: 'SERVER_FETCH_GROUPS' });
-    }
+    // }
   }, [])
 
   const createAdventure = () => {
