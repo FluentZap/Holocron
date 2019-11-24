@@ -15,7 +15,7 @@ import { ScrollPanel } from '../../Panels/Panels';
 // const childFade = new FadeInBuilder(0.1, 0.2, 4);
 
 
-function Roster({ ds, dispatch }) {  
+function Roster({ ds, dispatch }) {
 
   const [character, setCharacter] = useState(newCharacter(ds.species['HUMAN']));
   const [selectStat, setSelectStat] = useState('')
@@ -82,7 +82,7 @@ function Roster({ ds, dispatch }) {
           style={{ gridArea: '1 / 16 / span 3 / span 7' }}
           onClick={saveCharacter}>Create</button>
         {/* <div className='flex-center data-panel red-glow scanlines' style={{ gridArea: '2 / 1 / span 3 / span 9', margin: 5, animationDelay: fadeInTime() }}> */}
-        <CharacterCard {...{ character, ds, setCharacter }} newCharacter={true} />
+        <CharacterCard {...{ character, ds, setCharacter }} newCharacter />
         {/* </div> */}
 
         {category === 'Stats' ?
@@ -156,7 +156,7 @@ const SpeciesBox = ({ species, ds, setShowInfo }) => {
   const { Agility, Brawn, Cunning, Intellect, Presence, Willpower } = StartingChars[0];
   const { Experience, StrainThreshold, WoundThreshold } = StartingAttrs[0];
   return (
-    <ScrollPanel reset className='red-flat' gridArea='14 / 8 / span 24 / span 15'>
+    <ScrollPanel reset className='red-flat' area={[14, 8, 24, 15]}>
       <div className='z-5 m2 p2 flex-left data-panel gray-flat font-small'
         style={{ marginTop: 0 }}>
         <h4 className='m2 center'>{Name}</h4>
@@ -182,7 +182,7 @@ const SpeciesList = ({ species, changeSpecies, ds, fadeIn }) => {
   // const fadeClass = fadeIn === true ? 'animate-fade-in ' : ' '
   const speciesCount = Object.keys(ds.species).length;
   return (
-    <ScrollPanel className='red-flat' gridArea='14 / 1 / span 24 / span 7'>
+    <ScrollPanel className='red-flat' area={[14, 1, 24, 7]}>
       {Object.entries(ds.species).map(([key, value], i) =>
         <div key={uuid.v4()} className={`z-5 m2 p2 flex-center center data-panel font-small ${species === key ? 'orange-glow' : 'gray-flat-hover'}`}
           style={{ marginTop: i === 0 ? 0 : '0.5vh', marginBottom: i === speciesCount - 1 ? 0 : '0.5vh' }}

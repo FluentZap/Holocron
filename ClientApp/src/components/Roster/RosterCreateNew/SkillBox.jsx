@@ -22,10 +22,10 @@ export const SkillBox = ({ character, selectStat, selectSkill, setSelectSkill, d
       setSelectSkill(skill)
     }
   }
-  const grid = (selectStat === '' && selectSkill === '') ? '14 / 8 / span 24 / span 15' : '19 / 8 / span 19 / span 15'
+  const grid = (selectStat === '' && selectSkill === '') ? [14, 8, 24, 15] : [19, 8, 19, 15]
   const skillCount = Object.keys(ds.skills).length;
 
-  return <ScrollPanel reset className='red-flat' gridArea={grid}>
+  return <ScrollPanel reset className='red-flat' area={grid}>
     {selectSkill === '' ? getSkills(ds, selectStat).map(([key, value], i) => {
       return <div key={uuid.v4()} className='z-5 m2 p2 flex-left data-panel gray-flat-hover'
         style={{ marginTop: i === 0 ? 0 : '.5vh', marginBottom: i === skillCount - 1 ? 0 : '.5vh' }}

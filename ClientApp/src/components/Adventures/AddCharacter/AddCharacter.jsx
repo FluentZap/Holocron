@@ -1,33 +1,38 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import { connect } from 'react-redux'
 import { navigate } from "@reach/router";
 import uuid from 'uuid';
-import './RosterStyles.css';
-import { Panel, ScrollPanel } from '../Panels/Panels';
+import { ScrollPanel, CRend } from '../../Panels/Panels';
 
-function Roster({ characters, ds, dispatch }) {
-  //Load characters
+function AddCharacter({ characters, ds, dispatch }) {
   useEffect(() => {
-    // if (!characters || Object.keys(characters).length === 0) {
     dispatch({ type: 'SERVER_FETCH_ROSTER' })
-    // }
   }, [])
+
+
+  const selectCharacter = () => {
+    if (characterSelect) {
+      navigate('/adventure')
+    }
+  }
+
+  const [characterSelect, setCharacterSelect] = useState()
 
   return (
     <div className='flex-center full-screen'>
       <div className='data-container'>
-        <button onClick={() => navigate('/menu')} className='flex-center data-panel red-glow scanlines-back m2'
-          style={{ gridArea: '1 / 1 / span 3 / span 7', }}>Menu</button>
-        <button onClick={() => navigate('/createnew')} className='flex-center data-panel red-glow scanlines-back m2'
-          style={{ gridArea: '38 / 1 / span 3 / span 22', }}>Create New</button>
-        {!characters && <div className="lds-dual-ring" style={{ gridArea: '18 / 8 / span 8 / span 8' }} />}
+        <button onClick={() => navigate('/adventure')} className='flex-center data-panel red-glow scanlines-back m2'
+          style={{ gridArea: '1 / 1 / span 3 / span 7', }}>Back</button>
+        <button onClick={selectCharacter} className='flex-center data-panel red-glow scanlines-back m2'
+          style={{ gridArea: '38 / 1 / span 3 / span 22', }}>Choose Character</button>
 
-        {/* <div className='flex-center data-panel gray-flat roster-character-list m2 p4' style={{ ...getFade() }}> */}        
+        {!characters && <div className="lds-dual-ring" style={{ gridArea: '18 / 8 / span 8 / span 8' }} />}
         <ScrollPanel className='gray-flat' area={[4, 1, 34, 22]} >
           {characters && Object.entries(characters).map(([key, character]) =>
-            <div className='m4 p2 data-panel red-glow scanlines-back' key={uuid.v4()}
-              style={{ gridTemplate: 'repeat(4, 1fr) / repeat(8, 1fr)', display: 'grid' }}>
-              {/* <CharacterCard fadeDelay={fadeIn()} stats={character} /> */}
+            <div className={`m4 p2 data-panel ${CRend(characterSelect === key, 'orange-glow', 'red-glow')} scanlines-back`} key={uuid.v4()}
+              style={{ gridTemplate: 'repeat(4, 1fr) / repeat(8, 1fr)', display: 'grid' }}
+              onClick={() => setCharacterSelect(key)}
+            >
               <div className='flex-center data-panel m2 p2 font-small center'
                 style={{ gridArea: '1 / 1 / span 4 / span 3' }}>
                 {character['name']}
@@ -56,4 +61,4 @@ function mapStateToProps(state) {
   };
 }
 
-export default connect(mapStateToProps)(Roster);
+export default connect(mapStateToProps)(AddCharacter);

@@ -34,12 +34,18 @@ namespace Holocron.Hubs
 
     public async Task CreateUser(UserData user)
     {
-      (ListOf_DBResult flag, string SessionToken) = await HoloData.CreateUser(new User() { Name = user.Name, Password = user.Password });
-      if (connectedUsers.ContainsKey(Context.ConnectionId))
+      (ListOf_DBResult flag, User dataUser) = await HoloData.CreateUser(new User() { Name = user.Name, Password = user.Password });
+      if (flag == ListOf_DBResult.Success)
       {
-        connectedUsers[Context.ConnectionId].SessionToken = SessionToken.ToString();
-        await Clients.Caller.SendAsync("ServerLogin", flag, SessionToken, user.Name);
+        if (connectedUsers.ContainsKey(Context.ConnectionId))
+        {
+          connectedUsers[Context.ConnectionId].SessionToken = dataUser.SessionToken.ToString();
+          UpdateModel updateModel = new UpdateModel();
+          updateModel.AddUser(dataUser);
+          await Clients.Caller.SendAsync("ServerLogin", flag, updateModel);
+        }
       }
+      await Clients.Caller.SendAsync("ServerLogin", flag);
     }
 
     public async Task LoginUser(UserData user)
@@ -49,17 +55,16 @@ namespace Holocron.Hubs
         (ListOf_DBResult flag, User dataUser) = await HoloData.LoginUser(new User() { Name = user.Name, Password = user.Password });
         if (connectedUsers.ContainsKey(Context.ConnectionId))
         {
-          if (dataUser != null)
+          if (flag == ListOf_DBResult.Success)
           {
             connectedUsers[Context.ConnectionId].SessionToken = dataUser.SessionToken.ToString();
+            UpdateModel updateModel = new UpdateModel();
+            updateModel.AddUser(dataUser);
+            await Clients.Caller.SendAsync("ServerLogin", flag, updateModel);
+            System.Console.WriteLine($"Connected User: {Context.ConnectionId}");
+            System.Console.WriteLine($"Session Token: {dataUser.SessionToken}");
           }
-          // (ListOf_DBResult flag, User dataUser) = await HoloData.LoginUser(new User() { Name = user.Name, Password = user.Password });
-
-          UpdateModel updateModel = new UpdateModel();
-          updateModel.AddUser(dataUser);
-          await Clients.Caller.SendAsync("ServerLogin", flag, updateModel);
-          System.Console.WriteLine($"Connected User: {Context.ConnectionId}");
-          System.Console.WriteLine($"Session Token: {dataUser.SessionToken}");
+          await Clients.Caller.SendAsync("ServerLogin", flag);
         }
         else
         {
@@ -129,6 +134,17 @@ namespace Holocron.Hubs
       }
     }
 
+    public async Task FetchGroupList(string SessionToken)
+    {
+      if (SessionToken != null && connectedUsers.ContainsKey(Context.ConnectionId) && SessionToken == connectedUsers[Context.ConnectionId].SessionToken)
+      {
+        (ListOf_DBResult flag, List<Group> groups) = await HoloData.FetchGroups(SessionToken);
+        UpdateModel updateModel = new UpdateModel();
+        updateModel.AddGroupList(groups);
+        ClientUpdates.SendUpdate(Clients.Caller, flag, updateModel);
+      }
+    }
+
     public async Task CreateCharacter(CharacterData character)
     {
       string SessionToken = connectedUsers[Context.ConnectionId].SessionToken;
@@ -157,8 +173,8 @@ namespace Holocron.Hubs
         (ListOf_DBResult flag, Group group) = await HoloData.CreateGroup(SessionToken, new Group() { Name = NewGroup.Name, ConnectionId = NewGroup.ConnectionId });
         if (flag == ListOf_DBResult.Success)
         {
-          UpdateModel updateModel = new UpdateModel();
-          updateModel.AddGroup(group);
+          UpdateModel updateModel = new UpdateModel();          
+          updateModel.AddGroupList(group);
           ClientUpdates.SendUpdate(connectedUsers.Where(x => x.Value.SessionToken == SessionToken).Select(x => Clients.Client(x.Key)).ToList(), flag, updateModel);
         }
         else
@@ -188,12 +204,23 @@ namespace Holocron.Hubs
       }
     }
 
+    public async Task FetchAdventure(string SessionToken)
+    {
+      if (SessionToken != null && connectedUsers.ContainsKey(Context.ConnectionId) && SessionToken == connectedUsers[Context.ConnectionId].SessionToken)
+      {
+        (ListOf_DBResult flag, Group group) = await HoloData.FetchAdventure(SessionToken);
+        UpdateModel updateModel = new UpdateModel();
+        updateModel.AddAdventure(group);
+        ClientUpdates.SendUpdate(Clients.Caller, flag, updateModel);
+      }
+    }
+
     public async Task LoginGroup(int id)
     {
       string SessionToken = connectedUsers[Context.ConnectionId].SessionToken;
       if (SessionToken != null && connectedUsers.ContainsKey(Context.ConnectionId))
       {
-        ListOf_DBResult flag = await HoloData.LoginGroup(SessionToken, id);        
+        ListOf_DBResult flag = await HoloData.LoginGroup(SessionToken, id);
       }
     }
 

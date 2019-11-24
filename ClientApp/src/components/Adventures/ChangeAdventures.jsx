@@ -18,10 +18,11 @@ function ChangeAdventures({ ds, characters, groups, dispatch }) {
 
   useEffect(() => {
     // if (!characters || Object.keys(characters).length === 0) {
-      dispatch({ type: 'SERVER_FETCH_ROSTER' });
+    dispatch({ type: 'SERVER_FETCH_ROSTER' });
     // }
     // if (!groups || Object.keys(groups).length === 0) {
-      dispatch({ type: 'SERVER_FETCH_GROUPS' });
+    // dispatch({ type: 'SERVER_FETCH_GROUPS' });
+    dispatch({ type: 'SERVER_FETCH_GROUP_LIST' });
     // }
   }, [])
 
@@ -45,6 +46,7 @@ function ChangeAdventures({ ds, characters, groups, dispatch }) {
   const loginAdventure = () => {
     if (selectedGroup !== '') {
       dispatch({ type: 'SERVER_LOGIN_GROUP', id: parseInt(selectedGroup) });
+      // dispatch({ type: 'SERVER_LOGIN_GROUP', id: parseInt(selectedGroup) });
       navigate('/adventure');
     }
   }
@@ -74,7 +76,7 @@ function ChangeAdventures({ ds, characters, groups, dispatch }) {
         {category === 'adventureList' &&
           <>
             {!groups && <div className="lds-dual-ring" style={{ gridArea: '18 / 8 / span 8 / span 8' }} />}
-            <ScrollPanel className='gray-flat' gridArea='7 / 1 / span 30 / span 22'>
+            <ScrollPanel className='gray-flat' area={[7, 1, 30, 22]}>
               {groups && Object.entries(groups).map(([id, group]) =>
                 <div onClick={() => {
                   if (selectedGroup === id) {
@@ -95,9 +97,9 @@ function ChangeAdventures({ ds, characters, groups, dispatch }) {
                   </div>
                   <div className='flex-center data-panel m2 p2 font-small center'
                     style={{ gridArea: '1 / 4 / span 4 / span 5' }}>
-                    Members {group.permissions && Object.keys(group.permissions).length}
+                    Members {group.users && group.users}
                     <br />
-                    Characters {group.Characters ? group.Characters.length : 0}
+                    Characters {group.characters && group.characters}
                   </div>
                 </div>
               )}
@@ -116,7 +118,7 @@ function mapStateToProps(state) {
   return {
     ds: state.dataSet,
     characters: state.characters,
-    groups: state.groups
+    groups: state.groupList
   };
 }
 

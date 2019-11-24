@@ -145,10 +145,3 @@
     background-color: hsl(0, 0%, 27%);
     box-shadow: 0px 0px 0.5vh hsl(0, 0%, 27%);
 }
-
-.scroll-container {
-    display: block;
-    overflow-y: auto;
-    width: 99%;
-    margin: .5vh 0;
-}

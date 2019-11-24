@@ -1,6 +1,6 @@
 import React, { useRef, useEffect } from 'react';
 
-export function ScrollPanel({ gridArea, className, children, reset }) {
+export function ScrollPanel({ area, className, children, reset, margin = 'm2', padding = 'p2' }) {
   const panelRef = useRef(null)
 
   useEffect(() => {
@@ -10,7 +10,7 @@ export function ScrollPanel({ gridArea, className, children, reset }) {
   });
 
   return (
-    <div className={`flex-center data-panel ${className} scanlines-back m2 p2`} style={{ gridArea: gridArea, justifyContent: 'start' }} >
+    <div className={`flex-center data-panel ${className} scanlines-back ${margin} ${padding}`} style={{ gridArea: `${area[0]} / ${area[1]} / span ${area[2]} / span ${area[3]}`, justifyContent: 'start' }} >
       <div ref={panelRef} className='flex-center' style={{ display: 'block', overflowY: 'auto', width: '99%', margin: '.5vh 0' }} >
         {children}
       </div>
@@ -18,9 +18,9 @@ export function ScrollPanel({ gridArea, className, children, reset }) {
   )
 };
 
-export function Panel({ area, className, children }) {
+export function Panel({ area, className, children, margin = 'm2', padding = 'p2' }) {
   return (
-    <div className={`flex-center data-panel ${className} scanlines-back m2 p2`} style={{
+    <div className={`flex-center data-panel ${className} scanlines-back ${margin} ${padding}`} style={{
       gridArea: `${area[0]} / ${area[1]} / span ${area[2]} / span ${area[3]}`, justifyContent: 'start'
     }} >
       {children}

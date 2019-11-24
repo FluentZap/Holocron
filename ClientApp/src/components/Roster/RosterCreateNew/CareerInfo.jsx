@@ -85,7 +85,7 @@ const CareerInfo = ({ ds, career, changeCareer, specialization, changeSpecializa
 
 const CareerList = ({ ds, changeCareer, career }) => {
   const careerCount = Object.keys(ds.careers).length;
-  return <ScrollPanel className='red-flat' gridArea='14 / 1 / span 12 / span 7'>
+  return <ScrollPanel className='red-flat' area={[14, 1, 12, 7]}>
     {Object.entries(ds.careers).map(([key, value], i) =>
       <div key={uuid.v4()} className={`z-5 m2 p2 flex-center center data-panel font-small ${career === key ? 'orange-glow' : 'gray-flat-hover'}`}
         style={{ marginTop: i === 0 ? 0 : '0.5vh', marginBottom: i === careerCount - 1 ? 0 : '0.5vh' }}
@@ -120,13 +120,13 @@ const CareerSkills = ({ ds, character, career, setCareerSkill }) => {
 }
 
 const CareerInfoBox = ({ ds, career, setShowInfo }) => {
-  return <ScrollPanel reset className='red-flat' gridArea='17 / 8 / span 21 / span 15'>
+  return <ScrollPanel reset className='red-flat' area={[17, 8, 21, 15]}>
     <DescriptionBox text={ds.careers[career].Description[0]} setShowInfo={setShowInfo} />
   </ScrollPanel>
 }
 
 const SpecInfoBox = ({ ds, specialization, setShowInfo }) => {
-  return <ScrollPanel reset className='red-flat' gridArea='17 / 8 / span 21 / span 15'>
+  return <ScrollPanel reset className='red-flat' area={[17, 8, 21, 15]}>
     <DescriptionBox text={ds.specializations[specialization].Description[0]} setShowInfo={setShowInfo} />
   </ScrollPanel>
 }
@@ -135,7 +135,7 @@ const SpecInfoBox = ({ ds, specialization, setShowInfo }) => {
 const Specs = ({ ds, character, career, specialization, changeSpecialization }) => {
   const specList = ds.careers[career].Specializations[0].Key;
   const specCount = specList.length;
-  return <ScrollPanel className='red-flat' gridArea='26 / 1 / span 12 / span 7'>
+  return <ScrollPanel className='red-flat' area={[26, 1, 12, 7]}>
     {specList.map((key, i) =>
       <div key={uuid.v4()} className={`z-5 m2 p2 flex-center center data-panel font-small ${specialization === key ? 'orange-glow' : 'gray-flat-hover'}`}
         style={{ marginTop: i === 0 ? 0 : '.5vh', marginBottom: i === specCount - 1 ? 0 : '.5vh' }}

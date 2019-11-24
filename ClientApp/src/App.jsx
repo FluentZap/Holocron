@@ -24,6 +24,7 @@ import AdventureMenu from './components/Adventures/AdventureMenu/AdventureMenu';
 import Play from './components/Adventures/Play/Play';
 import Inventory from './components/Adventures/Inventory/Inventory';
 import logger from 'redux-logger'
+import AddCharacter from './components/Adventures/AddCharacter/AddCharacter';
 
 const store = createStore(holocronReducer, initial_state, applyMiddleware(holocronMiddleware, logger));
 
@@ -76,6 +77,7 @@ function App() {
 
         <PrivateRoute Component={Play} path="adventure/play" />
         <PrivateRoute Component={Inventory} path="adventure/inventory" />
+        <PrivateRoute Component={AddCharacter} path="/adventure/addcharacter" />
         {/* <PrivateRoute Component={RosterCreateNew} path="adventure/" /> */}
         {/* <PrivateRoute Component={RosterCreateNew} path="adventure/" /> */}
         {/* <PrivateRoute Component={RosterCreateNew} path="adventure/" /> */}

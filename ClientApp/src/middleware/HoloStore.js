@@ -83,9 +83,25 @@ export function holocronMiddleware({ dispatch, getState }) {
       });
     }
 
+    if (action.type === 'SERVER_FETCH_ADVENTURE') {
+      let state = getState();
+      connection.invoke("FetchAdventure", state.user.sessionToken
+      ).catch(function (err) {
+        return console.error(err.toString());
+      });
+    }
+
     if (action.type === 'SERVER_FETCH_GROUPS') {
       let state = getState();
       connection.invoke("FetchGroups", state.user.sessionToken
+      ).catch(function (err) {
+        return console.error(err.toString());
+      });
+    }
+
+    if (action.type === 'SERVER_FETCH_GROUP_LIST') {
+      let state = getState();
+      connection.invoke("FetchGroupList", state.user.sessionToken
       ).catch(function (err) {
         return console.error(err.toString());
       });
@@ -163,6 +179,8 @@ export const initial_state = {
   characters: null,
   dataSet: null,
   groups: null,
+  groupList: null,
+  currentAdventure: null,
 }
 
 
