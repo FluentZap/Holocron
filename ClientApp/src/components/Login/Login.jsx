@@ -3,6 +3,7 @@ import { connect } from 'react-redux'
 import uuid from 'uuid';
 import { Link, navigate } from "@reach/router";
 import './LoginStyles.css';
+import { CreateServerAction, Action, CreateAction } from '../../middleware/ActionBuilder';
 
 function Login({ dispatch, sessionToken }) {
   const [userName, setUserName] = useState('');
@@ -13,16 +14,16 @@ function Login({ dispatch, sessionToken }) {
   useEffect(() => {
     if (sessionToken === "rejected") {
       setRejectLogin("reject-animation");
-      dispatch({ type: 'SET_SESSION_TOKEN', sessionToken: null });
+      dispatch(CreateAction(Action.SetSessionToken, { sessionToken: null }));
     }
   }, [sessionToken, dispatch]);
 
   const AddUser = () => {
-    dispatch({ type: 'SERVER_CREATE_USER', userName: userName, password: password });
+    dispatch(CreateServerAction(Action.CreateUser, { userName: userName, password: password }));
   }
 
   const LoginUser = () => {
-    dispatch({ type: 'SERVER_LOGIN_USER', userName: userName, password: password });
+    dispatch(CreateServerAction(Action.LoginUser, { userName: userName, password: password }));
   }
 
   return (

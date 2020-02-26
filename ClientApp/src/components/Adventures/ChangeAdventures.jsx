@@ -3,6 +3,7 @@ import { connect } from 'react-redux'
 import { navigate } from "@reach/router";
 import uuid from 'uuid';
 import { Button, ScrollPanel, CRend, TextBox, Panel } from '../Panels/Panels';
+import { CreateServerAction, Action } from '../../middleware/ActionBuilder';
 
 function ChangeAdventures({ ds, characters, groups, dispatch }) {
   const [selectedCharacter, setSelectedCharacter] = useState('');
@@ -18,17 +19,17 @@ function ChangeAdventures({ ds, characters, groups, dispatch }) {
 
   useEffect(() => {
     // if (!characters || Object.keys(characters).length === 0) {
-    dispatch({ type: 'SERVER_FETCH_ROSTER' });
+    dispatch(CreateServerAction(Action.FetchRoster));
     // }
     // if (!groups || Object.keys(groups).length === 0) {
     // dispatch({ type: 'SERVER_FETCH_GROUPS' });
-    dispatch({ type: 'SERVER_FETCH_GROUP_LIST' });
+    dispatch(CreateServerAction(Action.FetchGroupList));
     // }
   }, [])
 
   const createAdventure = () => {
     if (groupName !== '' && connectionId !== '') {
-      dispatch({ type: 'SERVER_CREATE_GROUP', groupName: groupName, connectionId: connectionId })
+      dispatch(CreateServerAction(Action.CreateGroup, { groupName: groupName, connectionId: connectionId }));
       setCategory('adventureList');
     } else {
       setAlertInput(true);
@@ -37,7 +38,7 @@ function ChangeAdventures({ ds, characters, groups, dispatch }) {
 
   const joinAdventure = () => {
     if (groupName !== '' && connectionId !== '') {
-      dispatch({ type: 'SERVER_JOIN_GROUP', groupName: groupName, connectionId: connectionId })
+      dispatch(CreateServerAction(Action.JoinGroup, { groupName: groupName, connectionId: connectionId }));
     } else {
       setAlertInput(true);
     }
@@ -45,7 +46,7 @@ function ChangeAdventures({ ds, characters, groups, dispatch }) {
 
   const loginAdventure = () => {
     if (selectedGroup !== '') {
-      dispatch({ type: 'SERVER_LOGIN_GROUP', id: parseInt(selectedGroup) });
+      dispatch(CreateServerAction(Action.LoginGroup, { id: parseInt(selectedGroup) }));
       // dispatch({ type: 'SERVER_LOGIN_GROUP', id: parseInt(selectedGroup) });
       navigate('/adventure');
     }

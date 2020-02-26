@@ -3,6 +3,7 @@ import { connect } from 'react-redux'
 import { navigate } from "@reach/router";
 import './MainMenuStyles.css';
 import { Button } from '../Panels/Panels';
+import { CreateServerAction, Action } from '../../middleware/ActionBuilder';
 
 function MainMenu({ currentAdventure, groups, dispatch }) {
   // const [springs, set, stop] = useSprings(4, index => ({ opacity: 1 }))  
@@ -10,12 +11,12 @@ function MainMenu({ currentAdventure, groups, dispatch }) {
 
   useEffect(() => {
     if (!groups) {
-      dispatch({ type: 'SERVER_FETCH_GROUPS' })
+      dispatch(CreateServerAction(Action.FetchGroups));
     }
   }, [])
 
   const logout = () => {
-    dispatch({ type: 'SERVER_LOGOUT_USER' });
+    dispatch(CreateServerAction(Action.LogoutUser));
     navigate('/');
   }
 

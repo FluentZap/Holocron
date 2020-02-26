@@ -4,12 +4,13 @@ import { navigate } from "@reach/router";
 import uuid from 'uuid';
 import './RosterStyles.css';
 import { Panel, ScrollPanel } from '../Panels/Panels';
+import { CreateServerAction, Action } from '../../middleware/ActionBuilder';
 
 function Roster({ characters, ds, dispatch }) {
   //Load characters
   useEffect(() => {
     // if (!characters || Object.keys(characters).length === 0) {
-    dispatch({ type: 'SERVER_FETCH_ROSTER' })
+    dispatch(CreateServerAction(Action.FetchRoster));
     // }
   }, [])
 

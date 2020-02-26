@@ -2,11 +2,12 @@ import React from 'react';
 import { connect } from 'react-redux'
 import { navigate } from "@reach/router";
 import { Button } from '../../Panels/Panels';
+import { CreateServerAction, Action } from '../../../middleware/ActionBuilder';
 
 function Play({ dispatch }) {
 
   const logout = () => {
-    dispatch({ type: 'SERVER_LOGOUT_USER' });
+    dispatch(CreateServerAction(Action.LogoutUser));
     navigate('/');
   }
 

@@ -3,10 +3,11 @@ import { connect } from 'react-redux'
 import { navigate } from "@reach/router";
 import uuid from 'uuid';
 import { ScrollPanel, CRend } from '../../Panels/Panels';
+import { CreateServerAction, Action } from '../../../middleware/ActionBuilder';
 
 function AddCharacter({ characters, ds, dispatch }) {
   useEffect(() => {
-    dispatch({ type: 'SERVER_FETCH_ROSTER' })
+    dispatch(CreateServerAction(Action.FetchRoster));
   }, [])
 
 

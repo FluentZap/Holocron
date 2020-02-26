@@ -3,6 +3,7 @@ import { connect } from 'react-redux'
 import { navigate } from "@reach/router";
 // import './MainMenuStyles.css';
 import { Button } from '../../Panels/Panels';
+import { CreateServerAction, Action } from '../../../middleware/ActionBuilder';
 
 function AdventureMenu({ currentAdventure, dispatch }) {
 
@@ -11,7 +12,7 @@ function AdventureMenu({ currentAdventure, dispatch }) {
   // if ()  
 
   const logout = () => {
-    dispatch({ type: 'SERVER_LOGOUT_USER' });
+    dispatch(CreateServerAction(Action.LogoutUser));
     navigate('/');
   }
 
@@ -29,7 +30,7 @@ function AdventureMenu({ currentAdventure, dispatch }) {
         <Button onClick={() => navigate('/adventure/store')} className='red-glow' area={[14, 12, 9, 11]}>Store</Button>
         <Button onClick={() => navigate('/adventure/play')} className='red-glow' area={[23, 1, 9, 22]}>Play</Button>
         <Button onClick={() => navigate('/adventure/ship')} className='red-glow' area={[32, 1, 9, 11]}>Ship</Button>
-        <Button onClick={() => navigate('/adventure/notes')} className='red-glow' area={[32, 12, 9, 11]}>Notes</Button>        
+        <Button onClick={() => navigate('/adventure/notes')} className='red-glow' area={[32, 12, 9, 11]}>Notes</Button>
       </div>
     </div>
   );

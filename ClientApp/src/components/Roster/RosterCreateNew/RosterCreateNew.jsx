@@ -10,6 +10,7 @@ import FullScreenInfo from './FullScreenInfo';
 import CareerInfo from './CareerInfo';
 import DescriptionBox from '../../Universal/DescriptionBox';
 import { ScrollPanel } from '../../Panels/Panels';
+import { CreateServerAction, Action } from '../../../middleware/ActionBuilder';
 
 // const panelFade = new FadeInBuilder(0, 0.1, 2);
 // const childFade = new FadeInBuilder(0.1, 0.2, 4);
@@ -68,7 +69,7 @@ function Roster({ ds, dispatch }) {
       return;
     }
 
-    dispatch({ type: 'SERVER_CREATE_CHARACTER', character });
+    dispatch(CreateServerAction(Action.CreateCharacter));
     navigate('/roster');
   }
 

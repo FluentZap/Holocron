@@ -6,6 +6,12 @@ using Holocron.Context;
 namespace Holocron.Hubs
 {
 
+  public class StandardCommand
+  {
+    [JsonProperty("sessionToken")]
+    public string SessionToken { get; set; }
+  }
+
   public class UserData
   {
     [JsonProperty("userName")]

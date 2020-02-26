@@ -2,6 +2,7 @@ import { HubConnectionBuilder, LogLevel } from '@microsoft/signalr';
 import { navigate } from "@reach/router";
 import loadDataSet from './LoadDataSet';
 import { merge, cloneDeep, pickBy, identity } from 'lodash'
+import { getActionString } from './ActionBuilder';
 
 export function holocronMiddleware({ dispatch, getState }) {
   const connection = new HubConnectionBuilder()
@@ -50,86 +51,15 @@ export function holocronMiddleware({ dispatch, getState }) {
 
   return next => action => {
     //console.log('will dispatch', action)        
+    console.log(action);
+    const state = getState();
 
-    if (action.type === 'SERVER_CREATE_USER') {
-      connection.invoke("CreateUser", {
-        userName: action.userName,
-        password: action.password
-      }).catch(function (err) {
-        return console.error(err.toString());
-      });
-    }
+    if (action.server) {
+      const payload = action.payload ?
+        { ...action.payload, sessionToken: state.user.sessionToken } :
+        { sessionToken: state.user.sessionToken }
 
-    if (action.type === 'SERVER_LOGIN_USER') {
-      connection.invoke("LoginUser", {
-        userName: action.userName,
-        password: action.password
-      }).catch(function (err) {
-        return console.error(err.toString());
-      });
-    }
-
-    if (action.type === 'SERVER_LOGOUT_USER') {
-      connection.invoke("LogoutUser").catch(function (err) {
-        return console.error(err.toString());
-      });
-    }
-
-    if (action.type === 'SERVER_FETCH_ROSTER') {
-      let state = getState();
-      connection.invoke("FetchRoster", state.user.sessionToken
-      ).catch(function (err) {
-        return console.error(err.toString());
-      });
-    }
-
-    if (action.type === 'SERVER_FETCH_ADVENTURE') {
-      let state = getState();
-      connection.invoke("FetchAdventure", state.user.sessionToken
-      ).catch(function (err) {
-        return console.error(err.toString());
-      });
-    }
-
-    if (action.type === 'SERVER_FETCH_GROUPS') {
-      let state = getState();
-      connection.invoke("FetchGroups", state.user.sessionToken
-      ).catch(function (err) {
-        return console.error(err.toString());
-      });
-    }
-
-    if (action.type === 'SERVER_FETCH_GROUP_LIST') {
-      let state = getState();
-      connection.invoke("FetchGroupList", state.user.sessionToken
-      ).catch(function (err) {
-        return console.error(err.toString());
-      });
-    }
-
-    if (action.type === 'SERVER_CREATE_CHARACTER') {
-      connection.invoke("CreateCharacter", action.character
-      ).catch(function (err) {
-        return console.error(err.toString());
-      });
-    }
-
-    if (action.type === 'SERVER_CREATE_GROUP') {
-      connection.invoke("CreateGroup", { name: action.groupName, connectionId: action.connectionId }
-      ).catch(function (err) {
-        return console.error(err.toString());
-      });
-    }
-
-    if (action.type === 'SERVER_JOIN_GROUP') {
-      connection.invoke("JoinGroup", { name: action.groupName, connectionId: action.connectionId }
-      ).catch(function (err) {
-        return console.error(err.toString());
-      });
-    }
-
-    if (action.type === 'SERVER_LOGIN_GROUP') {
-      connection.invoke("LoginGroup", action.id
+      connection.invoke(getActionString(action.type), payload
       ).catch(function (err) {
         return console.error(err.toString());
       });
