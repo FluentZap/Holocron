@@ -4,7 +4,6 @@ using System;
 using System.Linq;
 using Microsoft.EntityFrameworkCore;
 using System.Collections.Generic;
-using Newtonsoft.Json;
 using Holocron.Context;
 
 namespace Holocron.Hubs
@@ -63,6 +62,7 @@ namespace Holocron.Hubs
             await Clients.Caller.SendAsync("ServerLogin", flag, updateModel);
             System.Console.WriteLine($"Connected User: {Context.ConnectionId}");
             System.Console.WriteLine($"Session Token: {dataUser.SessionToken}");
+            return;
           }
           await Clients.Caller.SendAsync("ServerLogin", flag);
         }
