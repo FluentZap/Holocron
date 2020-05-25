@@ -1,19 +1,17 @@
 import React, { useState, useEffect } from 'react';
 import { connect } from 'react-redux'
-import TextField from '@material-ui/core/TextField';
-import uuid from 'uuid';
-import { styled } from '@material-ui/styles';
+import { v4 as uuid } from 'uuid';
 import HButton from '../HButton';
 import { NavMenuSVG } from '../../SVG';
 import './GameStyles.css';
 
-const StyledButton = styled(TextField)({
-  color: 'white',
-  margin: '15px 15px',
-  '& label, input': {
-    color: 'white'
-  }
-})
+// const StyledButton = styled(TextField)({
+//   color: 'white',
+//   margin: '15px 15px',
+//   '& label, input': {
+//     color: 'white'
+//   }
+// })
 
 
 

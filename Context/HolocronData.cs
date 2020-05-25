@@ -45,11 +45,11 @@ namespace Holocron.Context
       }
     }
 
-    public static async Task<(ListOf_DBResult, User)> LoginUser(User user)
+    public static (ListOf_DBResult, User) LoginUser(User user)
     {
       using (var db = new HolocronContext())
       {
-        User dataUser = await db.Users.FirstAsync(x => x.Name == user.Name);
+        User dataUser = db.Users.First(x => x.Name == user.Name);
         if (dataUser != null && dataUser.Password == user.Password)
         {
           return (ListOf_DBResult.Success, dataUser);

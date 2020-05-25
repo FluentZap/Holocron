@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { connect } from 'react-redux'
 import { navigate } from "@reach/router";
-import uuid from 'uuid';
+import { v4 as uuid} from 'uuid';
 import { Button, ScrollPanel, CRend, TextBox, Panel } from '../Panels/Panels';
 import { CreateServerAction, Action } from '../../middleware/ActionBuilder';
 
@@ -86,7 +86,7 @@ function ChangeAdventures({ ds, characters, groups, dispatch }) {
                     setSelectedGroup(id)
                   }
                 }}
-                  className={CRend(selectedGroup === id, 'orange-glow', 'red-glow', 'm4 p2 data-panel scanlines-back')} key={uuid.v4()}
+                  className={CRend(selectedGroup === id, 'orange-glow', 'red-glow', 'm4 p2 data-panel scanlines-back')} key={uuid()}
                   style={{ gridTemplate: 'repeat(4, 1fr) / repeat(8, 1fr)', display: 'grid' }}>
                   <div className='flex-center data-panel m2 p2 font-small center'
                     style={{ gridArea: '1 / 1 / span 4 / span 3' }}>

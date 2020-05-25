@@ -1,5 +1,5 @@
 import React, { useEffect, useState, memo } from 'react';
-import uuid from 'uuid';
+import { v4 as uuid } from 'uuid';
 import './CharacterCardStyles.css';
 import { TextBox } from '../../Panels/Panels';
 
@@ -34,7 +34,7 @@ const CharacterCard = ({ ds, character, character: { name, species, career, woun
           <div>{strain} / {strainThreshold}</div>
         </>} />
       <TextBox area={[6, 15, 4, 5]}
-        text={specializations.map(spec => spec !== '' ? <div className='center' key={uuid.v4()}>{ds.specializations[spec].Name[0]}</div> : '')} />
+        text={specializations.map(spec => spec !== '' ? <div className='center' key={uuid()}>{ds.specializations[spec].Name[0]}</div> : '')} />
 
 
       <ImageBox area={[2, 2, 5, 5]}

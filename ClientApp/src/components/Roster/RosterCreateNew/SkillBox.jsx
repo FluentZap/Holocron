@@ -1,6 +1,6 @@
 import React, { useRef, useEffect } from 'react';
 import { getSkills, getStatValue, getSkillValue, getCareerSkill, getSkillBuyCost, getSkillSellCost } from '../../../models/CharacterStats';
-import uuid from 'uuid';
+import { v4 as uuid } from 'uuid';
 import GetSkillSymbols from '../../Universal/Symbol';
 import FadeInBuilder from '../../FadeInBuilder';
 import DescriptionBox from '../../Universal/DescriptionBox';
@@ -27,7 +27,7 @@ export const SkillBox = ({ character, selectStat, selectSkill, setSelectSkill, d
 
   return <ScrollPanel reset className='red-flat' area={grid}>
     {selectSkill === '' ? getSkills(ds, selectStat).map(([key, value], i) => {
-      return <div key={uuid.v4()} className='z-5 m2 p2 flex-left data-panel gray-flat-hover'
+      return <div key={uuid()} className='z-5 m2 p2 flex-left data-panel gray-flat-hover'
         style={{ marginTop: i === 0 ? 0 : '.5vh', marginBottom: i === skillCount - 1 ? 0 : '.5vh' }}
         onClick={() => updateSelectSkill(key)} >
         <div className='font-small'>{value} ({getSkillValue(character, key)}){getCareerSkill(character, key) ? ' - C' : ''}</div> <GetSkillSymbols skill={key} {...{ character, ds }} />

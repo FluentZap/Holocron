@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { connect } from 'react-redux'
-import uuid from 'uuid';
+import { v4 as uuid } from 'uuid';
 import { Link, navigate } from "@reach/router";
 import './LoginStyles.css';
 import { CreateServerAction, Action, CreateAction } from '../../middleware/ActionBuilder';

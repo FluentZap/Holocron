@@ -1,7 +1,7 @@
 import React, { useEffect, useState, useRef } from 'react';
 import { connect } from 'react-redux'
 import { navigate } from "@reach/router";
-import uuid from 'uuid';
+import { v4 as uuid } from 'uuid';
 import './RosterCreateNewStyles.css';
 import CharacterCard from '../CharacterCard/CharacterCard';
 import { newCharacter, setCharacterCareer } from '../../../models/CharacterStats';
@@ -90,7 +90,7 @@ function Roster({ ds, dispatch }) {
           <>
             <div className='roster-new-characteristics-list flex-center data-panel red-flat scanlines-back m2' style={{ gridArea: '14 / 1 / span 24 / span 7' }}>
               {Object.entries(character.characteristics).map(([key, value]) =>
-                <StatBox key={uuid.v4()} name={ds.characteristics[key].Name[0]} value={value + character.characteristicsBuy[key]} value2={character.characteristicsBuy[key]} selected={key === selectStat} onClick={() => {
+                <StatBox key={uuid()} name={ds.characteristics[key].Name[0]} value={value + character.characteristicsBuy[key]} value2={character.characteristicsBuy[key]} selected={key === selectStat} onClick={() => {
                   if (selectStat === key && selectSkill === '') {
                     setSelectStat('')
                     setSelectSkill('')
@@ -185,7 +185,7 @@ const SpeciesList = ({ species, changeSpecies, ds, fadeIn }) => {
   return (
     <ScrollPanel className='red-flat' area={[14, 1, 24, 7]}>
       {Object.entries(ds.species).map(([key, value], i) =>
-        <div key={uuid.v4()} className={`z-5 m2 p2 flex-center center data-panel font-small ${species === key ? 'orange-glow' : 'gray-flat-hover'}`}
+        <div key={uuid()} className={`z-5 m2 p2 flex-center center data-panel font-small ${species === key ? 'orange-glow' : 'gray-flat-hover'}`}
           style={{ marginTop: i === 0 ? 0 : '0.5vh', marginBottom: i === speciesCount - 1 ? 0 : '0.5vh' }}
           onClick={() => changeSpecies(key)} >
           {value.Name}

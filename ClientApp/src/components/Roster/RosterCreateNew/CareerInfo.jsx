@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useMemo } from 'react';
-import uuid from 'uuid';
+import { v4 as uuid } from 'uuid';
 import { getSkillValue, getCareerSkill, recalculateXp } from '../../../models/CharacterStats';
 import GetSkillSymbols from '../../Universal/Symbol';
 import DescriptionBox from '../../Universal/DescriptionBox';
@@ -87,7 +87,7 @@ const CareerList = ({ ds, changeCareer, career }) => {
   const careerCount = Object.keys(ds.careers).length;
   return <ScrollPanel className='red-flat' area={[14, 1, 12, 7]}>
     {Object.entries(ds.careers).map(([key, value], i) =>
-      <div key={uuid.v4()} className={`z-5 m2 p2 flex-center center data-panel font-small ${career === key ? 'orange-glow' : 'gray-flat-hover'}`}
+      <div key={uuid()} className={`z-5 m2 p2 flex-center center data-panel font-small ${career === key ? 'orange-glow' : 'gray-flat-hover'}`}
         style={{ marginTop: i === 0 ? 0 : '0.5vh', marginBottom: i === careerCount - 1 ? 0 : '0.5vh' }}
         onClick={() => changeCareer(key)}
       >
@@ -107,7 +107,7 @@ const CareerSkills = ({ ds, character, career, setCareerSkill }) => {
     <div className='flex-row-center data-panel red-flat scanlines-back m2 p2'
       style={{ gridArea: '19 / 8 / span 19 / span 15', justifyContent: 'center', flexFlow: 'row wrap', alignItems: 'stretch' }}>
       {ds.careers[career].CareerSkills[0].Key.map(key => {
-        return <div key={uuid.v4()} className={`z-5 m2 p2 flex-center center data-panel font-small ${character.skillsCareer.includes(key) ? 'orange-glow' : 'gray-flat-hover'}`}
+        return <div key={uuid()} className={`z-5 m2 p2 flex-center center data-panel font-small ${character.skillsCareer.includes(key) ? 'orange-glow' : 'gray-flat-hover'}`}
           style={{ width: '45%' }}
           onClick={() => {
             setCareerSkill(key);
@@ -137,7 +137,7 @@ const Specs = ({ ds, character, career, specialization, changeSpecialization }) 
   const specCount = specList.length;
   return <ScrollPanel className='red-flat' area={[26, 1, 12, 7]}>
     {specList.map((key, i) =>
-      <div key={uuid.v4()} className={`z-5 m2 p2 flex-center center data-panel font-small ${specialization === key ? 'orange-glow' : 'gray-flat-hover'}`}
+      <div key={uuid()} className={`z-5 m2 p2 flex-center center data-panel font-small ${specialization === key ? 'orange-glow' : 'gray-flat-hover'}`}
         style={{ marginTop: i === 0 ? 0 : '.5vh', marginBottom: i === specCount - 1 ? 0 : '.5vh' }}
         onClick={() => changeSpecialization(key)} >
         <div>{ds.specializations[key].Name[0]}</div>
@@ -155,7 +155,7 @@ const SpecSkills = ({ ds, character, specialization, setSpecSkill }) => {
     <div className='flex-row-center data-panel red-flat scanlines-back m2 p2'
       style={{ gridArea: '19 / 8 / span 19 / span 15', justifyContent: 'center', flexFlow: 'row wrap', alignItems: 'stretch' }}>
       {ds.specializations[specialization].CareerSkills[0].Key.map(key => {
-        return <div key={uuid.v4()} className={`z-5 m2 p2 flex-center center data-panel font-small ${character.skillsSpecFree.includes(key) ? 'orange-glow' : 'gray-flat-hover'}`}
+        return <div key={uuid()} className={`z-5 m2 p2 flex-center center data-panel font-small ${character.skillsSpecFree.includes(key) ? 'orange-glow' : 'gray-flat-hover'}`}
           style={{ width: '45%' }}
           onClick={() => {
             setSpecSkill(key);

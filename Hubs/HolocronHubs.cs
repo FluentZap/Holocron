@@ -52,7 +52,7 @@ namespace Holocron.Hubs
     {
       if (user.Name != "" && user.Password != "")
       {
-        (ListOf_DBResult flag, User dataUser) = await HoloData.LoginUser(new User() { Name = user.Name, Password = user.Password });
+        (ListOf_DBResult flag, User dataUser) = HoloData.LoginUser(new User() { Name = user.Name, Password = user.Password });
         if (connectedUsers.ContainsKey(Context.ConnectionId))
         {
           if (flag == ListOf_DBResult.Success)
