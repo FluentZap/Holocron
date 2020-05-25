@@ -69,7 +69,7 @@ function Roster({ ds, dispatch }) {
       return;
     }
 
-    dispatch(CreateServerAction(Action.CreateCharacter));
+    dispatch(CreateServerAction(Action.CreateCharacter, character));
     navigate('/roster');
   }
 

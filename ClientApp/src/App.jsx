@@ -29,7 +29,6 @@ import AddCharacter from './components/Adventures/AddCharacter/AddCharacter';
 const store = createStore(holocronReducer, initial_state, applyMiddleware(holocronMiddleware, logger));
 
 //fontFamily: 'Engli-Besh',
-
 function toggleFullScreen() {
   var doc = window.document;
   var docEl = doc.documentElement;
