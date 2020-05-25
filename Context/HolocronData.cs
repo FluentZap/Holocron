@@ -9,6 +9,7 @@ namespace Holocron.Context
 
   public enum ListOf_DBResult
   {
+    Error,
     Success,
     Duplicate,
     NotFound,
@@ -101,13 +102,12 @@ namespace Holocron.Context
           User dataUser = await db.Users.FirstOrDefaultAsync(x => x.SessionToken == SessionToken);
           if (dataUser != null)
           {
-            List<Group> groups = await db.Permissions.Where(x => x.User.Id == dataUser.Id).Select(x => x.Group)
-            .Include(g => g.Permissions)
-              .ThenInclude(x => x.User)
-            .Include(g => g.GroupCharacters)
-            .Include(g => g.Inventory)
-            .Include(g => g.Ships)
-            .ToListAsync();
+            List<Group> groups = await db.Permissions.Where(x => x.User.Id == dataUser.Id)
+              .Include(x => x.Group.GroupCharacters)
+              .Include(x => x.Group.Inventory)
+              .Include(x => x.Group.Ships)
+              .Select(x => x.Group)
+              .ToListAsync();
             if (groups != null)
             {
               foreach (var item in groups)

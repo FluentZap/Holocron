@@ -69,6 +69,8 @@ export function holocronMiddleware({ dispatch, getState }) {
     const returnValue = next(action)
 
     if (action.type === 'CLIENT_LOGIN') {
+      console.log(action);
+      
       let state = getState();
       if (state.user.sessionToken !== null && state.user.sessionToken !== "rejected") {
         navigate('/menu');
@@ -137,7 +139,7 @@ const setHubCallbacks = (connection, dispatch) => {
   });
 
   connection.on("ServerLogin", (flag, updateModel) => {
-    if (flag !== 0) {
+    if (flag !== 1) {
       dispatch({
         type: 'CLIENT_LOGIN',
         payload: { user: { sessionToken: 'rejected' } }
@@ -152,7 +154,10 @@ const setHubCallbacks = (connection, dispatch) => {
   });
 
   connection.on("ClientUpdate", (flag, updateModel) => {
-    if (flag === 0) {
+    console.log(flag);
+    console.log(updateModel);
+    
+    if (flag === 1) {
       dispatch({
         type: 'CLIENT_UPDATE',
         payload: updateModel
@@ -178,6 +183,7 @@ function parseUpdateModel(state, model) {
   model = pickBy(model, identity);
   let newState = cloneDeep(state);
   newState = merge(newState, model);
+  console.log(newState);
   return newState;
 }
 

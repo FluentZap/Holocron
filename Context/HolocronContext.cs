@@ -5,7 +5,7 @@ using Newtonsoft.Json;
 
 namespace Holocron.Context
 {
-
+  
   public class HolocronContext : DbContext
   {
     public DbSet<User> Users { get; set; }

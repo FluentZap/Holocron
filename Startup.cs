@@ -5,6 +5,7 @@ using Microsoft.AspNetCore.SpaServices.ReactDevelopmentServer;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
+using Newtonsoft.Json;
 using Holocron.Hubs;
 
 namespace Holocron
@@ -22,7 +23,7 @@ namespace Holocron
     public void ConfigureServices(IServiceCollection services)
     {
       services.AddControllersWithViews();
-      services.AddSignalR().AddNewtonsoftJsonProtocol();
+      services.AddSignalR().AddNewtonsoftJsonProtocol(o => { o.PayloadSerializerSettings.NullValueHandling = NullValueHandling.Ignore; });
       // In production, the React files will be served from this directory
       services.AddSpaStaticFiles(configuration =>
       {

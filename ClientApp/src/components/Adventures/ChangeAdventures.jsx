@@ -29,7 +29,7 @@ function ChangeAdventures({ ds, characters, groups, dispatch }) {
 
   const createAdventure = () => {
     if (groupName !== '' && connectionId !== '') {
-      dispatch(CreateServerAction(Action.CreateGroup, { groupName: groupName, connectionId: connectionId }));
+      dispatch(CreateServerAction(Action.CreateGroup, { Name: groupName, connectionId: connectionId }));
       setCategory('adventureList');
     } else {
       setAlertInput(true);
@@ -38,7 +38,7 @@ function ChangeAdventures({ ds, characters, groups, dispatch }) {
 
   const joinAdventure = () => {
     if (groupName !== '' && connectionId !== '') {
-      dispatch(CreateServerAction(Action.JoinGroup, { groupName: groupName, connectionId: connectionId }));
+      dispatch(CreateServerAction(Action.JoinGroup, { Name: groupName, connectionId: connectionId }));
     } else {
       setAlertInput(true);
     }

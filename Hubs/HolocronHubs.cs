@@ -4,6 +4,7 @@ using System;
 using System.Linq;
 using Microsoft.EntityFrameworkCore;
 using System.Collections.Generic;
+using Newtonsoft.Json;
 using Holocron.Context;
 
 namespace Holocron.Hubs
@@ -62,9 +63,11 @@ namespace Holocron.Hubs
             await Clients.Caller.SendAsync("ServerLogin", flag, updateModel);
             System.Console.WriteLine($"Connected User: {Context.ConnectionId}");
             System.Console.WriteLine($"Session Token: {dataUser.SessionToken}");
-            return;
           }
-          await Clients.Caller.SendAsync("ServerLogin", flag);
+          else
+          {
+            await Clients.Caller.SendAsync("ServerLogin", flag);
+          }
         }
         else
         {
@@ -119,7 +122,7 @@ namespace Holocron.Hubs
         (ListOf_DBResult flag, List<Character> characters) = await HoloData.FetchCharacters(c.SessionToken);
         UpdateModel updateModel = new UpdateModel();
         updateModel.AddCharacters(characters);
-        ClientUpdates.SendUpdate(Clients.Caller, flag, updateModel);
+        await ClientUpdates.SendUpdate(Clients.Caller, flag, updateModel);
       }
     }
 
@@ -130,7 +133,7 @@ namespace Holocron.Hubs
         (ListOf_DBResult flag, List<Group> groups) = await HoloData.FetchGroups(c.SessionToken);
         UpdateModel updateModel = new UpdateModel();
         updateModel.AddGroups(groups);
-        ClientUpdates.SendUpdate(Clients.Caller, flag, updateModel);
+        await ClientUpdates.SendUpdate(Clients.Caller, flag, updateModel);
       }
     }
 
@@ -141,7 +144,7 @@ namespace Holocron.Hubs
         (ListOf_DBResult flag, List<Group> groups) = await HoloData.FetchGroups(c.SessionToken);
         UpdateModel updateModel = new UpdateModel();
         updateModel.AddGroupList(groups);
-        ClientUpdates.SendUpdate(Clients.Caller, flag, updateModel);
+        await ClientUpdates.SendUpdate(Clients.Caller, flag, updateModel);
       }
     }
 
@@ -161,7 +164,7 @@ namespace Holocron.Hubs
         (ListOf_DBResult flag, List<Character> characters) = await HoloData.FetchCharacters(SessionToken);
         UpdateModel updateModel = new UpdateModel();
         updateModel.AddCharacters(characters);
-        ClientUpdates.SendUpdate(connectedUsers.Where(x => x.Value.SessionToken == SessionToken).Select(x => Clients.Client(x.Key)).ToList(), flag, updateModel);
+        await ClientUpdates.SendUpdate(connectedUsers.Where(x => x.Value.SessionToken == SessionToken).Select(x => Clients.Client(x.Key)).ToList(), flag, updateModel);
       }
     }
 
@@ -173,13 +176,13 @@ namespace Holocron.Hubs
         (ListOf_DBResult flag, Group group) = await HoloData.CreateGroup(SessionToken, new Group() { Name = NewGroup.Name, ConnectionId = NewGroup.ConnectionId });
         if (flag == ListOf_DBResult.Success)
         {
-          UpdateModel updateModel = new UpdateModel();          
+          UpdateModel updateModel = new UpdateModel();
           updateModel.AddGroupList(group);
-          ClientUpdates.SendUpdate(connectedUsers.Where(x => x.Value.SessionToken == SessionToken).Select(x => Clients.Client(x.Key)).ToList(), flag, updateModel);
+          await ClientUpdates.SendUpdate(connectedUsers.Where(x => x.Value.SessionToken == SessionToken).Select(x => Clients.Client(x.Key)).ToList(), flag, updateModel);
         }
         else
         {
-          ClientUpdates.SendUpdate(connectedUsers.Where(x => x.Value.SessionToken == SessionToken).Select(x => Clients.Client(x.Key)).ToList(), flag);
+          await ClientUpdates.SendUpdate(connectedUsers.Where(x => x.Value.SessionToken == SessionToken).Select(x => Clients.Client(x.Key)).ToList(), flag);
         }
       }
     }
@@ -195,11 +198,11 @@ namespace Holocron.Hubs
           UpdateModel updateModel = new UpdateModel();
           updateModel.AddGroup(group);
           IEnumerable<string> playerTokens = group.Permissions.Select(x => x.User.SessionToken);
-          ClientUpdates.SendUpdate(connectedUsers.Where(x => playerTokens.Contains(x.Value.SessionToken)).Select(x => Clients.Client(x.Key)).ToList(), flag, updateModel);
+          await ClientUpdates.SendUpdate(connectedUsers.Where(x => playerTokens.Contains(x.Value.SessionToken)).Select(x => Clients.Client(x.Key)).ToList(), flag, updateModel);
         }
         else
         {
-          ClientUpdates.SendUpdate(connectedUsers.Where(x => x.Value.SessionToken == SessionToken).Select(x => Clients.Client(x.Key)).ToList(), flag);
+          await ClientUpdates.SendUpdate(connectedUsers.Where(x => x.Value.SessionToken == SessionToken).Select(x => Clients.Client(x.Key)).ToList(), flag);
         }
       }
     }
@@ -211,7 +214,7 @@ namespace Holocron.Hubs
         (ListOf_DBResult flag, Group group) = await HoloData.FetchAdventure(c.SessionToken);
         UpdateModel updateModel = new UpdateModel();
         updateModel.AddAdventure(group);
-        ClientUpdates.SendUpdate(Clients.Caller, flag, updateModel);
+        await ClientUpdates.SendUpdate(Clients.Caller, flag, updateModel);
       }
     }
 
@@ -238,8 +241,9 @@ namespace Holocron.Hubs
 
   public static class ClientUpdates
   {
+
     //Send update to all effected clients
-    public static async void SendUpdate(List<IClientProxy> clients, ListOf_DBResult flag, UpdateModel updateModel)
+    public static async Task SendUpdate(List<IClientProxy> clients, ListOf_DBResult flag, UpdateModel updateModel)
     {
       foreach (var client in clients)
       {
@@ -247,12 +251,12 @@ namespace Holocron.Hubs
       }
     }
 
-    public static async void SendUpdate(IClientProxy client, ListOf_DBResult flag, UpdateModel updateModel)
+    public static async Task SendUpdate(IClientProxy client, ListOf_DBResult flag, UpdateModel updateModel)
     {
       await client.SendAsync("ClientUpdate", flag, updateModel);
     }
 
-    public static async void SendUpdate(List<IClientProxy> clients, ListOf_DBResult flag)
+    public static async Task SendUpdate(List<IClientProxy> clients, ListOf_DBResult flag)
     {
       foreach (var client in clients)
       {
