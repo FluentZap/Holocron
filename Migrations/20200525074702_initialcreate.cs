@@ -1,8 +1,9 @@
 ﻿using Microsoft.EntityFrameworkCore.Migrations;
+using MySql.Data.EntityFrameworkCore.Metadata;
 
 namespace Holocron.Migrations
 {
-    public partial class InitialCreate : Migration
+    public partial class initialcreate : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -11,7 +12,7 @@ namespace Holocron.Migrations
                 columns: table => new
                 {
                     Id = table.Column<int>(nullable: false)
-                        .Annotation("MySQL:AutoIncrement", true),
+                        .Annotation("MySQL:ValueGenerationStrategy", MySQLValueGenerationStrategy.IdentityColumn),
                     BR = table.Column<int>(nullable: false),
                     AG = table.Column<int>(nullable: false),
                     INT = table.Column<int>(nullable: false),
@@ -29,7 +30,7 @@ namespace Holocron.Migrations
                 columns: table => new
                 {
                     Id = table.Column<int>(nullable: false)
-                        .Annotation("MySQL:AutoIncrement", true),
+                        .Annotation("MySQL:ValueGenerationStrategy", MySQLValueGenerationStrategy.IdentityColumn),
                     Name = table.Column<string>(nullable: true),
                     ConnectionId = table.Column<string>(nullable: true)
                 },
@@ -43,7 +44,7 @@ namespace Holocron.Migrations
                 columns: table => new
                 {
                     Id = table.Column<int>(nullable: false)
-                        .Annotation("MySQL:AutoIncrement", true),
+                        .Annotation("MySQL:ValueGenerationStrategy", MySQLValueGenerationStrategy.IdentityColumn),
                     ASTRO = table.Column<int>(nullable: false),
                     ATHL = table.Column<int>(nullable: false),
                     BRAWL = table.Column<int>(nullable: false),
@@ -91,7 +92,7 @@ namespace Holocron.Migrations
                 columns: table => new
                 {
                     Id = table.Column<int>(nullable: false)
-                        .Annotation("MySQL:AutoIncrement", true),
+                        .Annotation("MySQL:ValueGenerationStrategy", MySQLValueGenerationStrategy.IdentityColumn),
                     Location = table.Column<string>(nullable: true),
                     Name = table.Column<string>(nullable: true),
                     GroupId = table.Column<int>(nullable: true)
@@ -112,7 +113,7 @@ namespace Holocron.Migrations
                 columns: table => new
                 {
                     Id = table.Column<int>(nullable: false)
-                        .Annotation("MySQL:AutoIncrement", true),
+                        .Annotation("MySQL:ValueGenerationStrategy", MySQLValueGenerationStrategy.IdentityColumn),
                     Name = table.Column<string>(nullable: true),
                     GroupId = table.Column<int>(nullable: true)
                 },
@@ -132,11 +133,11 @@ namespace Holocron.Migrations
                 columns: table => new
                 {
                     Id = table.Column<int>(nullable: false)
-                        .Annotation("MySQL:AutoIncrement", true),
+                        .Annotation("MySQL:ValueGenerationStrategy", MySQLValueGenerationStrategy.IdentityColumn),
                     SessionToken = table.Column<string>(nullable: true),
                     Name = table.Column<string>(nullable: true),
                     Password = table.Column<string>(nullable: true),
-                    CurrentAdventureId = table.Column<int>(nullable: true)
+                    CurrentAdventureId = table.Column<int>(nullable: false)
                 },
                 constraints: table =>
                 {
@@ -146,7 +147,7 @@ namespace Holocron.Migrations
                         column: x => x.CurrentAdventureId,
                         principalTable: "Groups",
                         principalColumn: "Id",
-                        onDelete: ReferentialAction.Restrict);
+                        onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.CreateTable(
@@ -154,7 +155,7 @@ namespace Holocron.Migrations
                 columns: table => new
                 {
                     Id = table.Column<int>(nullable: false)
-                        .Annotation("MySQL:AutoIncrement", true),
+                        .Annotation("MySQL:ValueGenerationStrategy", MySQLValueGenerationStrategy.IdentityColumn),
                     UserId = table.Column<int>(nullable: true),
                     Name = table.Column<string>(nullable: true),
                     Credits = table.Column<int>(nullable: false),
@@ -212,7 +213,7 @@ namespace Holocron.Migrations
                 columns: table => new
                 {
                     Id = table.Column<int>(nullable: false)
-                        .Annotation("MySQL:AutoIncrement", true),
+                        .Annotation("MySQL:ValueGenerationStrategy", MySQLValueGenerationStrategy.IdentityColumn),
                     GroupId = table.Column<int>(nullable: true),
                     UserId = table.Column<int>(nullable: true),
                     PermissionGroup = table.Column<string>(nullable: true)
@@ -239,7 +240,7 @@ namespace Holocron.Migrations
                 columns: table => new
                 {
                     Id = table.Column<int>(nullable: false)
-                        .Annotation("MySQL:AutoIncrement", true),
+                        .Annotation("MySQL:ValueGenerationStrategy", MySQLValueGenerationStrategy.IdentityColumn),
                     Location = table.Column<string>(nullable: true),
                     Name = table.Column<string>(nullable: true),
                     CharacterId = table.Column<int>(nullable: true)
@@ -260,7 +261,7 @@ namespace Holocron.Migrations
                 columns: table => new
                 {
                     Id = table.Column<int>(nullable: false)
-                        .Annotation("MySQL:AutoIncrement", true),
+                        .Annotation("MySQL:ValueGenerationStrategy", MySQLValueGenerationStrategy.IdentityColumn),
                     Name = table.Column<string>(nullable: true),
                     CharacterId = table.Column<int>(nullable: true)
                 },

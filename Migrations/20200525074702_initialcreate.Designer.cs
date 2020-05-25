@@ -3,14 +3,16 @@ using System;
 using Holocron.Context;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace Holocron.Migrations
 {
     [DbContext(typeof(HolocronContext))]
-    partial class HolocronContextModelSnapshot : ModelSnapshot
+    [Migration("20200525074702_initialcreate")]
+    partial class initialcreate
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
